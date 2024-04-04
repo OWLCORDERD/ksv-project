@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gugi&family=Noto+Sans+KR:wght@100..900&display=swap");
+
+
+:root {
+    --font-Unbounded : "Unbounded", sans-serif;
+    --font-Noto : "Noto Sans KR", sans-serif;
+    --header-height : 6.25rem;
+    --black-color : #000;
+    --white-color : #fff;
+    --text-color : #5c5c5c;
+    --center-X : translateX(-50%);
+    --center-Y : translateY(-50%);
+    --center-XY : translate(-50%, -50%);
+}
