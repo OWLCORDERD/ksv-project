@@ -32,10 +32,9 @@ body > #wrap {
     left: 0;
     display: flex;
     justify-content: space-between;
-    align-items: center;
     width: 100%;
     height: 5rem;
-    z-index: 10;
+    z-index: 100;
 }
 
 header > .main-menu {
@@ -56,16 +55,39 @@ header > .main-menu {
     cursor: pointer;
 }
 
-.main-menu > .logo {
-    display: inline-flex;
+/* banner logo title wrap 영역 */
+header > .logo{
+    margin-top: 6.25rem;
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    width: 10rem;
+    height: 13rem;
 }
 
-.logo > h1{
+.logo > .sub-title{
     width: 100%;
-    line-height: 6.25rem;
-    font-size: 1.5rem;
+    height: 3rem;
+    overflow: hidden;
+}
+
+.sub-title > p{
+    font-size: 1.2rem;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.logo > .main-title{
+    width: 100%;
+    height: 5rem;
+}
+
+.main-title > h1 {
+    font-size: 5rem;
+    line-height: 5rem;
+    text-transform: uppercase;
+    text-align: center;
     color: var(--white-color);
 }
 
@@ -103,7 +125,6 @@ header > .sub-menu {
     display: block;
     width: 100%;
     height: 100%;
-    padding: 2rem 0;
 }
 
 /* main 컨텐츠 banner 영역 */
@@ -114,42 +135,10 @@ header > .sub-menu {
     padding-top: var(--header-height);
 }
 
-/* banner logo title wrap 영역 */
-.main-banner > .title-wrap{
-    margin: 0 auto;
-    width: 50rem;
-    height: 15rem;
-}
-
-.title-wrap > .sub-title{
-    width: 100%;
-    height: 3rem;
-}
-
-.sub-title > p{
-    font-size: 1.2rem;
-    color: var(--text-color);
-    text-align: center;
-}
-
-.title-wrap > .main-title{
-    width: 100%;
-    height: 10rem;
-}
-
-.main-title > h1 {
-    font-size: 5rem;
-    line-height: 10rem;
-    text-transform: uppercase;
-    text-align: center;
-    color: var(--white-color);
-}
-
 /* banner scroll event 컨텐츠 영역 */
 .main-banner > .screen-container {
     position: relative;
-    top: 0;
-    left: 0;
+    margin-top: 20rem;
     width: 100%;
     height: 100%;
     z-index: 10;
@@ -330,7 +319,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     position: relative;
     top: 0;
     width: 100%;
-    height: 100vh;
+    height: 300vh;
     padding: 3rem 6.25rem;
 }
 
@@ -342,16 +331,16 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 .title-wrap > .ksvArtist-title {
     margin: 0 auto;
     width: 30rem;
-    height: 6.25rem;
+    height: 8rem;
 }
 
 .ksvArtist-title > h1 {
-    line-height: 6.25rem;
+    line-height: 8rem;
     text-align: center;
     color: #fff;
-    font-size: 2rem;
+    font-size: 4rem;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 200;
 }
 
 .title-wrap > .ksvArtist-info {
@@ -363,10 +352,10 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 .ksvArtist-info > p {
     line-height: 3.125rem;
     font-size: 15px;
-    font-family: var(--font-Noto);
     color: #fff;
     text-align: center;
     font-family: var(--font-Noto);
+    font-weight: bold;
 }
 
 .title-wrap > .view-ksvArtist {
@@ -417,31 +406,34 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 /*아티스트 사진들을 활용한 css 3D 회전 이벤트 부모 영역 */
 .main-ksvArtist > .carousel-Artist {
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 30rem;
+    height: 100vh;
     margin-top: 2rem;
     overflow: hidden;
 }
 
 /*transform 속성으로 preserve-3d style 부여 및 회전 animation 부여 */
 .carousel-Artist > .carousel-animateBox {
+    position: relative;
+    top: 50%;
     display: flex;
     justify-content: center;
+    align-items: center;
     transform-style: preserve-3d;
-    animation: carousel 10s linear infinite;
+    transform: perspective(700px) translateY(-50%);
 }
 
 /*perspective 속성을 활용하여 사용자에게 보여지는 뷰포트와
 요소간의 거리를 조절하여 원근감 부여 및 360도 회전 */
 @keyframes carousel {
     0% {
-        transform: perspective(800px) rotateY(0);
+        transform: perspective(800px);
     }
 
     100% {
-        transform: perspective(800px) rotateY(360deg);
+        transform: perspective(800px);
     }
 }
 
@@ -453,6 +445,8 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
     width: 200px;
     height: 200px;
     transform: rotateY(calc(var(--i) * 1deg)) translateZ(350px);
+    overflow: hidden;
+    border-radius: 1.5rem;
 }
 
 .artist::before{
@@ -475,12 +469,19 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
     object-fit: cover;
 }
 
+.main-container > .main-contents {
+    position: relative;
+    width: 100%;
+    height: 77.5rem;
+    padding: 0 6.25rem;
+    margin : 6.25rem 0;
+}
+
 /* 주간 ksv 아티스트 추천 영역 */
 .main-container > .week-recommend {
     position: relative;
     width: 100%;
     height: 100%;
-    padding: 5rem;
 }
 
 .week-recommend > .week-artist {
@@ -488,13 +489,14 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 50rem;
+    height: 38.25rem;
+    margin-bottom: 3rem;
 }
 
 .week-artist > .artist-info{
     position: relative;
     width: 100%;
-    height: max-content;
+    height: 100%;
 }
 
 .artist-info > .pick-title {
@@ -541,7 +543,7 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
 .week-artist > .artist-topTrack {
     position: relative;
     width: 80%;
-    height: max-content;
+    height: 100%;
 }
 
 .artist-topTrack > .title-wrap {
@@ -628,7 +630,7 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
 .week-recommend > .artist-trackList {
     position: relative;
     width: 100%;
-    height: 40rem;
+    height: 36.25rem;
 }
 
 .artist-trackList > .title-wrap {
@@ -688,24 +690,28 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
 .artist-trackList > .track-List {
     position: relative;
     width: 100%;
-    height: 30rem;
-    overflow: hidden;
+    height: 100%;
+    margin : 0 auto;
 }
 
 .track-List > .slide-wrap {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
-    display: inline-flex;
-    width: max-content;
-    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 .slide-wrap > .track-item {
-    position: relative;
-    width: 20rem;
-    height: 100%;
-    margin-left: 2rem;
+    position: absolute;
+    top: 0;
+    transition: all ease-in-out 800ms;
+    transform: scale(0.8);
+    padding: 0 2rem;
+}
+
+.track-item.active {
+    transform: scale(1.0);
 }
 
 .track-item:first-child{
@@ -714,11 +720,12 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
 
 .track-item > .track-img {
     position: relative;
-    width: 100%;
-    height: 20rem;
+    width: 18rem;
+    height: 18rem;
+    margin: 0 auto;
     border-radius: 2rem;
     overflow: hidden;
-    border: 5px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .track-img > img {
