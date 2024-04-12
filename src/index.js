@@ -3,7 +3,9 @@ import { getArtists, getWeekArtist } from './api/artist';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import bannerVideo from './images/banner-video.mp4';
+import introVideo from './images/introduce-video.mp4';
 import search from './api/youtubeAPI';
+import img from './images/introduce-image.png';
 import { slideItem } from './slideItem';
 
 /* --gsap 라이브러리의 확장 기능 ScrollTrigger plugin 추가 (scroll event)-- */
@@ -18,9 +20,10 @@ if (video_screen) {
   video_src.src = bannerVideo;
 }
 
-const screenVideo = document.querySelector('.video-screen');
-const video = document.querySelector('.banner_video');
 const screenElement = document.querySelector('.screen-container');
+const screenVideo = document.querySelector('.video-screen');
+const video_opacity = document.querySelector('.screen-opacity');
+const introduce_container = document.querySelector('.main-introduce');
 
 gsap.to(screenVideo, {
   position: 'sticky',
@@ -28,63 +31,68 @@ gsap.to(screenVideo, {
   scrollTrigger: {
     trigger: screenElement,
     start: 'top top',
-    end: '20% top',
+    end: '5% top',
     scrub: 1,
   },
 });
 
-gsap.to(video, {
+gsap.to(video_screen, {
   width: '100%',
 
   scrollTrigger: {
     trigger: screenElement,
     start: 'top top',
-    end: '20% top',
+    end: '5% top',
     scrub: 1,
   },
 });
 
-const introduce_container = document.querySelector('.main-introduce');
+gsap.to(video_opacity, {
+  width: '100%',
+  backgroundColor: 'rgba(0,0,0,1)',
+
+  scrollTrigger: {
+    trigger: screenElement,
+    start: 'top top',
+    end: '5% top',
+    scrub: 1,
+  },
+});
 
 gsap.fromTo(
   introduce_container,
   {
     opacity: 0,
+    y: 250,
   },
   {
     opacity: 1,
+    y: 0,
     scrollTrigger: {
       trigger: screenElement,
-      start: '10% top',
+      start: '5% top',
       end: '20% top',
       scrub: 1,
     },
   },
 );
 
-const video_opacity = document.querySelector('.screen-opacity');
+const intro_video = document.querySelector('.intro_video');
+const example = document.querySelector('.video-wrap');
+const intro_image = document.createElement('img');
+const introVideo_source = document.createElement('source');
 
-gsap.to(video_opacity, {
-  width: '100%',
+if (intro_image) {
+  intro_image.src = img;
+  example.append(intro_image);
+}
 
-  scrollTrigger: {
-    trigger: screenElement,
-    start: 'top top',
-    end: '20% top',
-    scrub: 1,
-  },
-});
-
-gsap.to(video_opacity, {
-  backgroundColor: 'rgba(0,0,0,1)',
-
-  scrollTrigger: {
-    trigger: screenElement,
-    start: 'top top',
-    end: '30% top',
-    scrub: 1,
-  },
-});
+/*
+if (introVideo_source) {
+  introVideo_source.src = introVideo;
+  intro_video.append(introVideo_source);
+}
+*/
 
 /* artist container 영역의 슬라이드 영역 appendChild */
 const artists = await getArtists();
@@ -98,7 +106,7 @@ for (let i = 0; i < artists.length; i++) {
 
   carouselAnimate_container.innerHTML += `
   <div class = "artist" style = "--i: ${rotateY}">
-    <img src = "${artists[i].images[0].url}"/>
+    <img src = "${artists[i].images[0].url}" alt = "${artists[i].name} 프로필 이미지"/>
   </div>
   `;
 }
@@ -117,7 +125,7 @@ const artistImg = document.createElement('img');
 if (weekArtist && artistInfo) {
   artistInfo.innerHTML = `
     <div class = "pick-title">
-        <h3>This Week Ksv Artist</h3>
+        <p>This Week Ksv Artist</p>
     </div>
     <div class = "artist-name">
         <h2>${weekArtist[0].name}</h2>
@@ -131,6 +139,7 @@ if (weekArtist && artistInfo) {
   /* */
   artistImgBox.appendChild(artistImg);
   artistImg.src = weekArtist[0].images[0].url;
+  artistImg.alt = `${weekArtist[0].name} 프로필 이미지`;
 }
 
 /* 아티스트 인기 곡 리스트 중 첫번째 곡을 대표 인기곡으로 선정 */
@@ -138,23 +147,6 @@ const weekArtist_topTrack = weekArtist[1].tracks[0];
 
 /* search 비동기 함수 -> 대표 인기곡의 제목을 파라미터 값으로 전송하여
 youtube API에 해당 곡을 검색하여 비디오 추출 */
-const youtube = await search(weekArtist_topTrack.name);
-
-const topTrack_video = document.querySelector('.topTrack-video');
-
-const topTrack_videoId = youtube[0].id.videoId;
-
-/*youtube iframe 비디오 태그 기본 형식에 src 경로의 id부분 대표 인기곡 ID로 설정 */
-if (youtube && topTrack_video) {
-  topTrack_video.innerHTML = `
-  <iframe width="560" height="315"
-  src="https://www.youtube.com/embed/${topTrack_videoId}?autoplay=1&mute=1&loop=1&controls=0&playlist=${topTrack_videoId}"
-  title="YouTube video player" frameborder="0" allow="accelerometer;
-  autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;
-  web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-  </iframe>
-  `;
-}
 
 /*아티스트 대표 인기곡 앨범 이미지, 제목, 아티스트 노드 추가 */
 const topTrack_imgBox = document.querySelector('.track-img');
@@ -165,6 +157,7 @@ const topTrack_artistBox = document.querySelector('.track-artist');
 const topTrack_artist = document.createElement('span');
 
 topTrack_img.src = weekArtist_topTrack.album.images[0].url;
+topTrack_img.alt = `${weekArtist_topTrack.album.name} 대표 곡 앨범 이미지`;
 topTrack_imgBox.appendChild(topTrack_img);
 topTrack_title.textContent = weekArtist_topTrack.name;
 topTrack_titleBox.appendChild(topTrack_title);
@@ -263,10 +256,10 @@ const header = document.querySelector('header');
 gsap.fromTo(
   header,
   {
-    backgroundColor: 'rgba(15, 15, 15, 0.0)',
+    backgroundColor: 'rgba(0, 0, 0, 0.0)',
   },
   {
-    backgroundColor: 'rgba(15, 15, 15, 1)',
+    backgroundColor: 'rgba(0, 0, 0, 1)',
 
     scrollTrigger: {
       trigger: contents_container,

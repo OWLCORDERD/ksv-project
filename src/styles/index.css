@@ -13,7 +13,7 @@ body {
     align-items: center;
     justify-content: center;
     font-family: var(--font-Unbounded);
-    background-color: #0f0f0f;
+    background-color: #000000;
 }
 
 /* body 내부 컨텐츠 영역 */
@@ -74,7 +74,7 @@ header > .logo{
 
 .sub-title > p{
     font-size: 1.2rem;
-    color: var(--text-color);
+    color: #fff;
     text-align: center;
 }
 
@@ -238,15 +238,27 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     width: 100%;
     height: 100vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0 6.25rem;
+    padding: 6.25rem;
 }
 
-.main-introduce > .title-wrap {
+.main-introduce > .introduce-contents {
+    flex: 5;
+    height: 100%;
+}
+
+.introduce-contents > .contents-wrap {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: var(--center-XY);
     width: 40rem;
-    height: 20rem;
+    height: 40rem;
+}
+
+.contents-wrap > .title-wrap {
+    width: 30rem;
+    height: 15rem;
+    margin-bottom: 10rem;
 }
 
 .title-wrap > .static-txt {
@@ -279,7 +291,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     animation: txtDynamic 5s linear infinite;
 }
 
-.content > h1 {
+.content > h2 {
     display: inline-block;
     width: 100%;
     line-height: 8rem;
@@ -298,10 +310,10 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     }
 }
 
-.main-introduce > .introduce-txt {
+.contents-wrap > .introduce-txt {
     position: relative;
-    width: 40rem;
-    height: 20rem;
+    width: 35rem;
+    height: 15rem;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -312,6 +324,40 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     font-family: var(--font-Noto);
     word-break: keep-all;
     color: var(--white-color);
+}
+
+.main-introduce > .introduce-video {
+    position: relative;
+    flex: 5;
+    height: 100%;
+}
+
+.introduce-video > .video-wrap {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: var(--center-XY);
+    width: 30rem;
+    height: 40rem;
+    overflow: hidden;
+}
+
+.video-wrap > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-wrap > video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /*ksv 아티스트 페이지로 이동하는 영역 */
@@ -334,7 +380,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     height: 8rem;
 }
 
-.ksvArtist-title > h1 {
+.ksvArtist-title > h2 {
     line-height: 8rem;
     text-align: center;
     color: #fff;
@@ -500,11 +546,11 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
 
 .artist-info > .pick-title {
     width : 100%;
-    height: 2rem;
+    height: 3rem;
     margin-bottom: 1rem;
 }
 
-.pick-title > h3 {
+.pick-title > p {
     font-size: 1.2rem;
     text-transform: uppercase;
     color: var(--white-color);
@@ -513,7 +559,7 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
 .artist-info > .artist-name {
     width: 100%;
     height: 6.25rem;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .artist-name > h2 {
@@ -550,11 +596,10 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
     height: 3.125rem;
 }
 
-.title-wrap > h3 {
+.title-wrap > h2 {
     font-size: 1.2rem;
     font-family: var(--font-Unbounded);
     color: #fff;
-    line-height: 3.125rem;
     text-transform: uppercase;
 }
 
@@ -662,32 +707,32 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
     height: 100%;
 }
 
-.slide-prev > svg:hover {
-    cursor: pointer;
-}
-
-.slide-prev > svg > circle {
-    fill: #fff;
-    opacity: 0.1;
-}
-
-.slide-prev > svg > path {
-    fill: #fff;
-    opacity: 0.4;
-}
-
+.slide-prev > svg:hover,
 .slide-next > svg:hover {
     cursor: pointer;
 }
 
+.slide-prev > svg:hover > circle,
+.slide-next > svg:hover > circle {
+    opacity: 0.8;
+}
+
+.slide-prev > svg > circle,
 .slide-next > svg > circle {
     fill: #fff;
     opacity: 0.1;
 }
 
+.slide-prev > svg > path,
 .slide-next > svg > path {
     fill: #fff;
     opacity: 0.4;
+}
+
+.slide-prev > svg:hover > path,
+.slide-next > svg:hover > path {
+    fill : #000;
+    opacity: 0.8;
 }
 
 .artist-trackList > .track-List {
@@ -808,7 +853,8 @@ footer > .footer-inner {
     height: 100%;
 }
 
-.main-menu > .menu-title {
+.main-menu > .menu-title,
+.family-menu > .menu-title {
     width: 100%;
     height: 3.125rem;
 }

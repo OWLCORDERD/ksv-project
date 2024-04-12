@@ -10,6 +10,7 @@ export const slideItem = (data) => {
   track_imgBox.classList.toggle('track-img');
   track_imgBox.appendChild(track_img);
   track_img.src = data.album.images[0].url;
+  track_img.alt = `${data.album.name} 곡 앨범 이미지`;
   track_item.appendChild(track_title);
   track_item.appendChild(track_artist);
   track_title.textContent = data.name;
