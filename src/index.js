@@ -2,29 +2,36 @@ import './styles/index.css';
 import { getArtists, getWeekArtist } from './api/artist';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import bannerVideo from './images/banner-video.mp4';
-import introVideo from './images/introduce-video.mp4';
+import bannerVideo from './images/videos/banner-video.mp4';
 import search from './api/youtubeAPI';
 import img from './images/introduce-image.png';
 import { slideItem } from './slideItem';
 
-/* --gsap 라이브러리의 확장 기능 ScrollTrigger plugin 추가 (scroll event)-- */
+/* -- gsap 라이브러리의 확장 기능 ScrollTrigger plugin 추가 (scroll event) -- */
 gsap.registerPlugin(ScrollTrigger);
 
-/* --screen container의 video 태그에 source 태그 추가-- */
+/* -- video element에 비디오 경로가 지정된 source element 추가 -- */
 const video_screen = document.querySelector('.banner_video');
 const video_src = document.createElement('source');
-/* --source 노드가 생성 될 시, 부모인 비디오 element에 자식노드로 넣은 후 src 경로 import-- */
+/* source element 생성 후, source element에 src 속성으로 비디오 경로 추가 후 자식노드로 추가 */
 if (video_screen) {
   video_screen.appendChild(video_src);
   video_src.src = bannerVideo;
 }
 
+/* -- screen container 스크롤 이벤트 -- */
+
+/* 스크롤 이벤트 시작점 (최상위 부모) */
 const screenElement = document.querySelector('.screen-container');
+/* 상단의 비디오를 포함하고 있는 뷰포트 높이 100vh background 영역 */
 const screenVideo = document.querySelector('.video-screen');
+/* 비디오 background 화면의 불투명 opacity background 영역 */
 const video_opacity = document.querySelector('.screen-opacity');
+/* screen container 페이지 소개 영역 */
 const introduce_container = document.querySelector('.main-introduce');
 
+/* 최상위 부모인 screen container 상단에서 스크롤을 시작할 시,
+비디오 background 영역을 sticky로 상단에 고정 */
 gsap.to(screenVideo, {
   position: 'sticky',
 
@@ -36,6 +43,8 @@ gsap.to(screenVideo, {
   },
 });
 
+/* 비디오 background가 상단에 고정되면 자식 노드인 video element
+40% -> 100%로 스크롤에 따른 너비 증가 */
 gsap.to(video_screen, {
   width: '100%',
 
@@ -47,6 +56,9 @@ gsap.to(video_screen, {
   },
 });
 
+/* 비디오 background 영역이 상단에 고정되면서 하단까지 스크롤 될 때,
+다른 컨텐츠들이 비디오에 의해 가독성이 떨어지는것을 방지하기 위해 비디오의 크기를
+증가 시키는 동시에, opacity background도 같이 증가 시키며 background color를 부여 */
 gsap.to(video_opacity, {
   width: '100%',
   backgroundColor: 'rgba(0,0,0,1)',
@@ -59,14 +71,14 @@ gsap.to(video_opacity, {
   },
 });
 
+/* 위의 비디오 background 이벤트와 opacity background 이벤트가 종료 되는 시점에
+페이지 소개 영역 하단에서 상단으로 나타나는 이벤트 추가 */
 gsap.fromTo(
   introduce_container,
   {
-    opacity: 0,
     y: 250,
   },
   {
-    opacity: 1,
     y: 0,
     scrollTrigger: {
       trigger: screenElement,
@@ -77,22 +89,15 @@ gsap.fromTo(
   },
 );
 
-const intro_video = document.querySelector('.intro_video');
-const example = document.querySelector('.video-wrap');
+/* 페이지 소개 영역 (main-introduce) 이미지 노드 추가 */
+const intro_imageBox = document.querySelector('.introduce-imageBox');
 const intro_image = document.createElement('img');
-const introVideo_source = document.createElement('source');
 
 if (intro_image) {
   intro_image.src = img;
-  example.append(intro_image);
+  intro_image.alt = 'introduce 영역 배너 이미지';
+  intro_imageBox.append(intro_image);
 }
-
-/*
-if (introVideo_source) {
-  introVideo_source.src = introVideo;
-  intro_video.append(introVideo_source);
-}
-*/
 
 /* artist container 영역의 슬라이드 영역 appendChild */
 const artists = await getArtists();
@@ -111,17 +116,15 @@ for (let i = 0; i < artists.length; i++) {
   `;
 }
 
-/* getWeekArtist 비동기 함수 -> 주간 아티스트 ID를 선정하여
-아티스트의 정보 요청과 인기곡 리스트 요청 총 2개의 더미 데이터를 배열로 저장합니다. */
+/* 주간 아티스트를 선정하여 아티스트의 spotify web api ID값으로
+아티스트 데이터 & top track 데이터 총 2개의 더미 데이터를 요청하고 결과를 반환합니다. */
 const weekArtist = await getWeekArtist();
 
 /* week-recommend (주간 추천 아티스트 영역) artist info 영역 */
 const artistInfo = document.querySelector('.artist-info');
-/* API에서 가져온 아티스트 이미지 삽입할 element 추가 */
-const artistImgBox = document.createElement('div');
-const artistImg = document.createElement('img');
 
-/* 주간 아티스트 데이터 fetch 후 0번째 배열의 아티스트 정보에서 name 프로퍼티 추출하여 innerHTML */
+/* 결과 더미데이터 중, 0번째 인덱스의 아티스트 데이터에서 name 프로퍼티 추출하여 
+artist info 영역에 innerHTML */
 if (weekArtist && artistInfo) {
   artistInfo.innerHTML = `
     <div class = "pick-title">
@@ -132,37 +135,73 @@ if (weekArtist && artistInfo) {
     </div>
   `;
 
-  /* artist info 영역에 이미지를 감싸는 부모 element 자식 노드로 추가 */
+  /* API에서 가져온 아티스트 이미지를 삽입할 img element 추가 */
+  const artistImgBox = document.createElement('div');
+  const artistImg = document.createElement('img');
+
+  /* artist info 영역에 img element 자식 노드로 추가 */
   artistInfo.appendChild(artistImgBox);
-  /* 이미지를 감싸는 부모 영역에 class 추가 */
   artistImgBox.classList.toggle('artist-imgBox');
-  /* */
   artistImgBox.appendChild(artistImg);
+  /* 0번째 인덱스의 아티스트 데이터 중 높은 화질의 image url 속성값 추출하여 src import */
   artistImg.src = weekArtist[0].images[0].url;
   artistImg.alt = `${weekArtist[0].name} 프로필 이미지`;
 }
 
-/* 아티스트 인기 곡 리스트 중 첫번째 곡을 대표 인기곡으로 선정 */
+/* 1번째 인덱스의 top track 데이터 중 첫번째 곡을 대표 인기곡으로 선정 */
 const weekArtist_topTrack = weekArtist[1].tracks[0];
 
 /* search 비동기 함수 -> 대표 인기곡의 제목을 파라미터 값으로 전송하여
 youtube API에 해당 곡을 검색하여 비디오 추출 */
+const music_video = await search(weekArtist_topTrack.name);
 
-/*아티스트 대표 인기곡 앨범 이미지, 제목, 아티스트 노드 추가 */
-const topTrack_imgBox = document.querySelector('.track-img');
-const topTrack_img = document.createElement('img');
-const topTrack_titleBox = document.querySelector('.track-title');
-const topTrack_title = document.createElement('h2');
-const topTrack_artistBox = document.querySelector('.track-artist');
-const topTrack_artist = document.createElement('span');
+console.log(music_video);
+const topTrack_video = document.querySelector('.topTrack-video');
 
-topTrack_img.src = weekArtist_topTrack.album.images[0].url;
-topTrack_img.alt = `${weekArtist_topTrack.album.name} 대표 곡 앨범 이미지`;
-topTrack_imgBox.appendChild(topTrack_img);
-topTrack_title.textContent = weekArtist_topTrack.name;
-topTrack_titleBox.appendChild(topTrack_title);
-topTrack_artist.textContent = weekArtist_topTrack.artists[0].name;
-topTrack_artistBox.appendChild(topTrack_artist);
+const topTrack_videoId = music_video[0].id.videoId;
+
+/*youtube iframe 비디오 태그 기본 형식에 src 경로의 id부분 대표 인기곡 ID로 설정 */
+if (music_video && topTrack_video) {
+  topTrack_video.innerHTML = `
+  <iframe width="560" height="315"
+  src="https://www.youtube.com/embed/${topTrack_videoId}?autoplay=1&mute=1&loop=1&controls=0&playlist=${topTrack_videoId}"
+  title="YouTube video player" frameborder="0" allow="accelerometer;
+  autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;
+  web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+  </iframe>
+  `;
+}
+
+if (weekArtist_topTrack) {
+  /* 주간 아티스트 대표 인기곡 앨범 이미지 element 추가 */
+  const topTrack_imgBox = document.querySelector('.track-img');
+  const topTrack_img = document.createElement('img');
+
+  if (topTrack_img) {
+    /* 이미지 element에 대표 인기곡 데이터 중 앨범 이미지 경로값 src 속성에 추가 */
+    topTrack_img.src = weekArtist_topTrack.album.images[0].url;
+    topTrack_img.alt = `${weekArtist_topTrack.album.name} 대표 곡 앨범 이미지`;
+    topTrack_imgBox.appendChild(topTrack_img);
+  }
+
+  /* 주간 아티스트 대표 인기곡 제목 element 추가 */
+  const topTrack_titleBox = document.querySelector('.track-title');
+  const topTrack_title = document.createElement('h2');
+
+  if (topTrack_title) {
+    topTrack_title.innerText = weekArtist_topTrack.name;
+    topTrack_titleBox.appendChild(topTrack_title);
+  }
+
+  /* 주간 아티스트 대표 인기곡 앨범 아티스트 이름 element 추가 */
+  const topTrack_artistBox = document.querySelector('.track-artist');
+  const topTrack_artist = document.createElement('span');
+
+  if (topTrack_artist) {
+    topTrack_artist.innerText = weekArtist_topTrack.artists[0].name;
+    topTrack_artistBox.appendChild(topTrack_artist);
+  }
+}
 
 const ksvArtist_container = document.querySelector('.main-ksvArtist');
 const carousel_container = document.querySelector('.carousel-Artist');
