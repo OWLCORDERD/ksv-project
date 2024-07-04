@@ -1,11 +1,16 @@
 import './styles/index.css';
-import { getArtists, getWeekArtist } from './api/artist';
+import { getArtists, getWeekArtist } from '@/api/artist';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
-import bannerVideo from './images/videos/banner-video.mp4';
-import search from './api/youtubeAPI';
-import img from './images/introduce-image.png';
-import { slideItem } from './slideItem';
+import bannerVideo from '@/images/videos/bannerVideo.mp4';
+import search from '@/api/youtubeAPI';
+import { slideItem } from '@/slideItem';
+import { findChartTrack } from './api/chart';
+import spotify from './images/svg/spotify.svg';
+import jsonFile from './images/svg/jsonFile.svg';
+import database from './images/svg/database.svg';
+import Swiper from 'swiper';
+import { Navigation } from 'swiper/modules';
 
 /* -- gsap 라이브러리의 확장 기능 ScrollTrigger plugin 추가 (scroll event) -- */
 gsap.registerPlugin(ScrollTrigger);
@@ -21,83 +26,104 @@ if (video_screen) {
 
 /* -- screen container 스크롤 이벤트 -- */
 
-/* 스크롤 이벤트 시작점 (최상위 부모) */
-const screenElement = document.querySelector('.screen-container');
-/* 상단의 비디오를 포함하고 있는 뷰포트 높이 100vh background 영역 */
-const screenVideo = document.querySelector('.video-screen');
-/* 비디오 background 화면의 불투명 opacity background 영역 */
+/* screen container의 Banner 스크롤 영역 */
+const mainBanner = document.querySelector('.screen-container > .Banner');
+/* Banner 300vh 높이 영역 스크롤 시, 상단에 고정 시키는 비디오 영역 */
+const video_container = document.querySelector('.video-screen');
+/* 고정된 비디오 영역을 fade-out 느낌으로 감추기 위한 screen opacity background 영역 */
 const video_opacity = document.querySelector('.screen-opacity');
-/* screen container 페이지 소개 영역 */
-const introduce_container = document.querySelector('.main-introduce');
+/* 비디오 영역이 검정색으로 변하는 동시에 동적으로 변하는 dynamic text wrap */
+const dynamic_container = document.querySelector('.dynamic-container');
+/* dynamic text wrap logo 영역 */
+const dynamicLogo = document.querySelector('.dynamic-logo');
+/* dynamic text wrap sub-txt 영역 */
+const dynamicTxt = document.querySelector('.dynamic-txt');
+/* scroll down 버튼 */
+const scrollDown = document.querySelector('.scroll-down');
 
-/* 최상위 부모인 screen container 상단에서 스크롤을 시작할 시,
-비디오 background 영역을 sticky로 상단에 고정 */
-gsap.to(screenVideo, {
+/* Banner 영역 상단에서 스크롤을 시작할 시,
+비디오 스크린 영역을 sticky로 상단에 고정 */
+gsap.to(video_container, {
   position: 'sticky',
 
   scrollTrigger: {
-    trigger: screenElement,
+    trigger: mainBanner,
     start: 'top top',
-    end: '5% top',
+    end: 'center bottom',
     scrub: 1,
   },
 });
 
-/* 비디오 background가 상단에 고정되면 자식 노드인 video element
-40% -> 100%로 스크롤에 따른 너비 증가 */
-gsap.to(video_screen, {
-  width: '100%',
-
-  scrollTrigger: {
-    trigger: screenElement,
-    start: 'top top',
-    end: '5% top',
-    scrub: 1,
-  },
-});
-
-/* 비디오 background 영역이 상단에 고정되면서 하단까지 스크롤 될 때,
-다른 컨텐츠들이 비디오에 의해 가독성이 떨어지는것을 방지하기 위해 비디오의 크기를
-증가 시키는 동시에, opacity background도 같이 증가 시키며 background color를 부여 */
+/* 비디오 스크린 영역이 상단에 고정되면서 하단까지 스크롤 될 때,
+dynamic logo와 txt 영역의 인터렉션 변화를 위해  screen opacity 영역 background 검정색으로 투명도 증가 */
 gsap.to(video_opacity, {
-  width: '100%',
   backgroundColor: 'rgba(0,0,0,1)',
 
   scrollTrigger: {
-    trigger: screenElement,
+    trigger: mainBanner,
     start: 'top top',
-    end: '5% top',
+    end: '10% top',
     scrub: 1,
   },
 });
 
-/* 위의 비디오 background 이벤트와 opacity background 이벤트가 종료 되는 시점에
-페이지 소개 영역 하단에서 상단으로 나타나는 이벤트 추가 */
+/* dynamic 로고와 부제목을 감싸는 flex 컨테이너 부모 요소의 높이값을 증가 */
+gsap.to(dynamic_container, {
+  height: '16rem',
+
+  scrollTrigger: {
+    trigger: mainBanner,
+    start: '10% top',
+    end: '40% top',
+    scrub: 1,
+  },
+});
+
+/* 부제목을 제목뒤에 숨기기위해 absolute 속성으로 지정한 로고 영역에
+relative 속성을 부여하여 flex column 정렬 */
+gsap.to(dynamicLogo, {
+  position: 'relative',
+
+  scrollTrigger: {
+    trigger: mainBanner,
+    start: '10% top',
+    scrub: 1,
+  },
+});
+
+/* 제목뒤에 숨어있던 부제목 영역을 opacity 0 -> 1로 변경하여
+fade-in 되도록 하고, relative 속성을 부여하여 flex column 정렬 */
 gsap.fromTo(
-  introduce_container,
+  dynamicTxt,
   {
-    y: 250,
+    opacity: 0,
+    y: 100,
   },
   {
+    opacity: 1,
     y: 0,
+    position: 'relative',
+
     scrollTrigger: {
-      trigger: screenElement,
-      start: '5% top',
-      end: '20% top',
+      trigger: mainBanner,
+      start: '20% top',
       scrub: 1,
     },
   },
 );
 
-/* 페이지 소개 영역 (main-introduce) 이미지 노드 추가 */
-const intro_imageBox = document.querySelector('.introduce-imageBox');
-const intro_image = document.createElement('img');
+/* dynamic txt의 인터렉션 변화가 일어나는 동시에 스크롤 버튼을 아래로 내리면서
+fade-out 되는 효과 부여 */
+gsap.to(scrollDown, {
+  y: 250,
+  opacity: 0,
 
-if (intro_image) {
-  intro_image.src = img;
-  intro_image.alt = 'introduce 영역 배너 이미지';
-  intro_imageBox.append(intro_image);
-}
+  scrollTrigger: {
+    trigger: mainBanner,
+    start: '25% top',
+    scrub: 1,
+  },
+});
 
 /* artist container 영역의 슬라이드 영역 appendChild */
 const artists = await getArtists();
@@ -115,6 +141,38 @@ for (let i = 0; i < artists.length; i++) {
   </div>
   `;
 }
+
+const ksvArtist_container = document.querySelector('.main-ksvArtist');
+const carousel_container = document.querySelector('.carousel-Artist');
+const carousel_animateBox = document.querySelector('.carousel-animateBox');
+
+gsap.to(carousel_container, {
+  position: 'sticky',
+
+  scrollTrigger: {
+    trigger: ksvArtist_container,
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1,
+  },
+});
+
+gsap.fromTo(
+  carousel_animateBox,
+  {
+    rotateY: '0deg',
+  },
+  {
+    rotateY: '-360deg',
+
+    scrollTrigger: {
+      trigger: ksvArtist_container,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1,
+    },
+  },
+);
 
 /* 주간 아티스트를 선정하여 아티스트의 spotify web api ID값으로
 아티스트 데이터 & top track 데이터 총 2개의 더미 데이터를 요청하고 결과를 반환합니다. */
@@ -150,140 +208,6 @@ if (weekArtist && artistInfo) {
 
 /* 1번째 인덱스의 top track 데이터 중 첫번째 곡을 대표 인기곡으로 선정 */
 const weekArtist_topTrack = weekArtist[1].tracks[0];
-
-/* search 비동기 함수 -> 대표 인기곡의 제목을 파라미터 값으로 전송하여
-youtube API에 해당 곡을 검색하여 비디오 추출 */
-const music_video = await search(weekArtist_topTrack.name);
-
-console.log(music_video);
-const topTrack_video = document.querySelector('.topTrack-video');
-
-const topTrack_videoId = music_video[0].id.videoId;
-
-/*youtube iframe 비디오 태그 기본 형식에 src 경로의 id부분 대표 인기곡 ID로 설정 */
-if (music_video && topTrack_video) {
-  topTrack_video.innerHTML = `
-  <iframe width="560" height="315"
-  src="https://www.youtube.com/embed/${topTrack_videoId}?autoplay=1&mute=1&loop=1&controls=0&playlist=${topTrack_videoId}"
-  title="YouTube video player" frameborder="0" allow="accelerometer;
-  autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;
-  web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-  </iframe>
-  `;
-}
-
-if (weekArtist_topTrack) {
-  /* 주간 아티스트 대표 인기곡 앨범 이미지 element 추가 */
-  const topTrack_imgBox = document.querySelector('.track-img');
-  const topTrack_img = document.createElement('img');
-
-  if (topTrack_img) {
-    /* 이미지 element에 대표 인기곡 데이터 중 앨범 이미지 경로값 src 속성에 추가 */
-    topTrack_img.src = weekArtist_topTrack.album.images[0].url;
-    topTrack_img.alt = `${weekArtist_topTrack.album.name} 대표 곡 앨범 이미지`;
-    topTrack_imgBox.appendChild(topTrack_img);
-  }
-
-  /* 주간 아티스트 대표 인기곡 제목 element 추가 */
-  const topTrack_titleBox = document.querySelector('.track-title');
-  const topTrack_title = document.createElement('h2');
-
-  if (topTrack_title) {
-    topTrack_title.innerText = weekArtist_topTrack.name;
-    topTrack_titleBox.appendChild(topTrack_title);
-  }
-
-  /* 주간 아티스트 대표 인기곡 앨범 아티스트 이름 element 추가 */
-  const topTrack_artistBox = document.querySelector('.track-artist');
-  const topTrack_artist = document.createElement('span');
-
-  if (topTrack_artist) {
-    topTrack_artist.innerText = weekArtist_topTrack.artists[0].name;
-    topTrack_artistBox.appendChild(topTrack_artist);
-  }
-}
-
-const ksvArtist_container = document.querySelector('.main-ksvArtist');
-const carousel_container = document.querySelector('.carousel-Artist');
-const carousel_animateBox = document.querySelector('.carousel-animateBox');
-
-gsap.to(carousel_container, {
-  position: 'sticky',
-
-  scrollTrigger: {
-    trigger: ksvArtist_container,
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: 1,
-  },
-});
-
-gsap.fromTo(
-  carousel_animateBox,
-  {
-    rotateY: '0deg',
-  },
-  {
-    rotateY: '-360deg',
-
-    scrollTrigger: {
-      trigger: ksvArtist_container,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 1,
-    },
-  },
-);
-
-/* --header logo 영역 scroll 이벤트-- */
-
-/*body 태그 내부에서 스크롤이 발생 시, logo 영역 이벤트 발생 */
-const body = document.querySelector('body');
-const logo_subTitle = document.querySelector('.sub-title');
-const logo_mainTitle = document.querySelector('.main-title > h1');
-const logo_container = document.querySelector('.logo');
-
-/* @ logo 부제목 (sub-title) 영역 scroll Event @
-스크롤 시, 부제목 영역의 높이값이 0으로 줄어들면서 사라지는 효과와 동시에
-메인 title 영역만 logo 영역에 남도록 설정 */
-gsap.to(logo_subTitle, {
-  height: 0,
-
-  scrollTrigger: {
-    trigger: body,
-    start: 'top top',
-    end: '5% top',
-    scrub: 1,
-  },
-});
-
-/* @ logo (.logo) 영역 scroll Event @
-높이 값을 메인 title 높이 값만큼 축소하고, 아래에서 위로 올라오도록 설정한
-margin-top 값을 0으로 초기화하면서 메인 title 영역이 header 안에 위치하도록 설정 */
-gsap.to(logo_container, {
-  height: '5rem',
-  marginTop: 0,
-
-  scrollTrigger: {
-    trigger: body,
-    start: 'top top',
-    end: '5% top',
-    scrub: 1,
-  },
-});
-
-/* @ logo 메인 제목 (main-title) 영역 scroll Event @
-=> logo 영역의 크기를 줄임과 동시에 텍스트 크기 축소 */
-gsap.to(logo_mainTitle, {
-  fontSize: '1.5rem',
-
-  scrollTrigger: {
-    trigger: body,
-    start: 'top top',
-    end: '5% top',
-    scrub: 1,
-  },
-});
 
 /* --main contents 영역 header 스크롤 이벤트-- */
 
@@ -479,3 +403,63 @@ class customCarousel {
 /* 커스텀 슬라이드 객체 생성 시 슬라이드 이벤트를 부여 할 
 slide-wrap 영역을 인자값으로 전달 */
 new customCarousel(track_slide);
+
+const pickMethods_container = document.querySelector('.pick-methods');
+
+const methodData = [
+  {
+    id: 1,
+    image: spotify,
+    title: 'Download Spotify Chart File',
+    info: 'spotify chart 사이트에서 주간마다 제공하는 한국 차트곡 데이터 CSV 파일을 추출합니다.',
+  },
+  {
+    id: 2,
+    image: jsonFile,
+    title: 'Format CSV file to JSON file',
+    info: 'spotify chart 사이트에서 주간마다 제공하는 한국 차트곡 데이터 CSV 파일을 추출합니다.',
+  },
+  {
+    id: 3,
+    image: database,
+    title: 'Update Chart Database',
+    info: '차트 데이터를 관리하는 데이터베이스에 파일을 반영하여 내용을 업데이트합니다.',
+  },
+];
+
+/* Weekly Chart(주간 차트) pick methods(선택한 방법) ul container 자식 노드 */
+methodData.forEach((data) => {
+  const method_item = document.createElement('li');
+  const method_imageBox = document.createElement('div');
+  const method_infoBox = document.createElement('div');
+  const info_title = document.createElement('h2');
+  const info_txtBox = document.createElement('div');
+  const info_txt = document.createElement('p');
+
+  method_item.classList.toggle('method-item');
+  method_item.appendChild(method_imageBox);
+  method_imageBox.classList.toggle('method-imgBox');
+  method_imageBox.innerHTML += data.image;
+  method_item.appendChild(method_infoBox);
+  method_infoBox.classList.toggle('method-infoBox');
+  method_infoBox.appendChild(info_title);
+  info_txtBox.classList.toggle('info-txt');
+  method_infoBox.appendChild(info_txtBox);
+  info_txtBox.appendChild(info_txt);
+  info_title.textContent = data.title;
+  info_txt.textContent = data.info;
+
+  pickMethods_container.appendChild(method_item);
+});
+
+/*
+const findTrackDB = await findChartTrack();
+
+console.log(findTrackDB);
+*/
+
+/*
+const swiper = new Swiper(".example", {
+  modules : [Navigation],
+});
+*/

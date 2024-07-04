@@ -1,3 +1,4 @@
+import { findChartTrack } from './chart';
 import { fetchWebApi } from './spotifyAPI';
 
 const artistIds = [
@@ -12,7 +13,9 @@ const artistIds = [
   '6zn0ihyAApAYV51zpXxdEp',
 ];
 
-const weekArtistId = '3HqSLMAZ3g3d5poNaI7GOU';
+const weekTrackChart = await findChartTrack();
+
+const weekArtist = weekTrackChart[0].artists[0].id;
 
 export const getArtists = async () => {
   const ksvArtistList = [];
@@ -29,13 +32,13 @@ export const getArtists = async () => {
 export const getWeekArtist = async () => {
   const artistData = [];
 
-  const artist = await fetchWebApi(`v1/artists/${weekArtistId}`, 'GET');
+  const artist = await fetchWebApi(`v1/artists/${weekArtist}`, 'GET');
 
   artistData.push(artist);
 
   if (artist) {
     const track = await fetchWebApi(
-      `v1/artists/${weekArtistId}/top-tracks`,
+      `v1/artists/${weekArtist}/top-tracks`,
       'GET',
     );
 
@@ -43,13 +46,4 @@ export const getWeekArtist = async () => {
   }
 
   return artistData;
-};
-
-export const example = async () => {
-  const res = await fetchWebApi(
-    'v1/search?query=country%3Dkorea%26date%3Dlatest%26recurrence%3Ddaily&type=track&locale=ko-KR%2Cko%3Bq%3D0.9%2Cen-US%3Bq%3D0.8%2Cen%3Bq%3D0.7&offset=0&limit=20',
-    'GET',
-  );
-
-  return res;
 };

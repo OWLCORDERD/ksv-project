@@ -4,10 +4,9 @@
         <meta charset="UTF-8">
         <title>KSV</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name = "description" content="Korean Solo Vocal, Special Voice Recommeded Site, 한국 음원 차트에서 가장 인기가 많은 솔로 가수를 추천하며
-        특별하고 유니크한 보이스를 가진 아티스트들을 추천하는 사이트입니다."/>
-        <meta property="og:title" content="Korean Solo Vocal Site"/>
-        <meta property="og:description" content="Korean Solo Vocal, Special Voice Recommeded Site"/>
+        <meta name = "description" content="매주마다 spotify 한국 음원 차트 정보를 제공하여 K-POP 트렌드를 소개하고 특별하고 유니크한 보이스를 가진 아티스트들을 추천하는 사이트입니다."/>
+        <meta property="og:title" content="KSV"/>
+        <meta property="og:description" content="매주마다 spotify 한국 음원 차트 정보를 제공하여 K-POP 트렌드를 소개하고 특별하고 유니크한 보이스를 가진 아티스트들을 추천하는 사이트입니다."/>
         <meta name="google-site-verification" content="h2w6dinivACPLlPnqhMp348LLkjMp2eZJcOXrVuMC3I" />
         <script src = "./build/main.js"></script>
         <link href="./build/common.css" rel = "stylesheet"/>
@@ -16,124 +15,89 @@
     <body>
         <div id = "wrap">
             <header>
-                    <div class="main-menu">
-                        <div class="guide-Button">
-                            <svg
-                                width="30"
-                                height="30"
-                                viewBox="0 0 35 35"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <rect y="5" width="30" height="5" rx="2" fill="#fff"/>
-                                <rect y="15" width="30" height="5" rx="2" fill="#fff"/>
-                                <rect y="25" width="30" height="5" rx="2" fill="#fff"/>
-                            </svg>
-                        </div>
-                    </div>
-
                     <div class="logo">
-                        <div class="sub-title">
-                            <p>Korean Solo Vocal Recommendation Platform</p>
-                        </div>
-                        <div class="main-title">
-                            <h1>ksv</h1>
-                        </div>
+                        <h1>ksv</h1>
                     </div>
-
-                    <ul class="sub-menu">
-                        <li>
-                            <a href = "#" aria-label="login">
-                                <span>로그인</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href = "#" aria-label="join">
-                                <span>회원가입</span>
-                            </a>
-                        </li>
-                    </ul>
             </header>
 
             <main class="main-container">
-                <div class="main-banner">
-                    <div class="screen-container">
+                <div class="screen-container">
+                    <div class="Banner">
                         <div class="video-screen">
                             <div class="screen-opacity"></div>
                             <video autoplay muted loop class="banner_video"></video>
-                        </div>
+                            <div class="dynamic-container">
+                                <div class="dynamic-logo">
+                                    <h1>ksv</h1>
+                                </div>
 
-                        <div class="main-introduce">
-                            <div class="introduce-contents">
-                                <div class="contents-wrap">
-                                    <div class="title-wrap">
-                                        <div class="static-txt">
-                                            <p>Pick Only</p>
-                                        </div>
-
-                                        <div class="dynamic-txt">
-                                            <div class="content">
-                                                <h2>Solo Vocal</h2>
-                                                <h2>Special Voice</h2>
-                                                <h2>Solo Vocal</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="introduce-txt">
-                                        <p>
-                                            저희 KSV는 한국의 유니크한 목소리를 가진 아티스트들의
-                                            데이터를 직접 선별하여 매주마다 업데이트합니다.
-                                            <br/>
-                                            <br/>
-                                            뿐만 유튜브 API와도 연동하여 뮤직비디오를 감상하고,
-                                            Spotify API에서 제공하는 미리듣기를 통해 곡의
-                                            하이라이트를 미리 감상하실 수 있습니다.
-                                        </p>
+                                <div class="dynamic-txt">
+                                    <div class="content">
+                                        <h2>Introduce K-pop Special Voice & Vocal Site</h2>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="introduce-video">
-                                <div class="introduce-imageBox">
-                                </div>
+                            <div class="scroll-down">
+                                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16.6667 22.9167L25 31.25M25 31.25L33.3333 22.9167M25 31.25V6.25M14.5833 9.4074C9.5584 12.771 6.25 18.4991 6.25 25C6.25 35.3554 14.6447 43.75 25 43.75C35.3554 43.75 43.75 35.3554 43.75 25C43.75 18.4991 40.4417 12.771 35.4167 9.4074" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Scroll down</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="Weekly-chart">
+                        <div class="chart-titleWrap">
+                            <div class="title">
+                                <h1>Kpop Chart Service</h1>
+                            </div>
+
+                            <div class="content">
+                                <p>
+                                KSV에서는 사용자에게 최신 K-POP 트렌드의 동향을 알려드리기 위해
+                                매주마다 업데이트되는 한국 인기 차트 곡 데이터를 SPOTIFY CHART에서
+                                수집하여 제공합니다.
+                                </p>
                             </div>
                         </div>
 
-                        <div class="main-ksvArtist">
-                                <div class="title-wrap">
-                                    <div class="ksvArtist-title">
-                                        <h2>Ksv Artist</h2>
-                                    </div>
+                        <ul class="pick-methods"></ul>
+                    </div>
 
-                                    <div class="ksvArtist-info">
-                                        <p>ksv에서 추천하는 다양한 아티스트들을 확인해보세요.</p>
-                                    </div>
-
-                                    <a href = "#" class="view-ksvArtist" aria-label="viewMore-button">
-                                        <span>view more</span>
-                                        <svg>
-                                            <circle cx="15" cy="15" r="15"/>
-                                            <path d="M17.3536 15.3536C17.5488 15.1583 17.5488 14.8417 17.3536 14.6464L14.1716 11.4645C13.9763 11.2692 13.6597 11.2692 13.4645 11.4645C13.2692 11.6597 13.2692 11.9763 13.4645 12.1716L16.2929 15L13.4645 17.8284C13.2692 18.0237 13.2692 18.3403 13.4645 18.5355C13.6597 18.7308 13.9763 18.7308 14.1716 18.5355L17.3536 15.3536ZM16 15.5H17V14.5H16V15.5Z"/>
-                                        </svg>
-                                    </a>
-                                </div>
-
-                                <div class="carousel-Artist">
-                                    <div class="carousel-animateBox"></div>
-                                </div>
+                    <div class="ksv-Artist">
+                        <div class="title-wrap">
+                            <div class="ksvArtist-title">
+                                <h2>Ksv Artist</h2>
+                            </div>
+    
+                            <div class="ksvArtist-info">
+                                <p>ksv에서 추천하는 다양한 아티스트들을 확인해보세요.</p>
+                            </div>
+    
+                            <a href = "#" class="view-ksvArtist" aria-label="viewMore-button">
+                                <span>view more</span>
+                                <svg>
+                                    <circle cx="15" cy="15" r="15"/>
+                                    <path d="M17.3536 15.3536C17.5488 15.1583 17.5488 14.8417 17.3536 14.6464L14.1716 11.4645C13.9763 11.2692 13.6597 11.2692 13.4645 11.4645C13.2692 11.6597 13.2692 11.9763 13.4645 12.1716L16.2929 15L13.4645 17.8284C13.2692 18.0237 13.2692 18.3403 13.4645 18.5355C13.6597 18.7308 13.9763 18.7308 14.1716 18.5355L17.3536 15.3536ZM16 15.5H17V14.5H16V15.5Z"/>
+                                </svg>
+                            </a>
                         </div>
+    
+                        <div class="carousel-Artist">
+                            <div class="carousel-animateBox"></div>
+                        </div>
+                    </div>
 
-                        <div class="marquee-container">
-                            <div class="marquee-wrap">
-                                <div class="content">
-                                    <span>Korean Solo Vocal</span>
-                                    <span>Korean Special Voice</span>
-                                    <span>Recommend Korean Singer</span>
-                                    <span>Korean Solo Vocal</span>
-                                    <span>Korean Special Voice</span>
-                                    <span>Recommend Korean Singer</span>
-                                </div>
+                    <div class="marquee-container">
+                        <div class="marquee-wrap">
+                            <div class="content">
+                                <span>Korean Solo Vocal</span>
+                                <span>Korean Special Voice</span>
+                                <span>Recommend Korean Singer</span>
+                                <span>Korean Solo Vocal</span>
+                                <span>Korean Special Voice</span>
+                                <span>Recommend Korean Singer</span>
                             </div>
                         </div>
                     </div>

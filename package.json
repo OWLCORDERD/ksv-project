@@ -16,6 +16,7 @@
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^2.8.1",
     "style-loader": "^3.3.4",
+    "svg-inline-loader": "^0.8.2",
     "url-loader": "^4.1.1",
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
@@ -24,8 +25,10 @@
   "dependencies": {
     "buffer": "^6.0.3",
     "express": "^4.18.3",
+    "firebase": "^10.12.2",
     "gsap": "^3.12.5",
     "html-webpack-plugin": "^5.6.0",
-    "slick-slider": "^1.8.2"
+    "slick-slider": "^1.8.2",
+    "swiper": "^11.1.4"
   }
 }
