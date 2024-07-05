@@ -9,8 +9,17 @@ import { findChartTrack } from './api/chart';
 import spotify from './images/svg/spotify.svg';
 import jsonFile from './images/svg/jsonFile.svg';
 import database from './images/svg/database.svg';
+import loadingSpinner from './images/svg/loading.svg';
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
+
+const body = document.querySelector('body');
+const loading = document.querySelector('.loading');
+
+setTimeout(() => {
+  body.removeChild(loading);
+  body.style.overflow = 'auto';
+}, 2000);
 
 /* -- gsap 라이브러리의 확장 기능 ScrollTrigger plugin 추가 (scroll event) -- */
 gsap.registerPlugin(ScrollTrigger);
@@ -208,6 +217,57 @@ if (weekArtist && artistInfo) {
 
 /* 1번째 인덱스의 top track 데이터 중 첫번째 곡을 대표 인기곡으로 선정 */
 const weekArtist_topTrack = weekArtist[1].tracks[0];
+
+/* search 비동기 함수 -> 대표 인기곡의 제목을 파라미터 값으로 전송하여
+youtube API에 해당 곡을 검색하여 비디오 추출 */
+const music_video = await search(weekArtist_topTrack.name);
+
+const topTrack_video = document.querySelector('.topTrack-video');
+
+const topTrack_videoId = music_video[0].id.videoId;
+
+/*youtube iframe 비디오 태그 기본 형식에 src 경로의 id부분 대표 인기곡 ID로 설정 */
+if (music_video && topTrack_video) {
+  topTrack_video.innerHTML = `
+  <iframe width="560" height="315"
+  src="https://www.youtube.com/embed/${topTrack_videoId}?autoplay=1&mute=1&loop=1&controls=0&playlist=${topTrack_videoId}"
+  title="YouTube video player" frameborder="0" allow="accelerometer;
+  autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;
+  web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+  </iframe>
+  `;
+}
+
+if (weekArtist_topTrack) {
+  /* 주간 아티스트 대표 인기곡 앨범 이미지 element 추가 */
+  const topTrack_imgBox = document.querySelector('.track-img');
+  const topTrack_img = document.createElement('img');
+
+  if (topTrack_img) {
+    /* 이미지 element에 대표 인기곡 데이터 중 앨범 이미지 경로값 src 속성에 추가 */
+    topTrack_img.src = weekArtist_topTrack.album.images[0].url;
+    topTrack_img.alt = `${weekArtist_topTrack.album.name} 대표 곡 앨범 이미지`;
+    topTrack_imgBox.appendChild(topTrack_img);
+  }
+
+  /* 주간 아티스트 대표 인기곡 제목 element 추가 */
+  const topTrack_titleBox = document.querySelector('.track-title');
+  const topTrack_title = document.createElement('h2');
+
+  if (topTrack_title) {
+    topTrack_title.innerText = weekArtist_topTrack.name;
+    topTrack_titleBox.appendChild(topTrack_title);
+  }
+
+  /* 주간 아티스트 대표 인기곡 앨범 아티스트 이름 element 추가 */
+  const topTrack_artistBox = document.querySelector('.track-artist');
+  const topTrack_artist = document.createElement('span');
+
+  if (topTrack_artist) {
+    topTrack_artist.innerText = weekArtist_topTrack.artists[0].name;
+    topTrack_artistBox.appendChild(topTrack_artist);
+  }
+}
 
 /* --main contents 영역 header 스크롤 이벤트-- */
 

@@ -14,6 +14,35 @@ body {
     justify-content: center;
     font-family: var(--font-Unbounded);
     background-color: #000000;
+    overflow: hidden;
+}
+
+body > .loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    z-index: 1000;
+}
+
+.loading > svg {
+    width: 80px;
+    height: 80px;
+    animation: rotateSpinner 1s infinite ease-in-out;
+}
+
+@keyframes rotateSpinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* body 내부 컨텐츠 영역 */
