@@ -221,8 +221,8 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 
 .screen-container > .Weekly-chart{
     width: 100%;
-    height: 200vh;
-    padding: 0 6.25rem;
+    height: 100%;
+    padding: 6.25rem 0;
     font-family: var(--font-Unbounded);
 }
 
@@ -232,6 +232,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     justify-content: space-around;
     width: 100%;
     height: 30rem;
+    padding: 0 6.25rem;
 }
 
 .chart-titleWrap  > .title {
@@ -242,7 +243,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 .chart-titleWrap  > .title > h1 {
     width: 100%;
     line-height: 8rem;
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 400;
     color: #fff;
     text-transform: uppercase;
@@ -255,7 +256,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 
 .chart-titleWrap > .content > p {
     width: 30%;
-    font-size: 1rem;
+    font-size: 14px;
     font-family: var(--font-Noto);
     color: #fff;
     word-break: keep-all;
@@ -265,6 +266,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     display: block;
     width: 100%;
     height: 40rem;
+    padding: 0 6.25rem;
 }
 
 .pick-methods > .method-item {
@@ -298,7 +300,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 
 .method-infoBox > h2 {
     line-height: 10rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-transform: uppercase;
     color: #fff;
     text-align: center;
@@ -313,11 +315,183 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 
 .info-txt > p {
     width: 60%;
-    font-size: 1rem;
+    font-size: 14px;
     text-transform: uppercase;
     color: #fff;
     font-family: var(--font-Noto);
     text-align: center;
+}
+
+/* 주간 차트 소개 영역 */
+.Weekly-chart > .chart-slide {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 40rem;
+    margin-top: 15rem;
+}
+
+.chart-slide > .chart-control {
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 3rem 0 6.25rem;
+}
+
+.chart-control >  .chart-info {
+    width: 100%;
+    height: 50%;
+    font-family: var(--font-Unbounded);
+}
+
+.chart-info > .title {
+    width: 100%;
+    height: 80%;
+}
+
+.chart-info > .title > h2 {
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 5rem;
+}
+
+.chart-info > .chart-date {
+    width: 100%;
+    height: 20%;
+}
+
+.chart-date > span {
+    color: #fff;
+    font-weight: 400;
+    line-height: 5rem;
+}
+
+.chart-control > .slide-control {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 30%;
+}
+
+.slide-control > .view-more {
+    width: 100%;
+}
+
+.view-more > a {
+    font-family: var(--font-Noto);
+    text-decoration: underline;
+    color: #fff;
+    font-weight: bold;
+}
+
+.slide-control > .control-button {
+    display: block;
+    width: 215px;
+    height: 80px;
+}
+
+.control-button > button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    margin-right: 50px;
+    border: none;
+    cursor: pointer;
+}
+
+.control-button > button:hover {
+    background-color: #fff;
+    transition: all 0.5s ease-in-out;
+}
+
+.control-button > button:nth-child(2){
+    margin-right: 0;
+}
+
+.control-button > button > svg {
+    width: 30px;
+    height: 30px;
+    fill: #fff;
+}
+
+.control-button > button:hover > svg {
+    fill: #000;
+}
+
+.chart-slide > .chart-slider {
+    position: relative;
+    width: 60%;
+    height: 28rem;
+    padding-right: 5rem;
+    overflow: hidden;
+}
+
+.slider-wrap > .swiper-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-wrapper > .swiper-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide:nth-child(10) {
+    margin-right: 0;
+}
+
+.swiper-slide > .track-image {
+    position: relative;
+    width: 100%;
+    height: 18rem;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.track-image > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.swiper-slide > .track-infoBox {
+    width: 100%;
+    height: 10rem;
+    font-family: var(--font-Noto);
+}
+
+.track-infoBox > h3 {
+    height: 8rem;
+    padding-top: 2rem;
+    font-size: 1rem;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    word-break: keep-all;
+}
+
+.track-infoBox > span {
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #fff;
 }
 
 /*ksv 아티스트 페이지로 이동하는 영역 */

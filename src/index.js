@@ -9,17 +9,17 @@ import { findChartTrack } from './api/chart';
 import spotify from './images/svg/spotify.svg';
 import jsonFile from './images/svg/jsonFile.svg';
 import database from './images/svg/database.svg';
-import loadingSpinner from './images/svg/loading.svg';
 import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
+import '@/styles/swiper/swiper.css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const body = document.querySelector('body');
 const loading = document.querySelector('.loading');
 
-setTimeout(() => {
-  body.removeChild(loading);
-  body.style.overflow = 'auto';
-}, 2000);
+body.removeChild(loading);
+body.style.overflow = 'auto';
 
 /* -- gsap 라이브러리의 확장 기능 ScrollTrigger plugin 추가 (scroll event) -- */
 gsap.registerPlugin(ScrollTrigger);
@@ -477,7 +477,7 @@ const methodData = [
     id: 2,
     image: jsonFile,
     title: 'Format CSV file to JSON file',
-    info: 'spotify chart 사이트에서 주간마다 제공하는 한국 차트곡 데이터 CSV 파일을 추출합니다.',
+    info: '웹 브라우저에서 곡 데이터들을 볼 수 있도록 CSV 파일을 JSON 파일로 포맷합니다. .',
   },
   {
     id: 3,
@@ -512,14 +512,80 @@ methodData.forEach((data) => {
   pickMethods_container.appendChild(method_item);
 });
 
-/*
-const findTrackDB = await findChartTrack();
+const chartTrackDB = await findChartTrack();
 
-console.log(findTrackDB);
-*/
+const chart10Track = chartTrackDB.slice(0, 10);
 
-/*
-const swiper = new Swiper(".example", {
-  modules : [Navigation],
+const slide_prev = document.querySelector('.prev-button');
+const slide_next = document.querySelector('.next-button');
+
+new Swiper('.swiper-container', {
+  slidesPerView: 3,
+  modules: [Navigation],
+  navigation: {
+    prevEl: slide_prev,
+    nextEl: slide_next,
+  },
+  speed: 1000,
+  spaceBetween: 50,
 });
-*/
+
+const slideWrapper = document.querySelector('.swiper-wrapper');
+
+chart10Track.forEach((track) => {
+  const track_slide = document.createElement('div');
+  track_slide.classList.toggle('swiper-slide');
+  const slide_imageBox = document.createElement('div');
+  slide_imageBox.classList.toggle('track-image');
+  const slide_image = document.createElement('img');
+  slide_image.src = `${track.album.images[0].url}`;
+  slide_imageBox.appendChild(slide_image);
+  track_slide.appendChild(slide_imageBox);
+  const track_infoBox = document.createElement('div');
+  track_infoBox.classList.add('track-infoBox');
+  const track_title = document.createElement('h3');
+  const track_artist = document.createElement('span');
+  track_title.textContent = track.name;
+  track_infoBox.appendChild(track_title);
+  track_artist.textContent = track.artists[0].name;
+  track_infoBox.appendChild(track_artist);
+  track_slide.appendChild(track_infoBox);
+  slideWrapper.appendChild(track_slide);
+});
+
+const weeklyChart_container = document.querySelector('.Weekly-chart');
+const weeklyChart_title = document.querySelector('.chart-titleWrap');
+
+gsap.fromTo(
+  weeklyChart_title,
+  {
+    opacity: 0,
+    y: 50,
+  },
+  {
+    opacity: 1,
+    y: 0,
+    scrollTrigger: {
+      trigger: weeklyChart_container,
+      start: '-10% top',
+      end: 'top top',
+    },
+  },
+);
+
+gsap.fromTo(
+  pickMethods_container,
+  {
+    opacity: 0,
+    y: 50,
+  },
+  {
+    opacity: 1,
+    y: 0,
+    scrollTrigger: {
+      trigger: weeklyChart_container,
+      start: '5% top',
+      end: '10% top',
+    },
+  },
+);

@@ -1,10 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Gugi&family=Noto+Sans+KR:wght@100..900&display=swap");
 
+@font-face {
+    font-family: 'SEBANG_Bold';
+    src: url('@/font/sebang/SEBANG Gothic Bold.ttf');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SEBANG_Regular';
+    src: url('@/font/sebang/SEBANG Gothic.ttf');
+    font-weight: 300;
+    font-style: normal;
+}
 
 :root {
-    --font-Unbounded : "Unbounded", sans-serif;
-    --font-Noto : "Noto Sans KR", sans-serif;
+    --font-Unbounded : 'Unbounded', sans-serif;
+    --font-Noto : 'SEBANG_Regular', sans-serif;
     --header-height : 6.25rem;
     --black-color : #000;
     --white-color : #fff;
@@ -12,4 +25,8 @@
     --center-X : translateX(-50%);
     --center-Y : translateY(-50%);
     --center-XY : translate(-50%, -50%);
+}
+
+html::-webkit-scrollbar {
+    display: none;
 }
