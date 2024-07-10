@@ -1,4 +1,4 @@
-import { findChartTrack } from './chart';
+import { getChartTrack } from './chart';
 import { fetchWebApi } from './spotifyAPI';
 
 const artistIds = [
@@ -13,7 +13,7 @@ const artistIds = [
   '6zn0ihyAApAYV51zpXxdEp',
 ];
 
-const weekTrackChart = await findChartTrack();
+const weekTrackChart = await getChartTrack();
 
 const weekArtist = weekTrackChart[0].artists[0].id;
 

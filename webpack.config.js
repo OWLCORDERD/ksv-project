@@ -8,19 +8,30 @@ module.exports = () => {
   dotenv.config();
 
   return {
-    entry: './src/index.js',
+    entry: {
+      index: './src/index.js',
+      chart: './src/chart.js',
+    },
     output: {
-      filename: 'main.js',
+      filename: '[name]_bundle.js',
       path: path.resolve(__dirname, 'build'),
     },
 
     plugins: [
       new htmlWebpackPlugin({
+        filename: 'index.html',
         template: './index.html',
+        excludeChunks: ['chart'],
+      }),
+
+      new htmlWebpackPlugin({
+        filename: 'chart.html',
+        template: './chart.html',
+        chunks: ['chart'],
       }),
 
       new miniCSSExtractPlugin({
-        filename: 'common.css',
+        filename: '[name].common.css',
       }),
 
       new webpack.DefinePlugin({

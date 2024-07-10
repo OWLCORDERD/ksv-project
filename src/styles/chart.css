@@ -1,0 +1,225 @@
+@import "./global.css";
+
+*{
+    margin : 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-Noto);
+    background-color: #000000;
+    overflow: hidden;
+}
+
+/* body 내부 컨텐츠 영역 */
+body > #wrap {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* header 영역 */
+#wrap > header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6.25rem;
+    padding: 0 6.25rem;
+    z-index: 100;
+}
+
+/* header logo 제목 영역 */
+header > .logo{
+    width: 200px;
+    height: 100%;
+}
+
+.logo > h1{
+    width: 100%;
+    line-height: 6.25rem;
+    overflow: hidden;
+    font-weight: 900;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-family: var(--font-Unbounded);
+    color: #fff;
+}
+
+/* 차트 페이지 main 컨텐츠 영역 */
+#wrap > .main-container {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 6.25rem 6.25rem 0 6.25rem;
+}
+
+/* 차트 페이지 dashboard 영역 */
+.main-container > .dashboard-container {
+    width: 100%;
+    height: 100%;
+    margin-top: 3rem;
+}
+
+/* dashboard 제목 */
+.dashboard-container > .dashboard-title {
+    width: 100%;
+    height: 6.25rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-title > h1 {
+    line-height: 6.25rem;
+    color: #fff;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+/* 주간 차트 dashboard  */
+.dashboard-container > .weeklyChart-dashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30rem;
+}
+
+/* 주간 아티스트 1위 데이터 영역 */
+.weeklyChart-dashboard > .weeklyChart-data {
+    width: 30%;
+    height: 100%;
+}
+
+/* 1위 아티스트 이름 데이터 영역 */
+.weeklyChart-data > .weekly-artist {
+    position: relative;
+    width: 100%;
+    height: calc(15rem - 1rem);
+    padding: 2rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.weekly-artist > .artist-wrap {
+    width: 70%;
+    height: 100%;
+}
+
+/* 아티스트 이름 */
+.artist-wrap > .artist-name {
+    width: 100%;
+    height: 6rem;
+    overflow: hidden;
+}
+
+.artist-name > span {
+    position: relative;
+    top: 6rem;
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.8rem;
+    line-height: 6rem;
+    transition: all 0.5s ease-in-out;
+}
+
+/* 아티스트 데이터 제목 */
+.artist-wrap > .chart-title {
+    width: 100%;
+    height: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-title > h2 {
+    color: #fff;
+    font-weight: 300;
+    line-height: 2rem;
+    font-size: 14px;
+}
+
+.weekly-artist > .trophy-icon {
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+}
+
+/* 주간 1위 아티스트 곡 카운트 영역 */
+.weeklyChart-data > .count-track {
+    position: relative;
+    width: 100%;
+    height: calc(15rem - 1rem);
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.count-track > .count-wrap {
+    width: 70%;
+    height: 100%;
+}
+
+/* 곡 카운트 데이터 영역 */
+.count-wrap > .count {
+    width: 100%;
+    height: 6rem;
+    overflow: hidden;
+}
+
+.count > span {
+    position: relative;
+    top: 6rem;
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.8rem;
+    line-height: 6rem;
+    transition: all 0.5s ease-in-out;
+}
+
+/* 곡 카운트 데이터 제목 */
+.count-wrap > .chart-title {
+    width: 100%;
+    height: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-title > h2 {
+    color: #fff;
+    font-weight: 300;
+    line-height: 2rem;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.count-track > .track-icon {
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+}
+
+/* 주간 차트 아티스트 순위 그래프 */
+.weeklyChart-dashboard > .weeklyChart-graph {
+    width: 60%;
+    height: 100%;
+}
+
+/* 차트 그래프(canvas) 부모 영역 */
+.weeklyChart-graph > .chart-graph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}

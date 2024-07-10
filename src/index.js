@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/all';
 import bannerVideo from '@/images/videos/bannerVideo.mp4';
 import search from '@/api/youtubeAPI';
 import { slideItem } from '@/slideItem';
-import { findChartTrack } from './api/chart';
+import { getChartTrack } from './api/chart';
 import spotify from './images/svg/spotify.svg';
 import jsonFile from './images/svg/jsonFile.svg';
 import database from './images/svg/database.svg';
@@ -512,7 +512,7 @@ methodData.forEach((data) => {
   pickMethods_container.appendChild(method_item);
 });
 
-const chartTrackDB = await findChartTrack();
+const chartTrackDB = await getChartTrack();
 
 const chart10Track = chartTrackDB.slice(0, 10);
 

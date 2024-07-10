@@ -28,6 +28,7 @@ body > .loading {
     justify-content: center;
     background-color: #000;
     z-index: 1000;
+    overflow: hidden;
 }
 
 .loading > svg {
