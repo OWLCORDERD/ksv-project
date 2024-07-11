@@ -1,32 +1,25 @@
 import { getChartTrack } from './chart';
 import { fetchWebApi } from './spotifyAPI';
 
-const artistIds = [
-  '3HqSLMAZ3g3d5poNaI7GOU',
-  '3qNVuliS40BLgXGxhdBdqu',
-  '5dCvSnVduaFleCnyy98JMo',
-  '6UbmqUEgjLA6jAcXwbM1Z9',
-  '6dhfy4ByARPJdPtMyrUYJK',
-  '6qvVoPGEqNCyYSjYCgfV1v',
-  '7c1HgFDe8ogy5NOZ1ANCJQ',
-  '0kRAVpQhUUArA8UnYwEdeZ',
-  '6zn0ihyAApAYV51zpXxdEp',
-];
-
 const weekTrackChart = await getChartTrack();
 
 const weekArtist = weekTrackChart[0].artists[0].id;
 
-export const getArtists = async () => {
+export const getArtists = async ({ artistIds }) => {
   const ksvArtistList = [];
 
-  for (let i = 0; i < artistIds.length; i++) {
-    const res = await fetchWebApi(`v1/artists/${artistIds[i]}`, 'GET');
+  if (artistIds.length > 1) {
+    for (let i = 0; i < artistIds.length; i++) {
+      const res = await fetchWebApi(`v1/artists/${artistIds[i]}`, 'GET');
 
-    ksvArtistList.push(res);
+      ksvArtistList.push(res);
+    }
+    return ksvArtistList;
+  } else {
+    const res = await fetchWebApi(`v1/artists/${artistIds[0]}`, 'GET');
+
+    return res;
   }
-
-  return ksvArtistList;
 };
 
 export const getWeekArtist = async () => {

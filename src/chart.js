@@ -1,4 +1,5 @@
-import { getChartTrack } from './api/chart';
+import { getArtists } from './api/artist';
+import { getArtistAlbum, getChartTrack } from './api/chart';
 import './styles/chart.css';
 import { Chart } from 'chart.js/auto';
 
@@ -39,20 +40,20 @@ sortCounts.sort((a, b) => {
   return b.counts - a.counts;
 });
 
-/*출현 횟수가 많은 top5 아티스트들을 선별 */
-const top5artist = sortCounts.slice(0, 5);
+/*출현 횟수가 많은 주간 아티스트 top5 선별 */
+const top5_weeklyArtist = sortCounts.slice(0, 5);
 
-/* 차트 labels에 추가 될 아티스트 이름 */
+/* 차트 설정 labels에 추가 될 아티스트 이름 */
 const artistLabels = [];
 
 /* 차트 data에 추가 될 아티스트의 출현 횟수 */
 const trackCounts = [];
 
-top5artist.forEach((count) => {
+top5_weeklyArtist.forEach((count) => {
   artistLabels.push(count.artist);
 });
 
-top5artist.forEach((count) => {
+top5_weeklyArtist.forEach((count) => {
   trackCounts.push(count.counts);
 });
 
@@ -154,12 +155,35 @@ weeklyArtist_name.style.top = 0;
 artist_trackCount.style.top = 0;
 
 /* 주간 아티스트의 차트인 곡 데이터 배열 */
-const weeklyArtist_track = [];
+const weekly1stArtist_track = [];
 
 /* 주간 차트 곡 데이터 배열에서 각 object의 artists 배열에서 name 속성값을
-주간 아티스트 이름과 비교하여 아티스트의 차트인 곡 추출 */
+1위 아티스트 이름과 비교하여 아티스트의 차트인 곡들을 추출 */
 weekly_chartTrack.forEach((track) => {
   if (track.artists[0].name === artistLabels[0]) {
-    weeklyArtist_track.push(track);
+    weekly1stArtist_track.push(track);
   }
 });
+
+const artistIds = [`${weekly1stArtist_track[0].artists[0].id}`];
+
+/* 주간 아티스트 정보 데이터 요청 */
+const weekly1st_artist = await getArtists({ artistIds });
+
+/* 주간 아티스트 이미지 부모 영역  */
+const weeklyArtist_imageBox = document.querySelector('.weeklyArtist-imgBox');
+
+/* 주간 아티스트 데이터의 images url 속성으로 이미지 노드 생성  */
+const weeklyArtist_image = document.createElement('img');
+weeklyArtist_image.src = weekly1st_artist.images[0].url;
+
+/* 주간 아티스트 이미지 부모 영역에 자식 이미지 노드 추가  */
+weeklyArtist_imageBox.appendChild(weeklyArtist_image);
+
+const weeklyArtist_title = document.querySelector('.weeklyArtist-title > h1');
+
+weeklyArtist_title.innerHTML += `${weekly1st_artist.name} 아티스트 앨범`;
+
+const artist = artistLabels[0];
+
+const weeklyArtist_album = await getArtistAlbum({ artist });

@@ -56,3 +56,12 @@ export const getChartTrack = async () => {
 
   return res.tracks;
 };
+
+export const getArtistAlbum = async ({ artist }) => {
+  const res = fetchWebApi(
+    `v1/search?q=artist=${artist}&type=album&limit=8`,
+    'GET',
+  );
+
+  console.log(res);
+};

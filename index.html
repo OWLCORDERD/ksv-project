@@ -4,11 +4,12 @@
         <meta charset="UTF-8">
         <title>KSV</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name = "description" content="매주마다 spotify 한국 음원 차트 정보를 제공하여 K-POP 트렌드를 소개하고 특별하고 유니크한 보이스를 가진 아티스트들을 추천하는 사이트입니다."/>
+        <meta name = "description" content="KSV 플랫폼에서는 매주마다 spotify 차트 데이터를 제공하여 K-POP 트렌드를 소개하고 KSV에서 선별한 유니크한 보이스를 가진 K-POP 아티스트들을 추천합니다."/>
         <meta property="og:title" content="KSV"/>
-        <meta property="og:description" content="매주마다 spotify 한국 음원 차트 정보를 제공하여 K-POP 트렌드를 소개하고 특별하고 유니크한 보이스를 가진 아티스트들을 추천하는 사이트입니다."/>
+        <meta property="og:description" content="KSV 플랫폼에서는 매주마다 spotify 차트 데이터를 제공하여 K-POP 트렌드를 소개하고 KSV에서 선별한 유니크한 보이스를 가진 K-POP 아티스트들을 추천합니다."/>
         <meta name="google-site-verification" content="h2w6dinivACPLlPnqhMp348LLkjMp2eZJcOXrVuMC3I" />
-        <link href="./build/common.css" rel = "stylesheet"/>
+        <script src = "./build/index_bundle.js"></script>
+        <link href="./build/index.common.css" rel = "stylesheet"/>
     </head>
 
     <body>
@@ -23,8 +24,19 @@
         <div id="wrap">
             <header>
                     <div class="logo">
-                        <h1>ksv</h1>
+                        <a href = "/">
+                            <h1>ksv</h1>
+                        </a>
                     </div>
+
+                    <nav class="menu">
+                        <div class="menu-button">
+                            <a href = "/chart.html">chart</a>
+                        </div>
+                        <div class="menu-button">
+                            <a href = "/">ksv artist</a>
+                        </div>
+                    </nav>
             </header>
 
             <main class="main-container">

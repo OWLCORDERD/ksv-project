@@ -55,33 +55,6 @@ body > #wrap {
     height: 100%;
 }
 
-/*header 영역*/
-#wrap > header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 6.25rem;
-    padding: 0 6.25rem;
-    z-index: 100;
-}
-
-/* banner logo title wrap 영역 */
-header > .logo{
-    width: 200px;
-    height: 100%;
-}
-
-.logo > h1{
-    width: 100%;
-    line-height: 6.25rem;
-    overflow: hidden;
-    font-family: var(--font-Unbounded);
-    font-weight: 900;
-    font-size: 1.5rem;
-    color: #fff;
-}
-
 /* 메인 페이지 main 컨텐츠 영역 */
 #wrap > .main-container {
     display: block;

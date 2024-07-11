@@ -135,7 +135,19 @@ gsap.to(scrollDown, {
 });
 
 /* artist container 영역의 슬라이드 영역 appendChild */
-const artists = await getArtists();
+const artistIds = [
+  '3HqSLMAZ3g3d5poNaI7GOU',
+  '3qNVuliS40BLgXGxhdBdqu',
+  '5dCvSnVduaFleCnyy98JMo',
+  '6UbmqUEgjLA6jAcXwbM1Z9',
+  '6dhfy4ByARPJdPtMyrUYJK',
+  '6qvVoPGEqNCyYSjYCgfV1v',
+  '7c1HgFDe8ogy5NOZ1ANCJQ',
+  '0kRAVpQhUUArA8UnYwEdeZ',
+  '6zn0ihyAApAYV51zpXxdEp',
+];
+
+const artists = await getArtists({ artistIds });
 
 const carouselAnimate_container = document.querySelector(
   '.carousel-animateBox',
@@ -539,6 +551,7 @@ chart10Track.forEach((track) => {
   slide_imageBox.classList.toggle('track-image');
   const slide_image = document.createElement('img');
   slide_image.src = `${track.album.images[0].url}`;
+  slide_image.alt = `${track.name} 앨범 이미지`;
   slide_imageBox.appendChild(slide_image);
   track_slide.appendChild(slide_imageBox);
   const track_infoBox = document.createElement('div');
