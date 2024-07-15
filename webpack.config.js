@@ -22,18 +22,18 @@ module.exports = () => {
       new htmlWebpackPlugin({
         filename: 'index.html',
         template: './index.html',
-        chunks: ['index'],
+        excludeChunks: ['chart', 'album'],
       }),
 
       new htmlWebpackPlugin({
         filename: 'chart.html',
-        template: './page/chart.html',
+        template: './chart.html',
         chunks: ['chart'],
       }),
 
       new htmlWebpackPlugin({
         filename: 'album.html',
-        template: './page/album.html',
+        template: './album.html',
         chunks: ['album'],
       }),
 

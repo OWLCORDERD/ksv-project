@@ -1,0 +1,689 @@
+@import url(https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Gugi&family=Noto+Sans+KR:wght@100..900&display=swap);
+@font-face {
+    font-family: 'SEBANG_Bold';
+    src: url(30f4399d3b4155a0202c.ttf);
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SEBANG_Regular';
+    src: url(db6b063ed02c51ddb019.ttf);
+    font-weight: 300;
+    font-style: normal;
+}
+
+/* 전역 속성 변수 */
+:root {
+    --font-Unbounded : 'Unbounded', sans-serif;
+    --font-Noto : 'SEBANG_Regular', sans-serif;
+    --header-height : 6.25rem;
+    --black-color : #000;
+    --white-color : #fff;
+    --text-color : #5c5c5c;
+    --center-X : translateX(-50%);
+    --center-Y : translateY(-50%);
+    --center-XY : translate(-50%, -50%);
+}
+
+*{
+    margin : 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+
+html::-webkit-scrollbar {
+    width: 10px;
+}
+
+html::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: #fff;
+}
+
+/*header 영역*/
+#wrap > header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5rem;
+    padding: 0 6.25rem;
+    z-index: 100;
+    font-family: var(--font-Unbounded);
+    transition: all 1s ease-in-out;
+}
+
+/* banner logo title wrap 영역 */
+header > .logo{
+    display: inline-block;
+    width: 200px;
+    height: 100%;
+}
+
+.logo > a {
+    width: 100%;
+}
+
+a > h1{
+    width: 100%;
+    line-height: 5rem;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+header > nav {
+    display: inline-block;
+    vertical-align: top;
+    width: max-content;
+    height: 100%;
+}
+
+nav > .menu-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15rem;
+    height: 100%;
+}
+
+.menu-button > a {
+    font-size: 14px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#wrap > footer {
+    width: 100%;
+    height: 25rem;
+    font-family: var(--font-Unbounded);
+}
+
+footer > .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 6.25rem;
+}
+
+.footer-inner > .footer-logo {
+    width: 25rem;
+    height: 100%;
+}
+
+.footer-logo > .logo {
+    width: 100%;
+    height: 5rem;
+    margin-bottom: 3.125rem;
+}
+
+.logo > h1 {
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+.footer-logo > .copy-right {
+    width: 100%;
+    height: 3.125rem;
+}
+
+.copy-right > span {
+    font-size: 12px;
+    color: var(--white-color);
+}
+
+.footer-inner > .footer-menu {
+    position: relative;
+    display: flex;
+    width: 60%;
+    height: 100%;
+}
+
+.footer-menu > .main-menu {
+    flex: 6;
+    height: 100%;
+}
+
+.main-menu > .menu-title,
+.family-menu > .menu-title {
+    width: 100%;
+    height: 3.125rem;
+}
+
+.menu-title > h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: var(--white-color);
+}
+
+.main-menu > ul,
+.family-menu > ul{
+    display: block;
+    width: 100%;
+    height: 3.125rem;
+    margin-top: 2rem;
+}
+
+.main-menu > ul > li,
+.family-menu > ul > li {
+    display: inline-block;
+    width: max-content;
+    height: 3.125rem;
+    margin-left: 5rem;
+}
+
+.main-menu > ul > li:first-child,
+.family-menu > ul > li:first-child{
+    margin-left: 0;
+}
+
+.main-menu > ul > li > a,
+.family-menu > ul > li > a {
+    width: 100%;
+    line-height: 3.125rem;
+    font-size: 12px;
+    font-weight: 100;
+    color: #000;
+    text-transform: uppercase;
+    color: var(--white-color);
+}
+
+.footer-menu > .family-menu {
+    flex: 4;
+}
+
+.footer-menu > .developer-menu {
+    position: absolute;
+    width: 100%;
+    height: 3.125rem;
+    top: 15rem;
+    right: 0;
+    display: flex;
+    align-items: center;
+}
+
+.developer-menu > .menu-title {
+    width: 30%;
+    height: 3.125rem;
+}
+
+.developer-menu > .menu-title > h2 {
+    font-size: 1rem;
+    line-height: 3.125rem;
+}
+
+.developer-menu > ul {
+    width: 60%;
+    height: 100%;
+}
+
+.developer-menu > ul > li {
+    display: inline-block;
+    width: max-content;
+    margin-right: 3rem;
+}
+
+
+body {
+    font-family: var(--font-Noto);
+    background-color: #000000;
+}
+
+/* body 내부 컨텐츠 영역 */
+body > #wrap {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 차트 페이지 main 컨텐츠 영역 */
+#wrap > .main-container {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 6.25rem;
+}
+
+/* 차트 페이지 dashboard 영역 */
+.main-container > .dashboard-container {
+    width: 100%;
+    height: 100%;
+}
+
+/* dashboard 제목 */
+.dashboard-container > .dashboard-title {
+    width: 100%;
+    height: 6.25rem;
+    margin-bottom: 2rem;
+}
+
+.dashboard-title > h1 {
+    line-height: 6.25rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+}
+
+/* 주간 차트 dashboard  */
+.dashboard-container > .weeklyChart-dashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 28rem;
+}
+
+.weeklyChart-dashboard > .weeklyArtist-imgBox {
+    width: 28rem;
+    height: 100%;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.weeklyArtist-imgBox > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.weeklyChart-dashboard > .data-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+}
+
+/* 주간 아티스트 1위 데이터 영역 */
+.data-wrap > .weeklyChart-data {
+    width: 35%;
+    height: 100%;
+}
+
+/* 1위 아티스트 이름 데이터 영역 */
+.weeklyChart-data > .weekly-artist {
+    position: relative;
+    width: 100%;
+    height: calc(28rem / 2 - 1rem);
+    padding: 2rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.weekly-artist > .artist-wrap {
+    width: 70%;
+    height: 100%;
+}
+
+/* 아티스트 이름 */
+.artist-wrap > .artist-name {
+    width: 100%;
+    height: 5rem;
+    overflow: hidden;
+}
+
+.artist-name > span {
+    position: relative;
+    top: 5rem;
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.8rem;
+    line-height: 5rem;
+    transition: all 0.5s ease-in-out;
+}
+
+/* 아티스트 데이터 제목 */
+.artist-wrap > .chart-title {
+    width: 100%;
+    height: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-title > h2 {
+    color: #fff;
+    font-weight: 300;
+    line-height: 2rem;
+    font-size: 14px;
+}
+
+.weekly-artist > .trophy-icon {
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+}
+
+/* 주간 1위 아티스트 곡 카운트 영역 */
+.weeklyChart-data > .count-track {
+    position: relative;
+    width: 100%;
+    height: calc(28rem / 2 - 1rem);
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.count-track > .count-wrap {
+    width: 70%;
+    height: 100%;
+}
+
+/* 곡 카운트 데이터 영역 */
+.count-wrap > .count {
+    width: 100%;
+    height: 4rem;
+    overflow: hidden;
+}
+
+.count > span {
+    position: relative;
+    top: 5rem;
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.8rem;
+    line-height: 5rem;
+    transition: all 0.5s ease-in-out;
+}
+
+/* 곡 카운트 데이터 제목 */
+.count-wrap > .chart-title {
+    width: 100%;
+    height: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-title > h2 {
+    color: #fff;
+    font-weight: 300;
+    line-height: 2rem;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.count-track > .track-icon {
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+}
+
+/* 주간 차트 아티스트 순위 그래프 */
+.data-wrap > .weeklyChart-graph {
+    width: 60%;
+    height: 100%;
+    padding: 0 2rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+/* 차트 그래프(canvas) 부모 영역 */
+.weeklyChart-graph > .chart-graph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.main-container > .weeklyArtist-album {
+    margin: 0 auto;
+    max-width: 1250px;
+    height: 100%;
+    margin-top: 6.25rem;
+}
+
+.weeklyArtist-album > .weeklyArtist-title {
+    width: 100%;
+    height: 6.25rem;
+    margin-bottom: 2rem;
+}
+
+.weeklyArtist-title > h1 {
+    line-height: 6.25rem;
+    font-size: 1.3rem;
+    color: #fff;
+    font-weight: 300;
+}
+
+.weeklyArtist-album > .skeleton-loading {
+    margin: 0 20px;
+    width: 100%;
+    height: 64rem;
+}
+
+.skeleton-loading > .skeleton-item {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20px;
+    width: calc(1250px / 4 - 40px);
+    height: 30rem;
+    margin-bottom: 2rem;
+}
+
+.skeleton-item > .img-area {
+    width: 100%;
+    height: 18rem;
+    margin-bottom: 2rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.skeleton-item > .info-area {
+    width: 100%;
+    height: 10rem;
+}
+
+.info-area > .title-area {
+    width: 100%;
+    height: 6rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.info-area > .date-area {
+    width: 100%;
+    height: 2rem;
+    margin-top: 2rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.weeklyArtist-album > .album-list {
+    margin: 0 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.album-list > .album-item {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20px;
+    width: calc(1250px / 4 - 40px);
+    height: 30rem;
+    margin-bottom: 2rem;
+}
+
+.album-item > .album-image {
+    position: relative;
+    width: 100%;
+    height: 18rem;
+    margin-bottom: 2rem;
+}
+
+.album-image::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+}
+
+.album-item:hover .album-image::before{
+    background-color: rgba(0,0,0,0.4);
+}
+
+.album-image > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.album-item > .album-info {
+    width: 100%;
+    height: 10rem;
+}
+
+.album-info > .album-title {
+    width: 100%;
+    height: 6rem;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.album-info > .release-date {
+    width: 100%;
+    height: 2rem;
+    margin-top: 2rem;
+    font-size: 13px;
+    color: #fff;
+}
+
+/* 주간 차트 1위 아티스트 소개 영역 */
+.main-container > .chart1st-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1250px;
+    height: 38rem;
+    margin: 6.25rem auto 0 auto;
+}
+
+.chart1st-container > .chart1st-artist{
+    width: 24rem;
+    height: 100%;
+}
+
+.chart1st-artist > .pick-title {
+    width : 100%;
+    height: 6rem;
+}
+
+.pick-title > h1 {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    color: var(--white-color);
+}
+
+.chart1st-artist > .artist-name {
+    width: 100%;
+    height: 6rem;
+    margin-bottom: 2rem;
+}
+
+.artist-name > h2 {
+    line-height: 6rem;
+    font-family: var(--font-Noto);
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--white-color);
+}
+
+.chart1st-artist > .artist-imgBox{
+    position: relative;
+    width: 24rem;
+    height: 24rem;
+}
+
+.artist-imgBox > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chart1st-container > .chart1st-track {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40rem;
+    height: 100%;
+}
+
+.chart1st-track > .topTrack-video {
+    position: relative;
+    width: 100%;
+    height: 30rem;
+}
+
+.topTrack-video > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chart1st-track > .track-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.track-info > .track-img {
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+    overflow: hidden;
+    border-radius: 10px;
+    border : 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.track-img > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.track-info > .track-title {
+    width: 60%;
+    height: 100%;
+}
+
+.track-title > h4 {
+    font-size: 14px;
+    color: var(--white-color);
+    line-height: 3rem;
+    font-family: var(--font-Noto);
+}
+
+.track-info > .track-artist {
+    text-align: end;
+    width: 20%;
+    height: 100%;
+}
+
+.track-artist > span{
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 3rem;
+    font-family: var(--font-Noto);
+}
