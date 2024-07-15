@@ -27,13 +27,13 @@ module.exports = () => {
 
       new htmlWebpackPlugin({
         filename: 'chart.html',
-        template: './src/page/chart.html',
+        template: './page/chart.html',
         chunks: ['chart'],
       }),
 
       new htmlWebpackPlugin({
         filename: 'album.html',
-        template: './src/page/album.html',
+        template: './page/album.html',
         chunks: ['album'],
       }),
 
