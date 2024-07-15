@@ -4,7 +4,7 @@ import { fetchWebApi } from './spotifyAPI';
 
 const endPoint = collection(db, 'chart');
 
-/* 차트 데이터가 저장된 firestore의 chart collection에서 랭킹 오름차순으로 데이터 요청 */
+/* csv 차트 파일 데이터가 저장된 firestore의 chart collection에서 랭킹 필드 값 오름차순으로 데이터 요청 */
 const getChartData = await getDocs(query(endPoint, orderBy('rank', 'asc')));
 
 /* 차트 데이터 배열 (spotify chart의 k-pop 차트 200위 데이터)*/
@@ -55,13 +55,4 @@ export const getChartTrack = async () => {
   const res = await fetchWebApi(`v1/tracks?ids=${fetchIdArray}`, 'GET');
 
   return res.tracks;
-};
-
-export const getArtistAlbum = async ({ artist }) => {
-  const res = fetchWebApi(
-    `v1/search?q=artist=${artist}&type=album&limit=8`,
-    'GET',
-  );
-
-  console.log(res);
 };

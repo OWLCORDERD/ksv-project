@@ -1,9 +1,6 @@
 @import "./global.css";
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: var(--font-Noto);
     background-color: #000000;
 }
@@ -22,14 +19,13 @@ body > #wrap {
     display: block;
     width: 100%;
     height: 100%;
-    padding: 6.25rem 6.25rem 0 6.25rem;
+    padding: 6.25rem;
 }
 
 /* 차트 페이지 dashboard 영역 */
 .main-container > .dashboard-container {
     width: 100%;
     height: 100%;
-    margin-top: 3rem;
 }
 
 /* dashboard 제목 */
@@ -42,9 +38,8 @@ body > #wrap {
 .dashboard-title > h1 {
     line-height: 6.25rem;
     color: #fff;
-    font-weight: 400;
     text-transform: uppercase;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 /* 주간 차트 dashboard  */
@@ -59,6 +54,7 @@ body > #wrap {
 .weeklyChart-dashboard > .weeklyArtist-imgBox {
     width: 28rem;
     height: 100%;
+    background-color: rgba(119,119,119,0.2);
 }
 
 .weeklyArtist-imgBox > img {
@@ -210,24 +206,254 @@ body > #wrap {
 
 .main-container > .weeklyArtist-album {
     margin: 0 auto;
-    max-width: 1400px;
+    max-width: 1250px;
     height: 100%;
     margin-top: 6.25rem;
-    padding: 5rem 0;
 }
 
 .weeklyArtist-album > .weeklyArtist-title {
     width: 100%;
-    height: 5rem;
+    height: 6.25rem;
+    margin-bottom: 2rem;
 }
 
 .weeklyArtist-title > h1 {
-    line-height: 5rem;
-    font-size: 1.5rem;
+    line-height: 6.25rem;
+    font-size: 1.3rem;
     color: #fff;
     font-weight: 300;
 }
 
-.weeklyArtist-Album > .album-list {
-    
+.weeklyArtist-album > .skeleton-loading {
+    margin: 0 20px;
+    width: 100%;
+    height: 64rem;
+}
+
+.skeleton-loading > .skeleton-item {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20px;
+    width: calc(1250px / 4 - 40px);
+    height: 30rem;
+    margin-bottom: 2rem;
+}
+
+.skeleton-item > .img-area {
+    width: 100%;
+    height: 18rem;
+    margin-bottom: 2rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.skeleton-item > .info-area {
+    width: 100%;
+    height: 10rem;
+}
+
+.info-area > .title-area {
+    width: 100%;
+    height: 6rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.info-area > .date-area {
+    width: 100%;
+    height: 2rem;
+    margin-top: 2rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.weeklyArtist-album > .album-list {
+    margin: 0 20px;
+    width: 100%;
+    height: 100%;
+}
+
+.album-list > .album-item {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20px;
+    width: calc(1250px / 4 - 40px);
+    height: 30rem;
+    margin-bottom: 2rem;
+}
+
+.album-item > .album-image {
+    position: relative;
+    width: 100%;
+    height: 18rem;
+    margin-bottom: 2rem;
+}
+
+.album-image::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+}
+
+.album-item:hover .album-image::before{
+    background-color: rgba(0,0,0,0.4);
+}
+
+.album-image > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.album-item > .album-info {
+    width: 100%;
+    height: 10rem;
+}
+
+.album-info > .album-title {
+    width: 100%;
+    height: 6rem;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.album-info > .release-date {
+    width: 100%;
+    height: 2rem;
+    margin-top: 2rem;
+    font-size: 13px;
+    color: #fff;
+}
+
+/* 주간 차트 1위 아티스트 소개 영역 */
+.main-container > .chart1st-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1250px;
+    height: 38rem;
+    margin: 6.25rem auto 0 auto;
+}
+
+.chart1st-container > .chart1st-artist{
+    width: 24rem;
+    height: 100%;
+}
+
+.chart1st-artist > .pick-title {
+    width : 100%;
+    height: 6rem;
+}
+
+.pick-title > h1 {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    color: var(--white-color);
+}
+
+.chart1st-artist > .artist-name {
+    width: 100%;
+    height: 6rem;
+    margin-bottom: 2rem;
+}
+
+.artist-name > h2 {
+    line-height: 6rem;
+    font-family: var(--font-Noto);
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--white-color);
+}
+
+.chart1st-artist > .artist-imgBox{
+    position: relative;
+    width: 24rem;
+    height: 24rem;
+}
+
+.artist-imgBox > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chart1st-container > .chart1st-track {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40rem;
+    height: 100%;
+}
+
+.chart1st-track > .topTrack-video {
+    position: relative;
+    width: 100%;
+    height: 30rem;
+}
+
+.topTrack-video > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chart1st-track > .track-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.track-info > .track-img {
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+    overflow: hidden;
+    border-radius: 10px;
+    border : 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.track-img > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.track-info > .track-title {
+    width: 60%;
+    height: 100%;
+}
+
+.track-title > h4 {
+    font-size: 14px;
+    color: var(--white-color);
+    line-height: 3rem;
+    font-family: var(--font-Noto);
+}
+
+.track-info > .track-artist {
+    text-align: end;
+    width: 20%;
+    height: 100%;
+}
+
+.track-artist > span{
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 3rem;
+    font-family: var(--font-Noto);
 }

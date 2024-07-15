@@ -9,8 +9,9 @@ module.exports = () => {
 
   return {
     entry: {
-      index: './src/index.js',
-      chart: './src/chart.js',
+      index: './src/js/index.js',
+      chart: './src/js/chart.js',
+      album: './src/js/album.js',
     },
     output: {
       filename: '[name]_bundle.js',
@@ -20,14 +21,20 @@ module.exports = () => {
     plugins: [
       new htmlWebpackPlugin({
         filename: 'index.html',
-        template: './index.html',
-        excludeChunks: ['chart'],
+        template: './src/page/index.html',
+        excludeChunks: ['chart', 'album'],
       }),
 
       new htmlWebpackPlugin({
         filename: 'chart.html',
-        template: './chart.html',
+        template: './src/page/chart.html',
         chunks: ['chart'],
+      }),
+
+      new htmlWebpackPlugin({
+        filename: 'album.html',
+        template: './src/page/album.html',
+        chunks: ['album'],
       }),
 
       new miniCSSExtractPlugin({

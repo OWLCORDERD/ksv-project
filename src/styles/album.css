@@ -1,0 +1,224 @@
+@import "./global.css";
+
+body {
+    font-family: var(--font-Noto);
+    background-color: #000000;
+}
+
+/* body 내부 컨텐츠 영역 */
+body > #wrap {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 차트 페이지 main 컨텐츠 영역 */
+#wrap > .main-container {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 6.25rem;
+}
+
+/* 차트 페이지 dashboard 영역 */
+.main-container > .album-Banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1250px;
+    height: 25rem;
+    margin: 2rem auto;
+}
+
+.album-Banner > .album-cover {
+    width: 25rem;
+    height: 25rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.album-cover > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.album-Banner > .album-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30rem;
+    height: 100%;
+}
+
+.album-info > .album-title {
+    width: 100%;
+    height: 10rem;
+}
+
+.album-title > .album-name {
+    width: 100%;
+    height: 6rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.album-name > h1 {
+    font-size: 1.3rem;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.album-title > .release-date {
+    width: 100%;
+    height: 3rem;
+    background-color: rgba(119,119,119,0.2);
+    margin-top: 1rem;
+}
+
+.release-date > p {
+    font-size: 1rem;
+    color: #fff;
+    line-height: 3rem;
+}
+
+.album-info > .total-track {
+    width: 100%;
+    height: 3rem;
+    background-color: rgba(119,119,119,0.2);
+}
+
+.total-track > span {
+    font-size: 1rem;
+    line-height: 3rem;
+    color: #fff;
+}
+
+.main-container > .album-Track {
+    position: relative;
+    max-width: 1250px;
+    height: 100%;
+    margin: 6.25rem auto 0 auto;
+}
+
+.album-Track > .title-wrap {
+    width : 100%;
+    height: 5rem;
+    margin-bottom: 2rem;
+}
+
+.title-wrap > h1 {
+    font-size: 1.3rem;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.album-Track > .track-list {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.track-list > .track-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 4rem;
+    margin-bottom: 2rem;
+}
+
+.track-item > .track-img {
+    width: 4rem;
+    height: 4rem;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.track-img > img {
+    width: 100%;
+    height: 100%;
+}
+
+.track-item > .title-wrap {
+    width: 40rem;
+    height: 100%;
+}
+
+.title-wrap > h2 {
+    line-height: 2rem;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.title-wrap > p {
+    line-height: 2rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+}
+
+.track-item > .track-artist {
+    width: 20rem;
+    line-height: 4rem;
+    color: #fff;
+    font-size: 14px;
+}
+
+.track-item > .play-track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+}
+
+.play-track > svg {
+    width: 2rem;
+    height: 2rem;
+    fill: #fff;
+}
+
+.album-Track > .skeleton-loading {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 22rem;
+}
+
+.skeleton-loading > .skeleton-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 4rem;
+    margin-bottom: 2rem;
+}
+
+.skeleton-item > .img-area {
+    width: 4rem;
+    height: 4rem;
+    background-color: rgba(119, 119, 119, 0.2);
+}
+
+.skeleton-item > .title-area {
+    width: 40rem;
+    height: 100%;
+    background-color: rgba(119, 119, 119, 0.2);
+}
+
+.skeleton-item > .artist-area {
+    width: 20rem;
+    height: 100%;
+    background-color: rgba(119, 119, 119, 0.2);
+}
+
+.skeleton-item > .play-area {
+    width: 4rem;
+    height: 100%;
+    background-color: rgba(119, 119, 119, 0.2);
+}
