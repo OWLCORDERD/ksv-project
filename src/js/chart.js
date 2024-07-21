@@ -116,7 +116,7 @@ const config = {
         ticks: {
           color: '#fff',
           font: {
-            size: 12,
+            size: 14,
             family: 'SEBANG_Regular',
           },
         },
@@ -127,9 +127,8 @@ const config = {
         },
         ticks: {
           color: '#fff',
-          fontSize: 30,
           font: {
-            size: 12,
+            size: 14,
             family: 'SEBANG_Regular',
           },
         },
@@ -149,10 +148,16 @@ const config = {
   },
 };
 
+/* 차트 그래프 생성 중에 사용자에게 보여지는 로딩 스켈레톤 UI 영역 */
+const chartGraph_skeleton = document.querySelector(
+  '.weeklyChart-graph > .skeleton-loading',
+);
 /* new 키워드 생성자에 canvas 요소와 설정 객체를 파라미터로 보내서 차트 그래프 생성 */
 new Chart(chartGraph, config);
-
 Chart.defaults.color = '#fff';
+
+/* 차트 생성이 완료되면 스켈레톤 요소 삭제 */
+chartGraph_skeleton.remove();
 
 /* 주간 1위 아티스트 이름과 곡 카운트 영역을 생성하는 작업 이후
 style 속성 부여 */
@@ -180,12 +185,20 @@ const weekly1st_artist = await getArtists({
 /* 주간 아티스트 이미지 부모 영역  */
 const weeklyArtist_imageBox = document.querySelector('.weeklyArtist-imgBox');
 
+/* 주간 아티스트 이미지 로딩 스켈레톤 UI 영역 */
+const weeklyArtistImg_skeleton = document.querySelector(
+  '.weeklyArtist-imgBox > .skeleton-loading',
+);
+
 /* 주간 아티스트 데이터의 images url 속성으로 이미지 노드 생성  */
 const weeklyArtist_image = document.createElement('img');
 weeklyArtist_image.src = weekly1st_artist.images[0].url;
 
 /* 주간 아티스트 이미지 부모 영역에 자식 이미지 노드 추가  */
 weeklyArtist_imageBox.appendChild(weeklyArtist_image);
+
+/* 주간 아티스트 이미지 로드 완료 후 스켈레톤 UI 제거 */
+weeklyArtistImg_skeleton.remove();
 
 const weeklyArtist_title = document.querySelector('.weeklyArtist-title > h1');
 
@@ -196,10 +209,11 @@ const weeklyArtist_albumData = await weeklyArtistAlbum(artistLabels[0]);
 const album_list = weeklyArtist_albumData.items;
 
 const albumList_container = document.querySelector('.album-list');
-const skeleton_container = document.querySelector('.skeleton-loading');
+const albumList_skeleton = document.querySelector(
+  '.weeklyArtist-album > .albums-loading',
+);
 
 album_list.forEach((album) => {
-  skeleton_container.remove();
   const album_item = document.createElement('a');
   album_item.classList.toggle('album-item');
   album_item.href = `album.html?id=${album.id}`;
@@ -235,6 +249,8 @@ album_list.forEach((album) => {
   album_item.appendChild(album_info);
   /* 앨범 아이템 노드 부모 영역에 appendChild */
   albumList_container.appendChild(album_item);
+
+  albumList_skeleton.remove();
 });
 
 const header = document.querySelector('header');
@@ -264,6 +280,14 @@ const chart1st_artistImg = document.querySelector(
   '.chart1st-artist > .artist-imgBox',
 );
 
+const chart1stImg_skeleton = document.querySelector(
+  '.chart1st-artist > .artist-imgBox > .skeleton-loading',
+);
+
+const chart1stName_skeleton = document.querySelector(
+  '.chart1st-artist > .artist-name > .skeleton-loading',
+);
+
 /* 결과 더미데이터 중, 0번째 인덱스의 아티스트 데이터에서 name 프로퍼티 추출하여 
 artist info 영역에 innerHTML */
 if (weekArtist) {
@@ -274,6 +298,9 @@ if (weekArtist) {
   /* 0번째 인덱스의 아티스트 데이터 중 높은 화질의 image url 속성값 추출하여 src import */
   artistImg.src = weekArtist[0].images[0].url;
   artistImg.alt = `${weekArtist[0].name} 프로필 이미지`;
+  /* 아티스트 이미지, 이름 노드 생성 완료 후 로딩 스켈레톤 UI 제거 */
+  chart1stName_skeleton.remove();
+  chart1stImg_skeleton.remove();
 }
 
 /* 1번째 인덱스의 top track 데이터 중 첫번째 곡을 대표 인기곡으로 선정 */
@@ -287,16 +314,26 @@ const topTrack_video = document.querySelector('.topTrack-video');
 
 const topTrack_videoId = music_video[0].id.videoId;
 
+const chart1stInfo_skeleton = document.querySelector(
+  '.chart1st-track > .track-info > .skeleton-loading',
+);
+
+const topTrackVideo_skeleton = document.querySelector(
+  '.chart1st-track > .topTrack-video > .skeleton-loading',
+);
+
 /*youtube iframe 비디오 태그 기본 형식에 src 경로의 id부분 대표 인기곡 ID로 설정 */
 if (music_video && topTrack_video) {
   topTrack_video.innerHTML = `
-  <iframe width="560" height="315"
+  <iframe
   src="https://www.youtube.com/embed/${topTrack_videoId}?autoplay=1&mute=1&loop=1&controls=0&playlist=${topTrack_videoId}"
   title="YouTube video player" frameborder="0" allow="accelerometer;
   autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;
   web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
   </iframe>
   `;
+
+  topTrackVideo_skeleton.remove();
 }
 
 if (weekArtist_topTrack) {
@@ -330,4 +367,6 @@ if (weekArtist_topTrack) {
   if (topTrack_artist) {
     topTrack_artist.innerText = weekArtist_topTrack.artists[0].name;
   }
+
+  chart1stInfo_skeleton.remove();
 }

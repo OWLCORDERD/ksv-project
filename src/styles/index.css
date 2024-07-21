@@ -9,14 +9,11 @@
 }
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-Unbounded);
-    background-color: #000000;
+    background-color: var(--black-color);
     overflow: hidden;
 }
 
+/* 초기 자바스크립트 파일 로드 과정에서 나타나는 로딩 컴포넌트 */
 body > .loading {
     position: absolute;
     top: 0;
@@ -26,7 +23,7 @@ body > .loading {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #000;
+    background-color: var(--black-color);
     z-index: 1000;
     overflow: hidden;
 }
@@ -119,6 +116,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    font-family: 'Unbounded-Bold';
     z-index: 10;
 }
 
@@ -154,27 +152,14 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     width: 100%;
     line-height: 8rem;
     font-size: 1.5rem;
-    font-weight: 400;
     color: var(--white-color);
     text-transform: uppercase;
 }
 
-/*
-@keyframes txtDynamic {
-    0% {
-        margin-top: 0;
-    }
-
-    100% {
-        margin-top : -16rem;
-    }
-}
-*/
-
 .video-screen > .scroll-down {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    transform: var(--center-X);
     width: 20rem;
     height: 10rem;
     display: flex;
@@ -186,18 +171,18 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 }
 
 .scroll-down > span {
-    font-weight: 400;
     font-size: 14px;
     line-height: 3rem;
     text-transform: uppercase;
-    color: #fff;
+    font-family: 'Unbounded-Bold';
+    color: var(--white-color);
 }
 
+/* 차트 서비스 소개 영역 */
 .screen-container > .Weekly-chart{
     width: 100%;
     height: 100%;
     padding: 6.25rem 0;
-    font-family: var(--font-Unbounded);
 }
 
 .Weekly-chart > .chart-titleWrap {
@@ -218,8 +203,8 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     width: 100%;
     line-height: 8rem;
     font-size: 1.6rem;
-    font-weight: 400;
-    color: #fff;
+    color: var(--white-color);
+    font-family: 'Unbounded-Bold';
     text-transform: uppercase;
 }
 
@@ -231,7 +216,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 .chart-titleWrap > .content > p {
     width: 30%;
     font-size: 14px;
-    font-family: var(--font-Noto);
+    font-family: 'SEBANG_Regular';
     color: #fff;
     word-break: keep-all;
 }
@@ -276,7 +261,8 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     line-height: 10rem;
     font-size: 1rem;
     text-transform: uppercase;
-    color: #fff;
+    color: var(--white-color);
+    font-family: 'Unbounded-Regular';
     text-align: center;
 }
 
@@ -292,11 +278,11 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     font-size: 14px;
     text-transform: uppercase;
     color: #fff;
-    font-family: var(--font-Noto);
+    font-family: 'SEBANG_Regular';
     text-align: center;
 }
 
-/* 주간 차트 소개 영역 */
+/* 주간 차트 top 10 슬라이드 소개 영역 */
 .Weekly-chart > .chart-slide {
     position: relative;
     display: flex;
@@ -319,7 +305,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 .chart-control >  .chart-info {
     width: 100%;
     height: 50%;
-    font-family: var(--font-Unbounded);
+    font-family: 'Unbounded-Regular';
 }
 
 .chart-info > .title {
@@ -329,8 +315,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 
 .chart-info > .title > h2 {
     font-size: 1.5rem;
-    color: #fff;
-    font-weight: 400;
+    color: var(--white-color);
     text-transform: uppercase;
     line-height: 5rem;
 }
@@ -341,8 +326,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 }
 
 .chart-date > span {
-    color: #fff;
-    font-weight: 400;
+    color: var(--white-color);
     line-height: 5rem;
 }
 
@@ -359,15 +343,14 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 }
 
 .view-more > a {
-    font-family: var(--font-Noto);
     text-decoration: underline;
-    color: #fff;
-    font-weight: bold;
+    color: var(--white-color);
+    font-family: 'SEBANG_Regular';
 }
 
 .slide-control > .control-button {
     display: block;
-    width: 215px;
+    width: 200px;
     height: 80px;
 }
 
@@ -375,8 +358,8 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     background-color: rgba(255,255,255,0.4);
     border-radius: 50%;
     margin-right: 50px;
@@ -403,6 +386,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     fill: #000;
 }
 
+/* 주간 차트 top 10 슬라이드 영역 */
 .chart-slide > .chart-slider {
     position: relative;
     width: 60%;
@@ -447,15 +431,14 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 .swiper-slide > .track-infoBox {
     width: 100%;
     height: 10rem;
-    font-family: var(--font-Noto);
 }
 
 .track-infoBox > h3 {
     height: 8rem;
     padding-top: 2rem;
     font-size: 1rem;
-    color: #fff;
-    font-weight: bold;
+    color: var(--white-color);
+    font-family: 'SEBANG_Bold';
     text-transform: uppercase;
     word-break: keep-all;
 }
@@ -465,7 +448,8 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     line-height: 2rem;
     font-size: 13px;
     text-transform: uppercase;
-    color: #fff;
+    color: var(--white-color);
+    font-family: 'SEBANG_Regular';
 }
 
 /*ksv 아티스트 페이지로 이동하는 영역 */
@@ -491,10 +475,10 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 .ksvArtist-title > h2 {
     line-height: 8rem;
     text-align: center;
-    color: #fff;
-    font-size: 4rem;
+    color: var(--white-color);
+    font-size: 3.5rem;
+    font-family: 'Unbounded-Regular';
     text-transform: uppercase;
-    font-weight: 200;
 }
 
 .title-wrap > .ksvArtist-info {
@@ -508,8 +492,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     font-size: 15px;
     color: #fff;
     text-align: center;
-    font-family: var(--font-Noto);
-    font-weight: bold;
+    font-family: 'SEBANG_Regular';
 }
 
 .title-wrap > .view-ksvArtist {
@@ -526,9 +509,8 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     line-height: 3.125rem;
     text-transform: uppercase;
     color: var(--white-color);
-    font-weight: bold;
-    font-weight: 500;
     font-size: 15px;
+    font-family: 'Unbounded-Bold';
 }
 
 .view-ksvArtist > svg {
@@ -538,7 +520,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 }
 
 .view-ksvArtist > svg > circle {
-    fill : rgba(255, 255, 255, 0.4);
+    fill : rgba(119, 119, 119, 0.4);
 }
 
 .view-ksvArtist > svg > path {
@@ -577,18 +559,6 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     align-items: center;
     transform-style: preserve-3d;
     transform: perspective(700px) translateY(-50%);
-}
-
-/*perspective 속성을 활용하여 사용자에게 보여지는 뷰포트와
-요소간의 거리를 조절하여 원근감 부여 및 360도 회전 */
-@keyframes carousel {
-    0% {
-        transform: perspective(800px);
-    }
-
-    100% {
-        transform: perspective(800px);
-    }
 }
 
 /*각 아티스트 이미지의 노드를 생성할 때, style로 지정한 변수 i의 값을 통해
@@ -631,7 +601,7 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
     width: 100%;
     height: 5rem;
     overflow: hidden;
-    border-top: 2px solid #fff;
+    border-top: 2px solid var(--white-color);
     z-index: 10;
 }
 
@@ -655,7 +625,7 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
     font-size: 1rem;
     color: var(--white-color);
     text-transform: uppercase;
-    font-weight: bold;
+    font-family: 'Unbounded-Bold';
     text-align: center;
 }
 

@@ -8,16 +8,21 @@ module.exports = () => {
   dotenv.config();
 
   return {
+    /* 번들링 js 파일 설정 */
     entry: {
       index: './src/js/index.js',
       chart: './src/js/chart.js',
       album: './src/js/album.js',
     },
+
+    /* 번들링 js 파일 저장 경로 설정 */
     output: {
       filename: '[name]_bundle.js',
       path: path.resolve(__dirname, 'build'),
     },
 
+    /* webpack은 js 파일만 인식하여 번들링하기에 html, css 파일 번들링 설정을
+    설정해주는 htmlWebpackPlugin, miniCSSExtractPlugin 사용 */
     plugins: [
       new htmlWebpackPlugin({
         filename: 'index.html',
@@ -41,6 +46,8 @@ module.exports = () => {
         filename: '[name].common.css',
       }),
 
+      /* docenv 환경변수 설정 (entry script 번들링 파일들을 webpack build time에 전역 환경 변수를
+        선언하여 webpack이 스크립트상에 존재하는 모든 변수 문자열을 대체 가능) */
       new webpack.DefinePlugin({
         'process.env.YOUTUBE_API_KEY': JSON.stringify(
           process.env.YOUTUBE_API_KEY,
@@ -75,6 +82,7 @@ module.exports = () => {
       }),
     ],
 
+    /* css loader, 이미지 url loader 모듈 */
     module: {
       rules: [
         {
@@ -100,6 +108,7 @@ module.exports = () => {
       ],
     },
 
+    /* 개발 모드 서버 */
     devServer: {
       static: {
         directory: path.resolve(__dirname, 'build'),
@@ -107,6 +116,7 @@ module.exports = () => {
       port: 8080,
     },
 
+    /* 절대 경로 설정 */
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src/'),

@@ -16,7 +16,10 @@ const select_albumId = params.get('id');
 const current_albumData = await getCurrentAlbum(select_albumId);
 
 /* 선택 앨범 표지 이미지 영역 */
-const album_cover = document.querySelector('.album-Banner > .album-cover');
+const album_cover = document.querySelector('.album-cover');
+const albumCover_skeleton = document.querySelector(
+  '.album-cover > .skeleton-loading',
+);
 
 /* 선택 앨범 표지 이미지 경로*/
 const album_coverImg = current_albumData.images[0].url;
@@ -30,29 +33,35 @@ cover_image.alt = `${current_albumData.name} 앨범 커버`;
 /* 앨범 표지 이미지 영역에 이미지 노드 추가 */
 album_cover.appendChild(cover_image);
 
+albumCover_skeleton.remove();
+
 /* 선택 앨범 이름 영역 */
 const album_name = document.querySelector('.album-name > h1');
-const name_container = document.querySelector('.album-name');
+const name_skeleton = document.querySelector('.album-name > .skeleton-loading');
 
 /* 앨범 이름 데이터 fetching 완료 후 loading background 삭제 후 텍스트 생성 */
-name_container.style.backgroundColor = 'transparent';
 album_name.textContent = current_albumData.name;
+name_skeleton.remove();
 
 /* 선택 앨범 발매일 영역 */
 const release_date = document.querySelector('.release-date > p');
-const date_container = document.querySelector('.release-date');
+const release_skeleton = document.querySelector(
+  '.release-date > .skeleton-loading',
+);
 
-/* 발매일 데이터 fetching 완료 후 loading background 삭제 후 텍스트 생성 */
-date_container.style.backgroundColor = 'transparent';
+/* 발매일 데이터 fetching 완료 후 text */
 release_date.textContent = `Release date: ${current_albumData.release_date}`;
+release_skeleton.remove();
 
 /* 앨범 곡 갯수 카운트 영역 */
 const track_count = document.querySelector('.total-track > span');
-const count_container = document.querySelector('.total-track');
+const trackCount_skeleton = document.querySelector(
+  '.total-track > .skeleton-loading',
+);
 
 /* 곡 카운트 데이터 fetching 완료 후 loading background 삭제 후 텍스트 생성 */
-count_container.style.backgroundColor = 'transparent';
 track_count.textContent = `Total track: ${current_albumData.total_tracks}`;
+trackCount_skeleton.remove();
 
 const header = document.querySelector('header');
 const body = document.querySelector('body');
@@ -70,13 +79,10 @@ gsap.to(header, {
 const album_tracks = current_albumData.tracks.items;
 
 const track_list = document.querySelector('.track-list');
-/* 앨범 데이터가 fetching 되는동안 사용자에게 보여질 skeleton 로딩 화면 영역 */
-const skeleton_container = document.querySelector('.skeleton-loading');
+const trackList_skeleton = document.querySelector('.trackList-loading');
 
 /* 앨범 곡 리스트 데이터에 반복문을 활용하여 곡 리스트 영역에 아이템 노드 생성 */
 album_tracks.forEach((track) => {
-  /* 로딩 skeleton UI 제거 */
-  skeleton_container.remove();
   const track_item = document.createElement('li');
   track_item.classList.toggle('track-item');
 
@@ -115,4 +121,5 @@ album_tracks.forEach((track) => {
 
   track_item.appendChild(track_play);
   track_list.appendChild(track_item);
+  trackList_skeleton.remove();
 });
