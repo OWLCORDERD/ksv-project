@@ -2,19 +2,26 @@ import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { fetchWebApi } from './spotifyAPI';
 
-const endPoint = collection(db, 'chart');
+// firebase firestore 차트 데이터 저장 collection 경로
+const endPoint = collection(db, 'chart_0725');
 
-/* csv 차트 파일 데이터가 저장된 firestore의 chart collection에서 랭킹 필드 값 오름차순으로 데이터 요청 */
-const getChartData = await getDocs(query(endPoint, orderBy('rank', 'asc')));
+/* 매주 추가되는 주간 차트 csv 파일 데이터로 업데이트하는 firestore의 차트 collection
+랭킹 필드 값 오름차순으로 데이터 요청 */
+const getSpotifyChartDB = await getDocs(
+  query(endPoint, orderBy('rank', 'asc')),
+);
 
-/* 차트 데이터 배열 (spotify chart의 k-pop 차트 200위 데이터)*/
-const chartData = [];
+//응답 받는 차트 데이터 저장 배열 (spotify chart의 k-pop 차트 200위 데이터)
+const spotifyChartDB = [];
 
-/* 차트 track 곡 데이터 배열 (곡 이미지와 상세정보 데이터) */
-const chartTrackData = [];
+const chartArtists = [];
 
-/* firestore에서 응답받은 문서들의 데이터 속성 값들을 배열에 저장 */
-getChartData.forEach((chartDoc) => {
+/* 
+차트 랭킹 데이터 속성 값들을 배열에 저장
+** 저장 시 데이터 필드 값중 uri 문자열의 곡 id 값을 추출하는 로직 추가 **
+*/
+getSpotifyChartDB.forEach((chartDoc) => {
+  // 응답받은 collection의 문서 필드 객체 생성
   const doc = {
     artist_names: chartDoc.data()['artist_names'],
     rank: chartDoc.data()['rank'],
@@ -22,37 +29,88 @@ getChartData.forEach((chartDoc) => {
     uri: chartDoc.data()['uri'],
   };
 
-  chartData.push(doc);
-});
-
-/* 차트 데이터 속성값 중 uri 문자열 값에서 track id 추출 */
-chartData.forEach((chart) => {
   /* uri 문자열 split 메소드로 배열로 변경 */
-  const uriParse = chart.uri.split('');
+  const uriParse = doc.uri.split('');
 
   /* 배열을 splice 속성을 통해 track id 부분만 잘라내서 문자열로 합치기 */
   const findTrackId = uriParse.splice(14).join('');
 
-  /* 객체에 uri -> trackId 값으로 변경 후 차트 track 곡 데이터 배열에 push */
+  /* 문서 필드 객체에 uri -> trackId 값으로 변경 후 차트 데이터 저장 배열에 push */
   const includeTrackIdData = {
-    artist_names: chart.artist_names,
-    rank: chart.rank,
-    track_name: chart.track_name,
-    id: findTrackId,
+    artist_names: doc.artist_names,
+    rank: doc.rank,
+    track_name: doc.track_name,
+    track_id: findTrackId,
   };
 
-  chartTrackData.push(includeTrackIdData);
+  spotifyChartDB.push(includeTrackIdData);
+});
+
+/* 차트 데이터 아티스트 이름 배열 생성 */
+spotifyChartDB.forEach((data) => {
+  chartArtists.push(data.artist_names);
+});
+
+/* 오름차순 정렬을 위한 배열을 만들기 위해 counts 객체 생성 */
+const counts = {};
+
+/* 주간 차트 출현하는 아티스트 각 출현 횟수 구하기 */
+chartArtists.forEach((x) => {
+  counts[x] = (counts[x] || 0) + 1;
+});
+
+/* 오름차순 정렬 아티스트 출연 횟수 데이터 배열 */
+const chartArtistCounts = [];
+
+for (let key in counts) {
+  const currentArtist = spotifyChartDB.find(
+    (chart) => chart.artist_names === key,
+  );
+  const findTrackId = currentArtist.track_id;
+  chartArtistCounts.push({
+    name: key,
+    counts: counts[key],
+    track_id: findTrackId,
+  });
+}
+
+/* sort 메소드를 통해 counts(출현 횟수) 기준으로 정렬 */
+chartArtistCounts.sort((a, b) => {
+  return b.counts - a.counts;
 });
 
 /* 추출한 음반 id 값들을 /tracks route -> query parameter 값으로 전송하여 곡 정보 추출 */
 export const getChartTrack = async () => {
-  const trackIdArray = chartTrackData.map((track) => {
-    return track.id;
+  const trackIdArray = spotifyChartDB.map((track) => {
+    return track.track_id;
   });
 
-  const fetchIdArray = trackIdArray.slice(0, 50).join(',');
-
+  const fetchIdArray = trackIdArray.slice(0, 10).join(',');
   const res = await fetchWebApi(`v1/tracks?ids=${fetchIdArray}`, 'GET');
 
   return res.tracks;
+};
+
+export const getTrackData = async (track_id) => {
+  const res = await fetchWebApi(`v1/tracks/${track_id}`, 'GET');
+
+  return res;
+};
+
+/* 출연 횟수 순으로 정렬시킨 배열에서 10위까지 추출하여 클라이언트로 return */
+export const weeklyArtistData = async () => {
+  const top10_artists = chartArtistCounts.slice(0, 10);
+  const top10_tracks = top10_artists.map((artist) => {
+    return artist.track_id;
+  });
+
+  /* 한글 지원이 안되는 spotify chart 아티스트 이름 영문 데이터
+  -> track id 한글로 변경*/
+  const res = await fetchWebApi(`v1/tracks?ids=${top10_tracks}`, 'GET');
+
+  res.tracks.forEach((track, i) => {
+    top10_artists[i].name = track.artists[0].name;
+  });
+
+  return top10_artists;
 };

@@ -1,6 +1,6 @@
 import gsap, { ScrollTrigger } from 'gsap/all';
 import { getArtists, getWeekArtist } from '../api/artist';
-import { getChartTrack } from '../api/chart';
+import { getTrackData, weeklyArtistData } from '../api/chart';
 import { weeklyArtistAlbum } from '../api/album';
 import '@/styles/chart.css';
 import { Chart } from 'chart.js/auto';
@@ -8,45 +8,8 @@ import search from '../api/youtubeAPI';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* 주간 차트 곡 데이터 배열 */
-const weekly_chartTrack = await getChartTrack();
-
-/* 주간 차트 아티스트 이름 배열 */
-const weekly_chartArtist = [];
-
-/* 주간 차트 곡 데이터에서 아티스트 이름 추출 */
-weekly_chartTrack.forEach((track) => {
-  /* 아티스트 이름 배열에 이름 추가  */
-  weekly_chartArtist.push(track.artists[0].name);
-});
-
-/* 주간 차트 아티스트 출현 횟수 object */
-const counts = {};
-
-/* 주간 차트 출현하는 아티스트 각 출현 횟수 구하기 */
-weekly_chartArtist.forEach((x) => {
-  counts[x] = (counts[x] || 0) + 1;
-});
-
-/* 주간 차트 출현 횟수 많은 아티스트 순으로 정렬하는 배열 */
-const sortCounts = [];
-
-/* counts object의 key 값 (아티스트 이름)과 counts(출현 횟수) 값의 object를 생성하여
-출현 횟수 기준 내림차순으로 정렬할 배열에 push */
-for (let key in counts) {
-  sortCounts.push({
-    artist: key,
-    counts: counts[key],
-  });
-}
-
-/* sort 메소드를 통해 counts(출현 횟수) 기준으로 정렬 */
-sortCounts.sort((a, b) => {
-  return b.counts - a.counts;
-});
-
-/*출현 횟수가 많은 주간 아티스트 top5 선별 */
-const top5_weeklyArtist = sortCounts.slice(0, 5);
+/* 차트 200위 데이터중 출현 횟수가 많은 주간 아티스트 top10 선별 */
+const top10_weeklyArtist = await weeklyArtistData();
 
 /* 차트 설정 labels에 추가 될 아티스트 이름 */
 const artistLabels = [];
@@ -54,12 +17,12 @@ const artistLabels = [];
 /* 차트 data에 추가 될 아티스트의 출현 횟수 */
 const trackCounts = [];
 
-top5_weeklyArtist.forEach((count) => {
-  artistLabels.push(count.artist);
+top10_weeklyArtist.forEach((artist) => {
+  artistLabels.push(artist.name);
 });
 
-top5_weeklyArtist.forEach((count) => {
-  trackCounts.push(count.counts);
+top10_weeklyArtist.forEach((artist) => {
+  trackCounts.push(artist.counts);
 });
 
 /* 주간 1위 아티스트 이름 부모 요소 */
@@ -96,7 +59,7 @@ const data = {
   labels: artistLabels,
   datasets: [
     {
-      label: '6.21 - 6.27 chart top 5',
+      label: '금주 차트인 상위 아티스트 곡 갯수',
       data: trackCounts,
       backgroundColor: ['#fff'],
     },
@@ -140,6 +103,7 @@ const config = {
           font: {
             size: 12,
             family: 'SEBANG_Regular',
+            color: '#fff',
           },
         },
       },
@@ -165,17 +129,9 @@ weeklyArtist_name.style.top = 0;
 artist_trackCount.style.top = 0;
 
 /* 주간 아티스트의 차트인 곡 데이터 배열 */
-const weekly1stArtist_track = [];
+const weeklyChart_1st = await getTrackData(top10_weeklyArtist[0].track_id);
 
-/* 주간 차트 곡 데이터 배열에서 각 object의 artists 배열에서 name 속성값을
-1위 아티스트 이름과 비교하여 아티스트의 차트인 곡들을 추출 */
-weekly_chartTrack.forEach((track) => {
-  if (track.artists[0].name === artistLabels[0]) {
-    weekly1stArtist_track.push(track);
-  }
-});
-
-const artistIds = [`${weekly1stArtist_track[0].artists[0].id}`];
+const artistIds = [`${weeklyChart_1st.artists[0].id}`];
 
 /* 주간 아티스트 정보 데이터 요청 */
 const weekly1st_artist = await getArtists({
@@ -204,7 +160,9 @@ const weeklyArtist_title = document.querySelector('.weeklyArtist-title > h1');
 
 weeklyArtist_title.textContent = `${weekly1st_artist.name} 아티스트 앨범`;
 
-const weeklyArtist_albumData = await weeklyArtistAlbum(artistLabels[0]);
+const weeklyArtist_albumData = await weeklyArtistAlbum(
+  weeklyChart_1st.artists[0].id,
+);
 
 const album_list = weeklyArtist_albumData.items;
 

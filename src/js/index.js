@@ -241,9 +241,8 @@ methodData.forEach((data) => {
   pickMethods_container.appendChild(method_item);
 });
 
-const chartTrackDB = await getChartTrack();
-
-const chart10Track = chartTrackDB.slice(0, 10);
+/* 차트 상위 top 10 곡 데이터 요청 */
+const chart10Track = await getChartTrack();
 
 const slide_prev = document.querySelector('.prev-button');
 const slide_next = document.querySelector('.next-button');

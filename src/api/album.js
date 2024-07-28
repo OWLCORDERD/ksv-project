@@ -6,11 +6,11 @@ export const getCurrentAlbum = async (album_id) => {
   return res;
 };
 
-export const weeklyArtistAlbum = async (artist) => {
+export const weeklyArtistAlbum = async (artist_id) => {
   const res = await fetchWebApi(
-    `v1/search?q=artist=${artist}&type=album&limit=8`,
+    `v1/artists/${artist_id}/albums?limit=8`,
     'GET',
   );
 
-  return res.albums;
+  return res;
 };

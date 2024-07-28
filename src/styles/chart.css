@@ -405,13 +405,12 @@ body > #wrap {
 .chart1st-track > .topTrack-video {
     position: relative;
     width: 100%;
-    height: 30rem;
+    height: 24rem;
+    padding: 3px;
+    background-color: rgba(119, 119, 119, 0.2);
 }
 
 .topTrack-video > iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -423,7 +422,6 @@ body > #wrap {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 2rem 0;
 }
 
 .track-info > .track-img {
