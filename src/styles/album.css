@@ -125,6 +125,7 @@ body > #wrap {
 }
 
 .track-list > .track-item {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -138,7 +139,6 @@ body > #wrap {
     height: 4rem;
     overflow: hidden;
     border-radius: 10px;
-    border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 .track-img > img {
@@ -174,18 +174,79 @@ body > #wrap {
     font-size: 14px;
 }
 
-.track-item > .play-track {
+.track-item > .option-button {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 4rem;
     height: 4rem;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
 }
 
-.play-track > svg {
+.option-button > svg {
     width: 2rem;
     height: 2rem;
     fill: var(--white-color);
+}
+
+.track-item > .option-menu {
+    display: none;
+    position: absolute;
+    top: 4rem;
+    right: 0;
+    width: 15rem;
+    height: 10rem;
+    background-color: var(--skeleton-color);
+    backdrop-filter: blur(10px);
+    box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.2);
+    border-radius: 1.5rem;
+    padding: 1rem 0;
+    z-index: 10;
+}
+
+.option-menu > ul {
+    width: 100%;
+    height: 8rem;
+}
+
+.option-menu > ul > li {
+    padding: 1rem;
+    width: 100%;
+    height: 4rem;
+    cursor: pointer;
+}
+
+.option-menu > ul > li:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.option-menu > ul > li > .menu-icon {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+}
+
+.option-menu > ul > li > .menu-icon > svg {
+    width: 2rem;
+    height: 2rem;
+    fill: #fff;
+}
+
+.option-menu > ul > li > .menu-title {
+    display: inline-block;
+    vertical-align: top;
+    width: 60%;
+    font-family: 'SEBANG_Bold';
+    font-size: 12px;
+    color: #fff;
+    line-height: 2rem;
+    margin-left: 2rem;
+}
+
+.option-menu.active {
+    display: block;
 }
 
 .album-Track > .trackList-loading {

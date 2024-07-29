@@ -11,9 +11,10 @@ const getSpotifyChartDB = await getDocs(
   query(endPoint, orderBy('rank', 'asc')),
 );
 
-//응답 받는 차트 데이터 저장 배열 (spotify chart의 k-pop 차트 200위 데이터)
+// 차트 데이터 응답 값 저장 배열 (spotify chart의 k-pop 차트 200위 데이터)
 const spotifyChartDB = [];
 
+// 차트 1위 ~ 200위 아티스트 이름 배열
 const chartArtists = [];
 
 /* 
@@ -46,7 +47,7 @@ getSpotifyChartDB.forEach((chartDoc) => {
   spotifyChartDB.push(includeTrackIdData);
 });
 
-/* 차트 데이터 아티스트 이름 배열 생성 */
+/* 차트 데이터 아티스트 이름 배열 업데이트 */
 spotifyChartDB.forEach((data) => {
   chartArtists.push(data.artist_names);
 });

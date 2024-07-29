@@ -1,10 +1,24 @@
 import '@/styles/album.css';
 import { getCurrentAlbum } from '../api/album';
-import playButton from '@/images/svg/play.svg';
+import optionButton from '@/images/svg/dot-menu-more.svg';
+import playIcon from '@/images/svg/option-menu/play.svg';
+import playListIcon from '@/images/svg/option-menu/music-library.svg';
 import gsap from 'gsap/all';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const header = document.querySelector('header');
+const body = document.querySelector('body');
+gsap.to(header, {
+  backgroundColor: '#000',
+  scrollTrigger: {
+    trigger: body,
+    top: 'top top',
+    end: 'center center',
+    scrub: 1,
+  },
+});
 
 /* 차트 페이지에서 URL로 넘겨받은 쿼리 객체 조회  */
 const params = new URLSearchParams(window.location.search);
@@ -12,7 +26,7 @@ const params = new URLSearchParams(window.location.search);
 /* search 속성 객체에서 앨범 id 속성 값 추출 */
 const select_albumId = params.get('id');
 
-/* 선택한 앨범 id 값으로 spotify web api /albums 앨범 데이터 요청 */
+/* spotify web api albums 라우터에 선택한 앨범 id 값으로 앨범 데이터 요청 */
 const current_albumData = await getCurrentAlbum(select_albumId);
 
 /* 선택 앨범 표지 이미지 영역 */
@@ -33,6 +47,7 @@ cover_image.alt = `${current_albumData.name} 앨범 커버`;
 /* 앨범 표지 이미지 영역에 이미지 노드 추가 */
 album_cover.appendChild(cover_image);
 
+/* 이미지 노드 추가 된 후 기존 스켈레톤 UI 제거 */
 albumCover_skeleton.remove();
 
 /* 선택 앨범 이름 영역 */
@@ -63,22 +78,12 @@ const trackCount_skeleton = document.querySelector(
 track_count.textContent = `Total track: ${current_albumData.total_tracks}`;
 trackCount_skeleton.remove();
 
-const header = document.querySelector('header');
-const body = document.querySelector('body');
-gsap.to(header, {
-  backgroundColor: '#000',
-  scrollTrigger: {
-    trigger: body,
-    top: 'top top',
-    end: 'center center',
-    scrub: 1,
-  },
-});
-
-/* 앨범 곡 리스트 데이터 */
+/* 앨범 데이터의 곡 리스트 데이터 배열 추출 */
 const album_tracks = current_albumData.tracks.items;
 
+/* 앨범 곡 리스트 부모 영역 */
 const track_list = document.querySelector('.track-list');
+/* 리스트 노드 자식노드들 생성되기까지 보여지는 Skeleton UI 영역 */
 const trackList_skeleton = document.querySelector('.trackList-loading');
 
 /* 앨범 곡 리스트 데이터에 반복문을 활용하여 곡 리스트 영역에 아이템 노드 생성 */
@@ -115,11 +120,86 @@ album_tracks.forEach((track) => {
   track_item.appendChild(track_titleWrap);
   track_item.appendChild(track_artist);
 
-  const track_play = document.createElement('div');
-  track_play.classList.toggle('play-track');
-  track_play.innerHTML += playButton;
+  const option_toggleButton = document.createElement('button');
+  option_toggleButton.classList.toggle('option-button');
+  option_toggleButton.innerHTML += optionButton;
+  track_item.appendChild(option_toggleButton);
 
-  track_item.appendChild(track_play);
+  const track_optionMenu = document.createElement('div');
+  track_optionMenu.classList.toggle('option-menu');
+
+  track_item.appendChild(track_optionMenu);
   track_list.appendChild(track_item);
   trackList_skeleton.remove();
+});
+
+const option_toggleButton = document.querySelectorAll('.option-button');
+const track_optionMenu = document.querySelectorAll('.option-menu');
+
+option_toggleButton.forEach((button, i) => {
+  button.addEventListener('click', () => {
+    if (track_optionMenu[i].className === 'option-menu') {
+      track_optionMenu.forEach((menu) => {
+        menu.classList.remove('active');
+      });
+      track_optionMenu[i].classList.add('active');
+    } else {
+      track_optionMenu[i].classList.remove('active');
+    }
+  });
+});
+
+const menuData = [
+  {
+    title: '플레이리스트에 추가하기',
+    class: 'add_playList',
+    icon: playListIcon,
+  },
+  {
+    title: '바로 듣기',
+    class: 'play_music',
+    icon: playIcon,
+  },
+];
+
+track_optionMenu.forEach((menu) => {
+  const option_list = document.createElement('ul');
+
+  menuData.forEach((item) => {
+    const option_item = document.createElement('li');
+    option_item.classList.toggle(item.class);
+    const iconBox = document.createElement('div');
+    iconBox.classList.toggle('menu-icon');
+    const titleBox = document.createElement('div');
+    titleBox.classList.toggle('menu-title');
+
+    iconBox.innerHTML += item.icon;
+    titleBox.innerHTML += item.title;
+
+    option_item.appendChild(iconBox);
+    option_item.appendChild(titleBox);
+    option_list.appendChild(option_item);
+  });
+  menu.appendChild(option_list);
+});
+
+const track_items = document.querySelectorAll('.track-item');
+
+let save_trackIds = [];
+
+track_items.forEach((item, i) => {
+  const addPlayList_option = document.querySelector(
+    `.track-item:nth-child(${i + 1}) > .option-menu > ul > .add_playList`,
+  );
+
+  addPlayList_option.addEventListener('click', () => {
+    const track_id = current_albumData.tracks.items[i].id;
+
+    const find_duplicate = save_trackIds.find((id) => id === track_id);
+
+    if (find_duplicate === undefined) {
+      save_trackIds.push(track_id);
+      localStorage.setItem('play_list', save_trackIds);
+    }
+  });
 });

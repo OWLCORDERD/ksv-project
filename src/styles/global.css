@@ -31,7 +31,8 @@
 :root {
     --black-color : #000;
     --white-color : #fff;
-    --text-color : #5c5c5c;
+    --text-color : #777777;
+    --skeleton-color : rgba(119, 119, 119, 0.2);
     --center-X : translateX(-50%);
     --center-Y : translateY(-50%);
     --center-XY : translate(-50%, -50%);
@@ -60,6 +61,9 @@ html::-webkit-scrollbar-thumb {
     position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
     height: 5rem;
     padding: 0 6.25rem;
@@ -70,7 +74,6 @@ html::-webkit-scrollbar-thumb {
 
 /* banner logo title wrap 영역 */
 header > .logo{
-    display: inline-block;
     width: 200px;
     height: 100%;
 }
@@ -89,13 +92,19 @@ a > h1{
 }
 
 header > nav {
-    display: inline-block;
-    vertical-align: top;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% - 200px);
+    height: 100%;
+}
+
+nav > .menu {
     width: max-content;
     height: 100%;
 }
 
-nav > .menu-button {
+.menu > .menu-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -108,6 +117,109 @@ nav > .menu-button {
     color: #fff;
     text-transform: uppercase;
     font-weight: bold;
+}
+
+nav > .music-player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 32rem;
+    height: 100%;
+}
+
+.music-player > .currentMusic-player {
+    width: 25rem;
+    height: 100%;
+    padding: 1rem 0;
+}
+
+.currentMusic-player > .music-cover {
+    display: inline-block;
+    vertical-align: top;
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--skeleton-color);
+    margin-right: 1rem;
+}
+
+.music-cover > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.currentMusic-player > .music-titleWrap {
+    display: inline-block;
+    vertical-align: top;
+    width: 8rem;
+    height: 100%;
+}
+
+.music-titleWrap > .music-title {
+    height: 2rem;
+    color: #fff;
+    font-family: 'SEBANG_Bold';
+    font-size: 14px;
+}
+
+.music-titleWrap > .music-artist {
+    line-height: 1rem;
+    color: #fff;
+    font-family: 'SEBANG_Regular';
+    font-size: 12px;
+}
+
+.currentMusic-player > .music-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: top;
+    width: 6rem;
+    height: 3rem;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.music-control > svg {
+    fill: #fff;
+}
+
+.currentMusic-player > .duration-timer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    vertical-align: top;
+    width: 6rem;
+    height: 100%;
+    color: var(--white-color);
+}
+
+.duration-timer > .duration-time {
+    font-family: 'SEBANG_Bold';
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.duration-timer > .total-time {
+    font-family: 'SEBANG_Bold';
+    font-size: 14px;
+}
+
+.music-player > .player-toggleButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.player-toggleButton > svg {
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 /* 전역 footer 영역 */

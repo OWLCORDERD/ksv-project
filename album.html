@@ -20,12 +20,46 @@
                     </a>
                 </div>
 
-                <nav class="menu">
-                    <div class="menu-button">
-                        <a href = "/chart.html">chart</a>
+                <nav>
+                    <div class="menu">
+                        <div class="menu-button">
+                            <a href = "/chart.html">chart</a>
+                        </div>
+                        <div class="menu-button">
+                            <a href = "/">ksv artist</a>
+                        </div>
                     </div>
-                    <div class="menu-button">
-                        <a href = "/">ksv artist</a>
+
+                    <div class="music-player">
+                        <div class="currentMusic-player">
+                            <div class="music-cover"></div>
+                            <div class="music-titleWrap">
+                                <div class="music-title">example</div>
+                                <div class="music-artist">hi</div>
+                            </div>
+
+                            <button type = "button" class="music-control">
+                                <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15 27.5C21.9035 27.5 27.5 21.9035 27.5 15C27.5 8.09644 21.9035 2.5 15 2.5C8.09644 2.5 2.5 8.09644 2.5 15C2.5 21.9035 8.09644 27.5 15 27.5ZM13.3669 19.8072L19.2671 16.3237C20.2442 15.7467 20.2442 14.2532 19.2671 13.6762L13.3669 10.1927C12.4171 9.63201 11.25 10.3618 11.25 11.5164V18.4835C11.25 19.6381 12.4171 20.368 13.3669 19.8072Z"/>
+                                </svg>
+                            </button>
+                            
+                            <div class="duration-timer">
+                                <div class="duration-time">
+                                    00:00 
+                                </div>
+                                /
+                                <div class="total-time">
+                                    01:00
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type = "button" class="player-toggleButton">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M49.9997 70.8334H79.1663M20.833 50.0001H79.1663M20.833 29.1667H79.1663" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
                     </div>
                 </nav>
             </header>
