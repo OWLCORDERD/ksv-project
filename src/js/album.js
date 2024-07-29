@@ -185,7 +185,9 @@ track_optionMenu.forEach((menu) => {
 
 const track_items = document.querySelectorAll('.track-item');
 
-let save_trackIds = [];
+let save_trackIds = [localStorage.getItem('play_list')];
+
+console.log(save_trackIds);
 
 track_items.forEach((item, i) => {
   const addPlayList_option = document.querySelector(
@@ -199,7 +201,8 @@ track_items.forEach((item, i) => {
 
     if (find_duplicate === undefined) {
       save_trackIds.push(track_id);
-      localStorage.setItem('play_list', save_trackIds);
+      const filterEmpty = save_trackIds.filter((id) => id !== '');
+      localStorage.setItem('play_list', filterEmpty);
     }
   });
 });

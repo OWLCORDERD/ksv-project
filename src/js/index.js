@@ -19,6 +19,11 @@ const loading = document.querySelector('.loading');
 body.removeChild(loading);
 body.style.overflow = 'auto';
 
+if (!localStorage.getItem('play_list')) {
+  /* 곡 플레이 리스트 로컬 스토리지 생성 */
+  localStorage.setItem('play_list', []);
+}
+
 /* -- gsap 라이브러리의 확장 기능 ScrollTrigger plugin 추가 (scroll event) -- */
 gsap.registerPlugin(ScrollTrigger);
 
