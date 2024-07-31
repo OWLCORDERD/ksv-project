@@ -21,12 +21,6 @@ body > #wrap {
     padding: 6.25rem;
 }
 
-@keyframes load {
-    100% {
-        background-position: -100% 0;
-    }
-}
-
 /* 차트 페이지 dashboard 영역 */
 .main-container > .dashboard-container {
     width: 100%;

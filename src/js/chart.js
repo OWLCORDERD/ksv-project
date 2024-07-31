@@ -2,19 +2,208 @@ import gsap, { ScrollTrigger } from 'gsap/all';
 import { getArtists, getWeekArtist } from '../api/artist';
 import { getTrackData, weeklyArtistData } from '../api/chart';
 import { weeklyArtistAlbum } from '../api/album';
+import musicFile from '@/images/svg/dashboard-icon/music-file.svg';
 import '@/styles/chart.css';
 import { Chart } from 'chart.js/auto';
 import search from '../api/youtubeAPI';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* 차트 200위 데이터중 출현 횟수가 많은 주간 아티스트 top10 선별 */
+// 앨범 페이지에 접속할때마다 로컬 스토리지의 play_list 아이템 배열 가져오기
+const play_list = localStorage.getItem('play_list');
+
+// 사용자가 곡 리스트에서 곡을 선택할때마다 저장되어 포맷되는 로컬 스토리지 재생곡 id 문자열
+const current_play = localStorage.getItem('current_play');
+
+// header에 포함된 현재 재생중인 노래 미리보기 player 음반 이미지, 제목, 아티스트 이름 영역 노드
+const currentMusic_cover = document.querySelector(
+  '.currentMusic-player > .music-cover',
+);
+const currentMusic_title = document.querySelector(
+  '.currentMusic-player > .music-titleWrap > .music-title',
+);
+const currentMusic_artist = document.querySelector(
+  '.currentMusic-player > .music-titleWrap > .music-artist',
+);
+// 음반 이미지 영역 이미지 태그 노드
+const currentMusic_image = document.querySelector(
+  '.currentMusic-player > .music-cover > img',
+);
+
+/* 렌더링시 current_play 로컬스토리지 아이템에 사용자가 선택한 곡이 없으면
+사용자에게 보여질 header 영역 currentMusic player 영역 default 노드 세팅 */
+if (current_play === '') {
+  currentMusic_cover.innerHTML += musicFile;
+
+  currentMusic_title.textContent = '곡을 선택해주세요.';
+
+  currentMusic_artist.remove();
+
+  currentMusic_title.style.height = '3rem';
+  currentMusic_title.style.display = 'flex';
+  currentMusic_title.style.alignItems = 'center';
+} else {
+  /* 렌더링 시 current_play 로컬스토리지에 곡 id 값이 존재할 시
+  매개변수로 fetching하여 응답받은 곡 데이터 속성값으로 header영역 currentMusic player 노드 세팅  */
+  const current_play = localStorage.getItem('current_play');
+  const currentMusic_data = await getTrackData(current_play);
+
+  currentMusic_image.src = currentMusic_data.album.images[0].url;
+  currentMusic_image.style.opacity = 1;
+
+  currentMusic_title.textContent = currentMusic_data.name;
+  currentMusic_artist.textContent = currentMusic_data.artists[0].name;
+}
+
+// playList 팝업창 class toggle 시키는 header currentMusic player 토글 버튼
+const popup_toggleButton = document.querySelector('.playList-toggle');
+
+// playList 팝업창 부모 노드
+const popup_container = document.querySelector('.playList-popup');
+
+// playList 팝업창 music player 영역 자식 노드들 (음반 제목, 아티스트, 이미지)
+const popup_playerTitle = document.querySelector(
+  '.playList-popup > .music-player > .music-title',
+);
+const popup_playerArtist = document.querySelector(
+  '.playList-popup > .music-player > .music-artist',
+);
+const popup_playerDisk = document.querySelector(
+  '.playList-popup > .music-player > .music-disk',
+);
+
+const popup_playerDiskImg = document.querySelector(
+  '.playList-popup > .music-player > .music-disk > img',
+);
+
+// playList 팝업창 music player 오디오 영역
+const popup_playerAudio = document.querySelector('.music-audio');
+const popup_playerSource = document.querySelector('.music-audio > source');
+
+// playList 팝업창 music player 오디오 재생 현황에 따라 업데이트되는 range input 영역
+const popup_musicSeekBar = document.querySelector('.seek-bar');
+
+// playList 팝업창 music player 오디오 총 재생시간 텍스트 영역
+const popup_playDuration = document.querySelector(
+  '.audio-slider > .music-duration',
+);
+
+// playList 팝업창 music player 오디오 재생시간 현황 텍스트 영역
+const popup_playCurrentTime = document.querySelector(
+  '.audio-slider > .current-time',
+);
+
+/* 오디오 태그에서 제공하는 재생시간 minute : second 형태로 포맷해주는 함수 */
+const audioPlayTime_Format = (audio_time) => {
+  let min = Math.floor(audio_time / 60);
+  if (min < 10) {
+    min = `0${min}`;
+  }
+  let sec = Math.floor(audio_time % 60);
+  if (sec < 10) {
+    sec = `0${sec}`;
+  }
+  return `${min} : ${sec}`;
+};
+
+// header의 currentMusic player 영역의 팝업 토글 버튼 클릭 이벤트
+popup_toggleButton.addEventListener('click', async () => {
+  // 팝업창 active class toggle (display : none 상태 -> display : block)
+  popup_container.classList.toggle('active');
+
+  // 팝업창 active class가 부여되어 있을 시 실행
+  if (popup_container.className.includes('active')) {
+    // 오디오 재생 중에 팝업창을 닫았을 시 저장한 재생 시간
+    const current_beforeTime = localStorage.getItem('audio_currentTime');
+    // 실시간으로 변경 될수도 있는 로컬 스토리지에 저장된 곡 id 값을 클릭할때마다 추출
+    const current_play = localStorage.getItem('current_play');
+
+    if (current_play !== '') {
+      // 실시간으로 클릭할때마다 로컬 스토리지에 저장된 곡 id 값으로 곡 데이터 요청
+      const currentMusic_data = await getTrackData(current_play);
+      //playList popup -> music-player 영역 자식 노드들의 데이터 업데이트
+      popup_playerTitle.textContent = currentMusic_data.name;
+      popup_playerArtist.textContent = currentMusic_data.artists[0].name;
+      popup_playerDiskImg.src = currentMusic_data.album.images[0].url;
+      popup_playerSource.src = currentMusic_data.preview_url;
+      popup_playerAudio.load();
+      popup_playerAudio.volume = 0.3;
+
+      // audio 태그가 로드되고 나서 비동기로 오디오 총 재생시간 minute : second 형태로 포맷
+      setTimeout(() => {
+        popup_playDuration.textContent = audioPlayTime_Format(
+          popup_playerAudio.duration,
+        );
+
+        // 현재 재생 상태를 나타내는 range input의 max 최대치를 총 재생시간으로 설정
+        popup_musicSeekBar.max = popup_playerAudio.duration;
+
+        // 로컬스토리지에 저장되어있던 재생시간으로 오디오 재생시간 조정
+        if (current_beforeTime) {
+          popup_playerAudio.currentTime = current_beforeTime;
+          popup_playCurrentTime.innerHTML =
+            audioPlayTime_Format(current_beforeTime);
+          popup_musicSeekBar.value = current_beforeTime;
+        }
+      }, 1000);
+    } else {
+      popup_playerTitle.textContent = '곡을 선택해주세요';
+    }
+  } else {
+    // 팝업창을 닫을 때, 재생중이던 곡의 currentTime 값을 로컬 스토리지에 저장
+    localStorage.setItem('audio_currentTime', popup_playerAudio.currentTime);
+  }
+});
+
+// range input을 클릭하여 onChange 이벤트 발생 시 현재 시간을 range value값으로 변경
+popup_musicSeekBar.addEventListener('change', () => {
+  popup_playerAudio.currentTime = popup_musicSeekBar.value;
+});
+
+// playList popup -> music-player 음악 컨트롤 재생 버튼
+const popup_playButton = document.querySelector('.play-btn');
+
+popup_playButton.addEventListener('click', () => {
+  // 재생 버튼이 pause class toggle 상태일때 클릭 시 이벤트 실행
+  if (popup_playButton.className.includes('pause')) {
+    popup_playerAudio.play();
+    /*  5초마다 현재 재생중인 오디오의 재생시간을 range input value값으로 업데이트
+    및 currentTime text 업데이트 */
+    const audioPlay_realTime = setInterval(() => {
+      popup_musicSeekBar.value = popup_playerAudio.currentTime;
+      popup_playCurrentTime.innerHTML = audioPlayTime_Format(
+        popup_playerAudio.currentTime,
+      );
+
+      // 총 재생 시간과 현재 재생중인 재생시간이 일치할 시 setinterval 함수 clear
+      if (popup_playerAudio.currentTime == popup_playerAudio.duration) {
+        clearInterval(audioPlay_realTime);
+        popup_playerDisk.classList.remove('play');
+        popup_playButton.classList.toggle('pause');
+
+        // 다시 0초로 세팅 및 range input 초기상태로 되돌리기
+        popup_playerAudio.currentTime = 0;
+        popup_musicSeekBar.value = popup_playerAudio.currentTime;
+        popup_playCurrentTime.innerHTML = audioPlayTime_Format(
+          popup_playerAudio.currentTime,
+        );
+      }
+    }, 500);
+  } else {
+    popup_playerAudio.pause();
+  }
+
+  popup_playButton.classList.toggle('pause');
+  popup_playerDisk.classList.toggle('play');
+});
+
+// 차트 200위 데이터중 출현 횟수가 많은 주간 아티스트 top10 선별
 const top10_weeklyArtist = await weeklyArtistData();
 
-/* 차트 설정 labels에 추가 될 아티스트 이름 */
+// 차트 설정 labels에 추가 될 아티스트 이름
 const artistLabels = [];
 
-/* 차트 data에 추가 될 아티스트의 출현 횟수 */
+//차트 data에 추가 될 아티스트의 출현 횟수
 const trackCounts = [];
 
 top10_weeklyArtist.forEach((artist) => {
@@ -280,7 +469,6 @@ const topTrackVideo_skeleton = document.querySelector(
   '.chart1st-track > .topTrack-video > .skeleton-loading',
 );
 
-/*youtube iframe 비디오 태그 기본 형식에 src 경로의 id부분 대표 인기곡 ID로 설정 */
 if (music_video && topTrack_video) {
   topTrack_video.innerHTML = `
   <iframe

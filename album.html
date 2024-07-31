@@ -30,39 +30,57 @@
                         </div>
                     </div>
 
-                    <div class="music-player">
-                        <div class="currentMusic-player">
-                            <div class="music-cover"></div>
-                            <div class="music-titleWrap">
-                                <div class="music-title">example</div>
-                                <div class="music-artist">hi</div>
-                            </div>
-
-                            <button type = "button" class="music-control">
-                                <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15 27.5C21.9035 27.5 27.5 21.9035 27.5 15C27.5 8.09644 21.9035 2.5 15 2.5C8.09644 2.5 2.5 8.09644 2.5 15C2.5 21.9035 8.09644 27.5 15 27.5ZM13.3669 19.8072L19.2671 16.3237C20.2442 15.7467 20.2442 14.2532 19.2671 13.6762L13.3669 10.1927C12.4171 9.63201 11.25 10.3618 11.25 11.5164V18.4835C11.25 19.6381 12.4171 20.368 13.3669 19.8072Z"/>
-                                </svg>
-                            </button>
-                            
-                            <div class="duration-timer">
-                                <div class="duration-time">
-                                    00:00 
-                                </div>
-                                /
-                                <div class="total-time">
-                                    01:00
-                                </div>
-                            </div>
+                    <div class="currentMusic-player">
+                        <div class="music-cover">
+                            <img src = "" alt = ""/>
+                        </div>
+                        <div class="music-titleWrap">
+                            <div class="music-title"></div>
+                            <div class="music-artist"></div>
                         </div>
 
-                        <button type = "button" class="player-toggleButton">
+                        <div class="currentMusic-audio">
+                            <audio src = "" autoplay></audio>
+                        </div>
+
+                        <button type = "button" class="playList-toggle">
                             <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M49.9997 70.8334H79.1663M20.833 50.0001H79.1663M20.833 29.1667H79.1663" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M46.875 70.833C46.875 69.1072 45.4758 67.708 43.75 67.708C42.0242 67.708 40.625 69.1072 40.625 70.833C40.625 72.5593 42.0242 73.958 43.75 73.958C45.4758 73.958 46.875 72.5593 46.875 70.833Z" fill="white"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M36.1346 31.425H63.8647C77.9263 31.425 84.9572 31.425 88.9068 35.5368C92.8559 39.6486 91.9268 46.0013 90.0684 58.7063L88.3059 70.7547C86.8484 80.718 86.1201 85.6997 82.3818 88.683C78.6434 91.6663 73.1297 91.6663 62.1022 91.6663H37.8969C26.8697 91.6663 21.3561 91.6663 17.6178 88.683C13.8795 85.6997 13.1508 80.718 11.6933 70.7547L9.93097 58.7063C8.07251 46.0013 7.1433 39.6486 11.0927 35.5368C15.0421 31.425 22.0729 31.425 36.1346 31.425ZM53.1247 43.7497C53.1247 42.0238 51.7255 40.6249 49.9997 40.6249C48.2738 40.6249 46.8747 42.0238 46.8747 43.7497V61.9918C45.8972 61.6463 44.8455 61.458 43.7497 61.458C38.572 61.458 34.3747 65.6555 34.3747 70.833C34.3747 76.0109 38.572 80.208 43.7497 80.208C48.9272 80.208 53.1247 76.0109 53.1247 70.833V55.4988C55.9172 57.7638 59.4234 59.3747 62.4997 59.3747C64.2255 59.3747 65.6247 57.9759 65.6247 56.2497C65.6247 54.5238 64.2255 53.1247 62.4997 53.1247C61.2272 53.1247 58.8101 52.2138 56.5976 50.2509C54.4388 48.3359 53.1247 45.9943 53.1247 43.7497Z" fill="white"/>
+                                <path opacity="0.4" d="M35.4563 8.33328H64.5402C65.5086 8.33303 66.2515 8.33287 66.9006 8.39637C71.5165 8.84791 75.2948 11.6232 76.8969 15.3615H23.0996C24.7017 11.6232 28.4799 8.84791 33.0958 8.39637C33.745 8.33287 34.4876 8.33303 35.4563 8.33328Z" fill="white"/>
+                                <path opacity="0.7" d="M26.2923 19.6777C20.4981 19.6777 15.7469 23.1767 14.1614 27.8185C14.1284 27.9153 14.0967 28.0126 14.0664 28.1103C15.7254 27.6079 17.4519 27.2797 19.1997 27.0557C23.7012 26.4785 29.3901 26.4788 35.9986 26.4792H64.7157C71.324 26.4788 77.0132 26.4785 81.5144 27.0557C83.2623 27.2797 84.989 27.6079 86.6477 28.1103C86.6177 28.0126 86.5856 27.9153 86.5527 27.8185C84.9673 23.1767 80.2161 19.6777 74.4219 19.6777H26.2923Z" fill="white"/>
                             </svg>
                         </button>
                     </div>
                 </nav>
             </header>
+
+            <div class="playList-popup">
+                <div class="music-player">
+                    <h1 class="music-title"></h1>
+                    <p class="music-artist"></p>
+                    <div class="music-disk">
+                        <img src = "" alt = ""/>
+                    </div>
+
+                    <div class="audio-slider">
+                        <input type = "range" class = "seek-bar" />
+                        <span class = "current-time"></span>
+                        <span class = "music-duration"></span>
+                    </div>
+
+                    <div class="audio-control">
+                        <div class="play-btn pause">
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <audio class="music-audio">
+                        <source src = "" />
+                    </audio>
+                </div>
+            </div>
 
             <main class = "main-container">
                 <div class="album-Banner">

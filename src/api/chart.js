@@ -1,15 +1,7 @@
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { fetchWebApi } from './spotifyAPI';
-
-// firebase firestore 차트 데이터 저장 collection 경로
-const endPoint = collection(db, 'chart_0725');
-
-/* 매주 추가되는 주간 차트 csv 파일 데이터로 업데이트하는 firestore의 차트 collection
-랭킹 필드 값 오름차순으로 데이터 요청 */
-const getSpotifyChartDB = await getDocs(
-  query(endPoint, orderBy('rank', 'asc')),
-);
+import chart0725 from '../chartData/chart_0725.json';
 
 // 차트 데이터 응답 값 저장 배열 (spotify chart의 k-pop 차트 200위 데이터)
 const spotifyChartDB = [];
@@ -21,13 +13,13 @@ const chartArtists = [];
 차트 랭킹 데이터 속성 값들을 배열에 저장
 ** 저장 시 데이터 필드 값중 uri 문자열의 곡 id 값을 추출하는 로직 추가 **
 */
-getSpotifyChartDB.forEach((chartDoc) => {
-  // 응답받은 collection의 문서 필드 객체 생성
+chart0725.forEach((chartDoc) => {
+  // json 데이터 배열 각 객체의 필요한 데이터만 추출
   const doc = {
-    artist_names: chartDoc.data()['artist_names'],
-    rank: chartDoc.data()['rank'],
-    track_name: chartDoc.data()['track_name'],
-    uri: chartDoc.data()['uri'],
+    artist_names: chartDoc.artist_names,
+    rank: chartDoc.rank,
+    track_name: chartDoc.track_name,
+    uri: chartDoc.uri,
   };
 
   /* uri 문자열 split 메소드로 배열로 변경 */

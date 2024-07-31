@@ -24,6 +24,11 @@ if (!localStorage.getItem('play_list')) {
   localStorage.setItem('play_list', []);
 }
 
+if (!localStorage.getItem('current_play')) {
+  /* 바로 실행하기 선택한 곡 id 저장 로컬 스토리지 생성 */
+  localStorage.setItem('current_play', '');
+}
+
 /* -- gsap 라이브러리의 확장 기능 ScrollTrigger plugin 추가 (scroll event) -- */
 gsap.registerPlugin(ScrollTrigger);
 
