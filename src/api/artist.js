@@ -3,7 +3,7 @@ import { fetchWebApi } from './spotifyAPI';
 
 const weekChart_tracks = await getChartTrack();
 
-const weekArtist = weekChart_tracks[0].artists[0].id;
+const weekArtist = weekChart_tracks.tracks[0].artists[0].id;
 
 export const getArtists = async ({ artistIds }) => {
   const ksvArtistList = [];

@@ -1,11 +1,12 @@
 import gsap, { ScrollTrigger } from 'gsap/all';
 import { getArtists, getWeekArtist } from '../api/artist';
-import { getTrackData, weeklyArtistData } from '../api/chart';
+import { getChartTrack, getTrackData, weeklyArtistData } from '../api/chart';
 import { weeklyArtistAlbum } from '../api/album';
 import musicFile from '@/images/svg/dashboard-icon/music-file.svg';
 import '@/styles/chart.css';
 import { Chart } from 'chart.js/auto';
 import search from '../api/youtubeAPI';
+import dotButton from '../images/svg/dot-menu-more.svg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -248,7 +249,7 @@ const data = {
   labels: artistLabels,
   datasets: [
     {
-      label: '금주 차트인 상위 아티스트 곡 갯수',
+      label: '금주 top 20 아티스트 곡 카운트 집계',
       data: trackCounts,
       backgroundColor: ['#fff'],
     },
@@ -453,66 +454,160 @@ if (weekArtist) {
 /* 1번째 인덱스의 top track 데이터 중 첫번째 곡을 대표 인기곡으로 선정 */
 const weekArtist_topTrack = weekArtist[1].tracks[0];
 
-/* search 비동기 함수 -> 대표 인기곡의 제목을 파라미터 값으로 전송하여
-youtube API에 해당 곡을 검색하여 비디오 추출 */
-const music_video = await search(weekArtist_topTrack.name);
+// 차트 리스트 더보기 버튼 페이지 넘버링 인덱스
+let page = 1;
 
-const topTrack_video = document.querySelector('.topTrack-video');
+// 초기 차트 상위 10위 데이터 추출
+const weeklyChart_top10 = await getChartTrack(page);
 
-const topTrack_videoId = music_video[0].id.videoId;
+// 차트 1위~200위 곡 리스트 테이블 body 데이터 영역
+const chartTrack_list = document.querySelector('.track-list > tbody');
 
-const chart1stInfo_skeleton = document.querySelector(
-  '.chart1st-track > .track-info > .skeleton-loading',
+// 초기에 1위 ~ 10위 차트 곡 데이터를 기반으로 테이블 구성
+weeklyChart_top10.tracks.forEach((track, i) => {
+  const track_item = document.createElement('tr');
+  track_item.classList.toggle('chart-track');
+
+  const table_rankData = document.createElement('td');
+  const track_rank = document.createElement('span');
+  track_rank.textContent = weeklyChart_top10.ranks[i];
+  table_rankData.appendChild(track_rank);
+
+  const track_title = document.createElement('h2');
+  track_title.textContent = track.name;
+  const track_album = document.createElement('p');
+  track_album.textContent = track.album.name;
+
+  const table_infoData = document.createElement('td');
+  const track_infoBox = document.createElement('div');
+  track_infoBox.classList.toggle('track-info');
+  track_infoBox.appendChild(track_title);
+  track_infoBox.appendChild(track_album);
+
+  const track_imgBox = document.createElement('div');
+  track_imgBox.classList.toggle('track-imgBox');
+
+  const track_image = document.createElement('img');
+  track_image.src = track.album.images[0].url;
+  track_image.alt = `${track.title} 곡 앨범 이미지`;
+  track_imgBox.appendChild(track_image);
+
+  table_infoData.appendChild(track_imgBox);
+  table_infoData.appendChild(track_infoBox);
+
+  const table_artistData = document.createElement('td');
+  const track_artist = document.createElement('span');
+  track_artist.classList.toggle('track-artist');
+  track_artist.textContent = track.artists[0].name;
+  table_artistData.appendChild(track_artist);
+
+  const table_option = document.createElement('td');
+  const option_button = document.createElement('div');
+  option_button.classList.toggle('option-button');
+  option_button.innerHTML += dotButton;
+  table_option.appendChild(option_button);
+
+  track_item.appendChild(table_rankData);
+  track_item.appendChild(table_infoData);
+  track_item.appendChild(table_artistData);
+  track_item.appendChild(table_option);
+
+  chartTrack_list.appendChild(track_item);
+});
+
+// 더보기 버튼 노드
+const viewMore_button = document.querySelector(
+  '.weeklyChart-tracks > .view-more',
 );
 
-const topTrackVideo_skeleton = document.querySelector(
-  '.chart1st-track > .topTrack-video > .skeleton-loading',
+// 현 페이지의 다음 페이지 상태값
+let nextPage = page + 1;
+
+// 다음 페이지 상태값으로 다음 페이지의 데이터 순위 배열 추출
+const nextChart_ranks = await getChartTrack(nextPage);
+
+// 더보기 버튼의 텍스트로 다음 페이지의 곡 데이터 순위 텍스트 삽입
+viewMore_button.textContent = `+ ${nextChart_ranks.ranks[0]}위~${nextChart_ranks.ranks[9]}위 더보기`;
+
+// 더보기 버튼 클릭 시 다음 페이지 데이터 비동기 로직 실행
+viewMore_button.addEventListener('click', async () => {
+  // 페이지 값 증가
+  page = page + 1;
+
+  // 증가된 페이지 값으로 다음 랭킹 범위 곡 데이터 재 요청
+  const nextRank_tracks = await getChartTrack(page);
+
+  //
+  nextRank_tracks.tracks.forEach((track, i) => {
+    const track_item = document.createElement('tr');
+    track_item.classList.toggle('chart-track');
+
+    const table_rankData = document.createElement('td');
+    const track_rank = document.createElement('span');
+    track_rank.textContent = nextRank_tracks.ranks[i];
+    table_rankData.appendChild(track_rank);
+
+    const track_title = document.createElement('h2');
+    track_title.textContent = track.name;
+    const track_album = document.createElement('p');
+    track_album.textContent = track.album.name;
+
+    const table_infoData = document.createElement('td');
+    const track_infoBox = document.createElement('div');
+    track_infoBox.classList.toggle('track-info');
+    track_infoBox.appendChild(track_title);
+    track_infoBox.appendChild(track_album);
+
+    const track_imgBox = document.createElement('div');
+    track_imgBox.classList.toggle('track-imgBox');
+
+    const track_image = document.createElement('img');
+    track_image.src = track.album.images[0].url;
+    track_image.alt = `${track.title} 곡 앨범 이미지`;
+    track_imgBox.appendChild(track_image);
+
+    table_infoData.appendChild(track_imgBox);
+    table_infoData.appendChild(track_infoBox);
+
+    const table_artistData = document.createElement('td');
+    const track_artist = document.createElement('span');
+    track_artist.classList.toggle('track-artist');
+    track_artist.textContent = track.artists[0].name;
+    table_artistData.appendChild(track_artist);
+
+    const table_option = document.createElement('td');
+    const option_button = document.createElement('div');
+    option_button.classList.toggle('option-button');
+    option_button.innerHTML += dotButton;
+    table_option.appendChild(option_button);
+
+    track_item.appendChild(table_rankData);
+    track_item.appendChild(table_infoData);
+    track_item.appendChild(table_artistData);
+    track_item.appendChild(table_option);
+
+    chartTrack_list.appendChild(track_item);
+  });
+
+  // 증가된 현 페이지의 다음 페이지 상태값
+  let nextPage = page + 1;
+
+  // 다음 페이지의 순위 배열 데이터 요청
+  const nextChart_ranks = await getChartTrack(nextPage);
+
+  // 더보기 버튼 텍스트 다음 페이지의 순위 텍스트로 변환
+  viewMore_button.textContent = `+ ${nextChart_ranks.ranks[0]}위~${nextChart_ranks.ranks[9]}위 더보기`;
+});
+/*
+const observe_container = document.querySelector(
+  '.weeklyChart-tracks > .skeleton-loading',
 );
 
-if (music_video && topTrack_video) {
-  topTrack_video.innerHTML = `
-  <iframe
-  src="https://www.youtube.com/embed/${topTrack_videoId}?autoplay=1&mute=1&loop=1&controls=0&playlist=${topTrack_videoId}"
-  title="YouTube video player" frameborder="0" allow="accelerometer;
-  autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;
-  web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-  </iframe>
-  `;
+let observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    console.log(entry.isIntersecting);
+  });
+});
 
-  topTrackVideo_skeleton.remove();
-}
-
-if (weekArtist_topTrack) {
-  /* 주간 아티스트 대표 인기곡 앨범 이미지 element 추가 */
-  const topTrack_imgBox = document.querySelector(
-    '.chart1st-track > .track-info > .track-img',
-  );
-  const topTrack_img = document.createElement('img');
-
-  if (topTrack_img) {
-    /* 이미지 element에 대표 인기곡 데이터 중 앨범 이미지 경로값 src 속성에 추가 */
-    topTrack_img.src = weekArtist_topTrack.album.images[0].url;
-    topTrack_img.alt = `${weekArtist_topTrack.album.name} 대표 곡 앨범 이미지`;
-    topTrack_imgBox.appendChild(topTrack_img);
-  }
-
-  /* 주간 아티스트 대표 인기곡 제목 text 추가 */
-  const topTrack_title = document.querySelector(
-    '.chart1st-track > .track-info > .track-title > h4',
-  );
-
-  if (topTrack_title) {
-    topTrack_title.innerText = weekArtist_topTrack.name;
-  }
-
-  /* 주간 아티스트 대표 인기곡 앨범 아티스트 이름 text 추가 */
-  const topTrack_artist = document.querySelector(
-    '.chart1st-track > .track-info > .track-artist > span',
-  );
-
-  if (topTrack_artist) {
-    topTrack_artist.innerText = weekArtist_topTrack.artists[0].name;
-  }
-
-  chart1stInfo_skeleton.remove();
-}
+observer.observe(observe_container);
+*/

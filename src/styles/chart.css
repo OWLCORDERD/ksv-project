@@ -23,37 +23,24 @@ body > #wrap {
 
 /* 차트 페이지 dashboard 영역 */
 .main-container > .dashboard-container {
-    width: 100%;
+    max-width: 1250px;
     height: 100%;
-}
-
-/* dashboard 제목 */
-.dashboard-container > .dashboard-title {
-    width: 100%;
-    height: 6.25rem;
-    margin-bottom: 2rem;
-}
-
-.dashboard-title > h1 {
-    line-height: 6.25rem;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 1.3rem;
-    font-family: 'SEBANG_Bold';
+    margin: 2rem auto 0 auto;
 }
 
 /* 주간 차트 dashboard  */
-.dashboard-container > .weeklyChart-dashboard {
+.dashboard-container > .weeklyChart-artist {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 28rem;
+    height: 25rem;
+    margin-bottom: 6.25rem;
 }
 
-.weeklyChart-dashboard > .weeklyArtist-imgBox {
+.weeklyChart-artist > .weeklyArtist-imgBox {
     position: relative;
-    width: 28rem;
+    width: 25rem;
     height: 100%;
 }
 
@@ -63,64 +50,59 @@ body > #wrap {
     object-fit: cover;
 }
 
-.weeklyChart-dashboard > .data-wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 70%;
-    height: 100%;
-}
-
 /* 주간 아티스트 1위 데이터 영역 */
-.data-wrap > .weeklyChart-data {
-    width: 35%;
+.weeklyChart-artist > .weeklyArtist-data {
+    width: 35rem;
     height: 100%;
 }
 
 /* 1위 아티스트 이름 데이터 영역 */
-.weeklyChart-data > .weekly-artist {
+.weeklyArtist-data > .weekly-artist {
     position: relative;
     width: 100%;
-    height: calc(28rem / 2 - 1rem);
-    padding: 2rem;
-    background-color: rgba(119,119,119,0.2);
+    height: calc(25rem / 2 - 2rem);
+    padding: 0 2rem;
+    margin-bottom: 4rem;
 }
 
 .weekly-artist > .artist-wrap {
-    width: 70%;
+    width: 100%;
     height: 100%;
 }
 
 /* 아티스트 이름 */
 .artist-wrap > .artist-name {
     width: 100%;
-    height: 5rem;
+    height: 6.5rem;
     overflow: hidden;
 }
 
 .artist-name > span {
     position: relative;
-    top: 5rem;
+    top: 6.5rem;
     color: var(--white-color);
     font-family: 'SEBANG_Bold';
     font-size: 1.8rem;
-    line-height: 5rem;
     transition: all 0.5s ease-in-out;
 }
 
-/* 아티스트 데이터 제목 */
-.artist-wrap > .chart-title {
+/* 아티스트, 카운트 데이터 제목 */
+.artist-wrap > .chart-title,
+.count-wrap > .chart-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
     width: 100%;
-    height: 2rem;
-    margin-top: 2rem;
+    height: 3rem;
+    margin-top: 1rem;
 }
 
 .chart-title > h2 {
     color: #fff;
     font-weight: 300;
-    line-height: 2rem;
     font-size: 14px;
     font-family: 'SEBANG_Bold';
+    text-transform: uppercase;
 }
 
 .weekly-artist > .trophy-icon {
@@ -133,51 +115,32 @@ body > #wrap {
 }
 
 /* 주간 1위 아티스트 곡 카운트 영역 */
-.weeklyChart-data > .count-track {
+.weeklyArtist-data > .count-track {
     position: relative;
     width: 100%;
-    height: calc(28rem / 2 - 1rem);
-    margin-top: 2rem;
-    padding: 2rem;
-    background-color: rgba(119,119,119,0.2);
+    height: calc(25rem / 2 - 2rem);
+    padding: 0 2rem;
 }
 
 .count-track > .count-wrap {
-    width: 70%;
+    width: 100%;
     height: 100%;
 }
 
 /* 곡 카운트 데이터 영역 */
 .count-wrap > .count {
     width: 100%;
-    height: 4rem;
+    height: 6.5rem;
     overflow: hidden;
 }
 
 .count > span {
     position: relative;
-    top: 5rem;
+    top: 6.5rem;
     font-family: 'SEBANG_Bold';
     color: var(--white-color);
     font-size: 1.8rem;
-    line-height: 5rem;
     transition: all 0.5s ease-in-out;
-}
-
-/* 곡 카운트 데이터 제목 */
-.count-wrap > .chart-title {
-    width: 100%;
-    height: 2rem;
-    margin-top: 2rem;
-}
-
-.chart-title > h2 {
-    color: #fff;
-    font-weight: 300;
-    line-height: 2rem;
-    font-size: 14px;
-    font-family: 'SEBANG_Regular';
-    text-transform: uppercase;
 }
 
 .count-track > .track-icon {
@@ -190,11 +153,10 @@ body > #wrap {
 }
 
 /* 주간 차트 아티스트 순위 그래프 */
-.data-wrap > .weeklyChart-graph {
+.dashboard-container > .weeklyChart-graph {
     position: relative;
-    width: 60%;
-    height: 100%;
-    background-color: rgba(119,119,119,0.2);
+    width: 100%;
+    height: 25rem;
 }
 
 /* 차트 그래프(canvas) 부모 영역 */
@@ -204,7 +166,6 @@ body > #wrap {
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 0 2rem;
 }
 
 /* 주간 아티스트 앨범 영역 */
@@ -457,4 +418,147 @@ body > #wrap {
     color: rgba(255, 255, 255, 0.8);
     line-height: 3rem;
     font-family: 'SEBANG_Regular';
+}
+
+.main-container > .weeklyChart-tracks {
+    max-width: 1250px;
+    height: 100%;
+    margin: 6.25rem auto 0 auto;
+}
+
+.weeklyChart-tracks > .track-list {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+    height: 100%;
+}
+
+.track-list > thead {
+    width: 100%;
+    height: 5rem;
+}
+
+thead > tr > th {
+    font-size: 15px;
+    font-family: 'SEBANG_Bold';
+    color: #fff;
+    text-align: center;
+}
+
+thead > tr > th:nth-child(1) {
+    width: 10rem;
+}
+
+thead > tr > th:nth-child(2) {
+    text-align: start;
+}
+
+.track-list > tbody {
+    width: 100%;
+    height: 100%;
+}
+
+tbody > .chart-track {
+    width: 100%;
+    height: 7rem;
+    padding: 1rem 0;
+}
+
+.chart-track > td {
+    width: 10rem;
+    height: 5rem;
+    text-align: center;
+}
+
+.chart-track > td:nth-child(1) > span {
+    font-size: 1rem;
+    color: #fff;
+    font-family: 'SEBANG_Bold';
+}
+
+.chart-track > td:nth-child(2) {
+    width: calc(60% - 10rem);
+    height: 5rem;
+    overflow: hidden;
+    text-align: start;
+}
+
+.chart-track > td:nth-child(2) > .track-imgBox {
+    display: inline-block;
+    vertical-align: top;
+    width: 5rem;
+    height: 5rem;
+    margin-right: 2rem;
+}
+
+.track-imgBox > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chart-track > td:nth-child(2) > .track-info {
+    display: inline-block;
+    vertical-align: top;
+    width: 80%;
+    height: 5rem;
+}
+
+.track-info > h2 {
+    height: 3rem;
+    font-size: 14px;
+    color: #fff;
+    font-family: 'SEBANG_Bold';
+}
+
+.track-info > p {
+    display: flex;
+    align-items: flex-end;
+    height: 2rem;
+    font-size: 12px;
+    color: #777;
+    font-family: 'SEBANG_Regular';
+}
+
+.chart-track > td:nth-child(3) {
+    text-align: center;
+}
+
+.chart-track > td:nth-child(3) > .track-artist {
+    font-size: 14px;
+    color: #fff;
+    font-family: 'SEBANG_Bold';
+}
+
+.chart-track > td:nth-child(4) > .option-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option-button > svg {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.weeklyChart-tracks > .view-more {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 3rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15rem;
+    height: 5rem;
+    font-family: 'SEBANG_Bold';
+    font-size: 1rem;
+    color: #fff;
+}
+
+.view-more:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }

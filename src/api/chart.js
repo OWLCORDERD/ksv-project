@@ -40,7 +40,7 @@ chart0725.forEach((chartDoc) => {
 });
 
 /* 차트 데이터 아티스트 이름 배열 업데이트 */
-spotifyChartDB.forEach((data) => {
+spotifyChartDB.slice(0, 20).forEach((data) => {
   chartArtists.push(data.artist_names);
 });
 
@@ -73,15 +73,29 @@ chartArtistCounts.sort((a, b) => {
 });
 
 /* 추출한 음반 id 값들을 /tracks route -> query parameter 값으로 전송하여 곡 정보 추출 */
-export const getChartTrack = async () => {
+export const getChartTrack = async (page) => {
   const trackIdArray = spotifyChartDB.map((track) => {
     return track.track_id;
   });
 
-  const fetchIdArray = trackIdArray.slice(0, 10).join(',');
+  const tracksRank = spotifyChartDB.map((track) => {
+    return track.rank;
+  });
+  const maxPageDataLength = 10;
+  let lastIndex = page * maxPageDataLength;
+  let firstIndex = lastIndex - maxPageDataLength;
+
+  const fetchIdArray = page
+    ? trackIdArray.slice(firstIndex, lastIndex).join(',')
+    : trackIdArray.slice(0, 10).join(',');
+
+  const currentPage_Rank = tracksRank.slice(firstIndex, lastIndex);
   const res = await fetchWebApi(`v1/tracks?ids=${fetchIdArray}`, 'GET');
 
-  return res.tracks;
+  return {
+    tracks: res.tracks,
+    ranks: currentPage_Rank,
+  };
 };
 
 export const getTrackData = async (track_id) => {
