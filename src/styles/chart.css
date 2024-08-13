@@ -40,7 +40,7 @@ body > #wrap {
 
 .weeklyChart-artist > .weeklyArtist-imgBox {
     position: relative;
-    width: 25rem;
+    width: 30%;
     height: 100%;
 }
 
@@ -50,23 +50,42 @@ body > #wrap {
     object-fit: cover;
 }
 
-/* 주간 아티스트 1위 데이터 영역 */
-.weeklyChart-artist > .weeklyArtist-data {
-    width: 35rem;
+/* 주간 차트 아티스트 순위 그래프 */
+.weeklyChart-artist > .weeklyChart-graph {
+    position: relative;
+    width: 60%;
+    height: 25rem;
+}
+
+/* 차트 그래프(canvas) 부모 영역 */
+.weeklyChart-graph > .chart-graph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     height: 100%;
+}
+
+/* 주간 아티스트 1위 데이터 영역 */
+.dashboard-container > .weeklyArtist-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 10.5rem;
 }
 
 /* 1위 아티스트 이름 데이터 영역 */
 .weeklyArtist-data > .weekly-artist {
     position: relative;
-    width: 100%;
-    height: calc(25rem / 2 - 2rem);
-    padding: 0 2rem;
-    margin-bottom: 4rem;
+    width: 50%;
+    height: 100%;
 }
 
 .weekly-artist > .artist-wrap {
-    width: 100%;
+    position: absolute;
+    left: 10rem;
+    width: calc(100% - 10rem); 
     height: 100%;
 }
 
@@ -107,9 +126,8 @@ body > #wrap {
 
 .weekly-artist > .trophy-icon {
     position: absolute;
-    top: 50%;
-    right: 2rem;
-    transform: translateY(-50%);
+    top: 0;
+    left: 0;
     width: 3rem;
     height: 3rem;
 }
@@ -117,13 +135,14 @@ body > #wrap {
 /* 주간 1위 아티스트 곡 카운트 영역 */
 .weeklyArtist-data > .count-track {
     position: relative;
-    width: 100%;
-    height: calc(25rem / 2 - 2rem);
-    padding: 0 2rem;
+    width: 50%;
+    height: 100%;
 }
 
 .count-track > .count-wrap {
-    width: 100%;
+    position: absolute;
+    left: 10rem;
+    width: calc(100% - 10rem);
     height: 100%;
 }
 
@@ -145,27 +164,10 @@ body > #wrap {
 
 .count-track > .track-icon {
     position: absolute;
-    top: 50%;
-    right: 2rem;
-    transform: translateY(-50%);
+    top: 0;
+    left: 0;
     width: 3rem;
     height: 3rem;
-}
-
-/* 주간 차트 아티스트 순위 그래프 */
-.dashboard-container > .weeklyChart-graph {
-    position: relative;
-    width: 100%;
-    height: 25rem;
-}
-
-/* 차트 그래프(canvas) 부모 영역 */
-.weeklyChart-graph > .chart-graph {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
 }
 
 /* 주간 아티스트 앨범 영역 */
@@ -227,18 +229,17 @@ body > #wrap {
 
 /* 주간 아티스트 앨범 목록 영역 */
 .weeklyArtist-album > .album-list {
-    margin: 0 20px;
-    width: 100%;
+    margin: 0 -20px;
     height: 100%;
 }
 
 .album-list > .album-item {
     display: inline-block;
     vertical-align: top;
-    margin-right: 20px;
-    width: calc(1250px / 4 - 40px);
+    margin: 0 20px;
+    width: calc(1290px / 4 - 40px) !important;
     height: 30rem;
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
 }
 
 .album-item > .album-image {

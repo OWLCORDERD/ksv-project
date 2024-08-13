@@ -1,5 +1,3 @@
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { db } from '../config/firebase';
 import { fetchWebApi } from './spotifyAPI';
 import chart0725 from '../chartData/chart_0725.json';
 
@@ -40,7 +38,7 @@ chart0725.forEach((chartDoc) => {
 });
 
 /* 차트 데이터 아티스트 이름 배열 업데이트 */
-spotifyChartDB.slice(0, 20).forEach((data) => {
+spotifyChartDB.forEach((data) => {
   chartArtists.push(data.artist_names);
 });
 

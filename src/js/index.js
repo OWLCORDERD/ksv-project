@@ -6,12 +6,8 @@ import bannerVideo from '@/images/videos/bannerVideo.mp4';
 import { getChartTrack } from '@/api/chart';
 import spotify from '@/images/svg/pick-method/spotify.svg';
 import jsonFile from '@/images/svg/pick-method/jsonFile.svg';
-import database from '@/images/svg/pick-method/database.svg';
-import Swiper from 'swiper';
-import { Navigation } from 'swiper/modules';
-import '@/styles/swiper/swiper.css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import trophy from '@/images/svg/pick-method/trophy-icon.svg';
+import { getTrackData, weeklyArtistData } from '../api/chart';
 
 const body = document.querySelector('body');
 const loading = document.querySelector('.loading');
@@ -171,7 +167,7 @@ for (let i = 0; i < artists.length; i++) {
   `;
 }
 
-const ksvArtist_container = document.querySelector('.main-ksvArtist');
+const ksvArtist_container = document.querySelector('.ksv-Artist');
 const carousel_container = document.querySelector('.carousel-Artist');
 const carousel_animateBox = document.querySelector('.carousel-animateBox');
 
@@ -216,17 +212,17 @@ const methodData = [
     id: 2,
     image: jsonFile,
     title: 'Format CSV file to JSON file',
-    info: '웹 브라우저에서 곡 데이터들을 볼 수 있도록 CSV 파일을 JSON 파일로 포맷합니다. .',
+    info: '웹 브라우저에서 곡 데이터들을 처리 할 수 있도록 CSV 파일을 JSON 파일로 포맷합니다.',
   },
   {
     id: 3,
-    image: database,
-    title: 'Update Chart Database',
-    info: '차트 데이터를 관리하는 데이터베이스에 파일을 반영하여 내용을 업데이트합니다.',
+    image: trophy,
+    title: 'Selection Weekly Artist',
+    info: '1위 ~ 200위 차트 곡 데이터 중 아티스트 출연 횟수를 구하여 금주 상위 아티스트를 선별합니다.',
   },
 ];
 
-/* Weekly Chart(주간 차트) pick methods(선택한 방법) ul container 자식 노드 */
+/* Weekly Chart(주간 차트) pick methods(선택한 방법) list container 자식 노드 */
 methodData.forEach((data) => {
   const method_item = document.createElement('li');
   const method_imageBox = document.createElement('div');
@@ -251,48 +247,34 @@ methodData.forEach((data) => {
   pickMethods_container.appendChild(method_item);
 });
 
-/* 차트 상위 top 10 곡 데이터 요청 */
-const chart10Track = await getChartTrack();
+// (ksv-Chart container) audio sample > current Player 영역 노드
+const currentPlayer_albumImg = document.querySelector(
+  '.current-player > .album-imgBox > img',
+);
+const currentPlayer_musicName = document.querySelector(
+  '.current-player > .music-titleWrap > .music-name > h3',
+);
+const currentPlayer_artistName = document.querySelector(
+  '.current-player > .music-titleWrap > .artist-name > span',
+);
 
-const slide_prev = document.querySelector('.prev-button');
-const slide_next = document.querySelector('.next-button');
+// 상위 출연 횟수 아티스트 10위 선별 데이터
+const weeklyChart_Artist = await weeklyArtistData();
+// 상위 아티스트 1위 곡 데이터
+const weeklyChart_1stMusic = await getTrackData(weeklyChart_Artist[0].track_id);
 
-new Swiper('.swiper-container', {
-  slidesPerView: 3,
-  modules: [Navigation],
-  navigation: {
-    prevEl: slide_prev,
-    nextEl: slide_next,
-  },
-  speed: 1000,
-  spaceBetween: 50,
-});
+currentPlayer_albumImg.src = weeklyChart_1stMusic.album.images[0].url;
+currentPlayer_musicName.textContent = weeklyChart_1stMusic.name;
+currentPlayer_artistName.textContent = weeklyChart_1stMusic.artists[0].name;
 
-const slideWrapper = document.querySelector('.swiper-wrapper');
+// (ksv-Chart container) audio sample > audio player 영역 노드
+const audio_musicDisk = document.querySelector(
+  '.audio-player > .music-disk > img',
+);
+audio_musicDisk.src = weeklyChart_1stMusic.album.images[0].url;
 
-chart10Track.forEach((track) => {
-  const track_slide = document.createElement('div');
-  track_slide.classList.toggle('swiper-slide');
-  const slide_imageBox = document.createElement('div');
-  slide_imageBox.classList.toggle('track-image');
-  const slide_image = document.createElement('img');
-  slide_image.src = `${track.album.images[0].url}`;
-  slide_image.alt = `${track.name} 앨범 이미지`;
-  slide_imageBox.appendChild(slide_image);
-  track_slide.appendChild(slide_imageBox);
-  const track_infoBox = document.createElement('div');
-  track_infoBox.classList.add('track-infoBox');
-  const track_title = document.createElement('h3');
-  const track_artist = document.createElement('span');
-  track_title.textContent = track.name;
-  track_infoBox.appendChild(track_title);
-  track_artist.textContent = track.artists[0].name;
-  track_infoBox.appendChild(track_artist);
-  track_slide.appendChild(track_infoBox);
-  slideWrapper.appendChild(track_slide);
-});
-
-const weeklyChart_container = document.querySelector('.Weekly-chart');
+// ksv Chart 소개 컨테이너 스크롤 이벤트
+const weeklyChart_container = document.querySelector('.ksv-Chart');
 const weeklyChart_title = document.querySelector('.chart-titleWrap');
 
 gsap.fromTo(
@@ -325,6 +307,76 @@ gsap.fromTo(
       trigger: weeklyChart_container,
       start: '5% top',
       end: '10% top',
+    },
+  },
+);
+
+// ksv music player 영역 차트 페이지 이동 버튼 클릭 이벤트
+const chart_linkButton = document.querySelector('.chart-button');
+
+chart_linkButton.addEventListener('click', () => {
+  window.location.href = '/chart.html';
+});
+
+// ksv music player 영역 스크롤 애니메이션 이벤트
+const musicPlayer_container = document.querySelector('.ksv-musicPlayer');
+const current_player = document.querySelector(
+  '.audio-sample > .current-player',
+);
+const audio_player = document.querySelector('.audio-sample > .audio-player');
+const audioMusic_disk = document.querySelector('.audio-player > .music-disk');
+const player_cursor = document.querySelector(
+  '.current-player > .cursor-animation',
+);
+
+gsap.fromTo(
+  current_player,
+  {
+    opacity: 0,
+    y: 50,
+  },
+  {
+    opacity: 1,
+    y: 0,
+    scrollTrigger: {
+      trigger: musicPlayer_container,
+      start: '-20% top',
+      end: 'center bottom',
+      scrub: 1,
+    },
+  },
+);
+
+gsap.fromTo(
+  audio_player,
+  {
+    opacity: 0,
+  },
+  {
+    opacity: 1,
+    transitionDelay: 0.5,
+    transitionDuration: 0.5,
+    scrollTrigger: {
+      trigger: musicPlayer_container,
+      start: '-20% top',
+      end: 'center bottom',
+      scrub: 1,
+    },
+  },
+);
+
+gsap.fromTo(
+  player_cursor,
+  {
+    animationPlayState: 'paused',
+  },
+  {
+    animationPlayState: 'running',
+    scrollTrigger: {
+      trigger: musicPlayer_container,
+      start: '-20% top',
+      end: 'center bottom',
+      scrub: 1,
     },
   },
 );

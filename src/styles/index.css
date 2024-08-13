@@ -179,13 +179,13 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 }
 
 /* 차트 서비스 소개 영역 */
-.screen-container > .Weekly-chart{
+.screen-container > .ksv-Chart{
     width: 100%;
     height: 100%;
     padding: 6.25rem 0;
 }
 
-.Weekly-chart > .chart-titleWrap {
+.ksv-Chart > .chart-titleWrap {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -215,13 +215,13 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 
 .chart-titleWrap > .content > p {
     width: 30%;
-    font-size: 14px;
+    font-size: 15px;
     font-family: 'SEBANG_Regular';
-    color: #fff;
+    color: #777;
     word-break: keep-all;
 }
 
-.Weekly-chart > .pick-methods {
+.ksv-Chart > .pick-methods {
     display: block;
     width: 100%;
     height: 40rem;
@@ -283,143 +283,234 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 }
 
 /* 주간 차트 top 10 슬라이드 소개 영역 */
-.Weekly-chart > .chart-slide {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.screen-container > .ksv-musicPlayer {
     width: 100%;
-    height: 40rem;
-    margin-top: 15rem;
-}
-
-.chart-slide > .chart-control {
-    width: 40rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     height: 100%;
-    padding: 0 3rem 0 6.25rem;
+    padding: 6.25rem 0;
 }
 
-.chart-control >  .chart-info {
+.ksv-musicPlayer > .introduce-detail {
     width: 100%;
-    height: 50%;
-    font-family: 'Unbounded-Regular';
-}
-
-.chart-info > .title {
-    width: 100%;
-    height: 80%;
-}
-
-.chart-info > .title > h2 {
-    font-size: 1.5rem;
-    color: var(--white-color);
-    text-transform: uppercase;
-    line-height: 5rem;
-}
-
-.chart-info > .chart-date {
-    width: 100%;
-    height: 20%;
-}
-
-.chart-date > span {
-    color: var(--white-color);
-    line-height: 5rem;
-}
-
-.chart-control > .slide-control {
+    height: 45rem;
+    padding: 0 6.25rem;
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    width: 100%;
-    height: 30%;
-}
-
-.slide-control > .view-more {
-    width: 100%;
-}
-
-.view-more > a {
-    text-decoration: underline;
-    color: var(--white-color);
-    font-family: 'SEBANG_Regular';
-}
-
-.slide-control > .control-button {
-    display: block;
-    width: 200px;
-    height: 80px;
-}
-
-.control-button > button {
-    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    background-color: rgba(255,255,255,0.4);
-    border-radius: 50%;
-    margin-right: 50px;
+}
+
+.introduce-detail > .title-wrap {
+    width: 60%;
+    height: 100%;
+}
+
+.introduce-detail > .title-wrap > .musicPlayer-title {
+    width: 100%;
+    height: 6.25rem;
+}
+
+.musicPlayer-title > h2 {
+    font-size: 1.6rem;
+    font-family: 'Unbounded-Bold';
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.introduce-detail > .title-wrap > .musicPlayer-info {
+    width: 60%;
+    height: 30rem;
+    margin-top: 5rem;
+}
+
+.musicPlayer-info > p {
+    font-size: 15px;
+    color: #777;
+    font-family: 'SEBANG_Regular';
+    word-break: keep-all;
+}
+
+.introduce-detail > .title-wrap > .chart-button {
+    position: relative;
+    overflow: hidden;
+    width: 15rem;
+    height: 3rem;
+    padding: 0rem;
+    background: #3d3a4e;
+    background-size: 400%;
+    color: #fff;
     border: none;
     cursor: pointer;
 }
 
-.control-button > button:hover {
+.chart-button:hover::before {
+    transform: scaleX(1);
+}
+
+.button-content {
+    position: relative;
+    z-index: 1;
+    font-family: 'SEBANG_Regular';
+}
+
+.chart-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    width: 100%;
+    height: inherit;
+    border-radius: inherit;
+    background: linear-gradient(
+      82.3deg,
+      rgba(150, 93, 233, 1) 10.8%,
+      rgba(99, 88, 238, 1) 94.3%
+    );
+    transition: all 0.475s;
+}
+
+.introduce-detail > .audio-sample {
+    width: 30rem;
+    height: 100%;
+}
+
+.audio-sample > .current-player {
+    position: relative;
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    height: 5rem;
+}
+
+.current-player > .cursor-animation {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4rem;
+    height: 4rem;
+    transition: all 0.3s ease-in-out;
+    animation: cursorMove 1s linear infinite;
+}
+
+@keyframes cursorMove {
+    0% {
+        transform: translateY(5rem);
+    }
+
+    100% {
+        transform: translateY(2rem);
+    }
+}
+
+.current-player > .album-imgBox {
+    width: 5rem;
+    height: 5rem;
+    overflow: hidden;
     background-color: #fff;
-    transition: all 0.5s ease-in-out;
 }
 
-.control-button > button:nth-child(2){
-    margin-right: 0;
-}
-
-.control-button > button > svg {
-    width: 30px;
-    height: 30px;
-    fill: #fff;
-}
-
-.control-button > button:hover > svg {
-    fill: #000;
-}
-
-/* 주간 차트 top 10 슬라이드 영역 */
-.chart-slide > .chart-slider {
-    position: relative;
-    width: 60%;
-    height: 28rem;
-    padding-right: 5rem;
-    overflow: hidden;
-}
-
-.slider-wrap > .swiper-container {
-    position: relative;
+.album-imgBox > img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.current-player > .music-titleWrap {
+    width: 16rem;
     height: 100%;
 }
 
-.swiper-wrapper > .swiper-slide {
-    position: relative;
-    width: 100%;
-    height: 100%;
+.music-titleWrap > .music-name {
+    height: 3rem;
+    font-size: 14px;
+    color: #fff;
+    font-family: 'SEBANG_Bold';
 }
 
-.swiper-slide:nth-child(10) {
-    margin-right: 0;
+.music-titleWrap > .artist-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 2rem;
+    font-size: 14px;
+    color: #777;
+    font-family: 'SEBANG_Bold';
 }
 
-.swiper-slide > .track-image {
-    position: relative;
+.current-player > .popup-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+    transition: all 0.3s ease-in-out;
+    animation: example linear infinite;
+    animation-delay: 1s;
+    animation-duration: 1s;
+}
+
+@keyframes example {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+.popup-toggle > svg {
+    width: 40px;
+    height: 40px;
+}
+
+.audio-sample > .audio-player {
     width: 100%;
-    height: 18rem;
+    height: 35rem;
+    margin-top: 5rem;
+}
+
+.audio-player > .music-disk {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    width: 20rem;
+    height: 20rem;
+    background-color: #000;
+    border-radius: 50%;
     overflow: hidden;
-    border-radius: 15px;
+    animation: diskRotate 10s linear infinite;
+    box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.2);
 }
 
-.track-image > img {
+.music-disk::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5rem;
+    height: 5rem;
+    content: '';
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    z-index: 10;
+}
+
+@keyframes diskRotate {
+    0% {
+        transform: translateX(-50%) rotate(0);
+    }
+    50% {
+        transform: translateX(-50%) rotate(180deg);
+    }
+    100% {
+        transform: translateX(-50%) rotate(360deg);
+    }
+}
+
+.music-disk > img {
     position: absolute;
     top: 0;
     left: 0;
@@ -428,28 +519,70 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     object-fit: cover;
 }
 
-.swiper-slide > .track-infoBox {
+.audio-player > .audio-slider {
+    position: relative;
     width: 100%;
-    height: 10rem;
+    height: 5rem;
+    margin-top: 5rem;
 }
 
-.track-infoBox > h3 {
-    height: 8rem;
-    padding-top: 2rem;
-    font-size: 1rem;
-    color: var(--white-color);
+.audio-slider > .seek-bar {
+    -webkit-appearance: none;
+    display: block;
+    width: 100%;
+    height: 10px;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.seek-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1px;
+    height: 20px;
+    background-color: #000000;
+    box-shadow: -35rem 0 0 35rem rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+}
+
+.audio-slider > .current-time {
+    height: 3rem;
+    line-height: 3rem;
     font-family: 'SEBANG_Bold';
-    text-transform: uppercase;
-    word-break: keep-all;
+    color: #fff;
 }
 
-.track-infoBox > span {
-    height: 2rem;
-    line-height: 2rem;
-    font-size: 13px;
-    text-transform: uppercase;
-    color: var(--white-color);
-    font-family: 'SEBANG_Regular';
+.audio-slider > .music-duration {
+    position: absolute;
+    right: 0;
+    height: 3rem;
+    line-height: 3rem;
+    color: #fff;
+    font-family: 'SEBANG_Bold';
+}
+
+.audio-player > .audio-control {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 5rem;
+}
+
+.audio-control > .prev-button,
+.audio-control > .play-button,
+.audio-control > .next-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+}
+
+.prev-button > svg,
+.play-button > svg,
+.next-button > svg {
+    width: 40px;
+    height: 40px;
 }
 
 /*ksv 아티스트 페이지로 이동하는 영역 */
@@ -463,7 +596,7 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
 
 .ksv-Artist > .title-wrap{
     width: 100%;
-    height: 20rem;
+    height: 23rem;
 }
 
 .title-wrap > .ksvArtist-title {
@@ -476,67 +609,71 @@ screen container의 상단에 고정되는 비디오 wrap 영역 */
     line-height: 8rem;
     text-align: center;
     color: var(--white-color);
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-family: 'Unbounded-Regular';
     text-transform: uppercase;
 }
 
 .title-wrap > .ksvArtist-info {
     margin: 2rem auto 0 auto;
-    width: 30rem;
-    height: 3.125rem;
-}
-
-.ksvArtist-info > p {
-    line-height: 3.125rem;
-    font-size: 15px;
-    color: #fff;
-    text-align: center;
-    font-family: 'SEBANG_Regular';
-}
-
-.title-wrap > .view-ksvArtist {
-    margin: 3rem auto 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 12rem;
-    height: 3.125rem;
+    width: 30rem;
+    height: 5rem;
 }
 
-.view-ksvArtist > span {
-    width: 10rem;
-    line-height: 3.125rem;
-    text-transform: uppercase;
-    color: var(--white-color);
+.ksvArtist-info > p {
+    width: 80%;
     font-size: 15px;
-    font-family: 'Unbounded-Bold';
-}
-
-.view-ksvArtist > svg {
-    display: block;
-    width: 2rem;
-    height: 2rem;
-}
-
-.view-ksvArtist > svg > circle {
-    fill : rgba(119, 119, 119, 0.4);
-}
-
-.view-ksvArtist > svg > path {
-    fill : rgb(230, 230, 230);
-}
-
-.view-ksvArtist:hover > span {
     color: #fff;
+    text-align: center;
+    word-break: keep-all;
+    font-family: 'SEBANG_Regular';
 }
 
-.view-ksvArtist:hover > svg > circle {
-    fill : #fff;
+.title-wrap > .viewMore-button {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+    width: 15rem;
+    height: 3rem;
+    padding: 0rem;
+    margin-top: 5rem;
+    background: #3d3a4e;
+    background-size: 400%;
+    color: #fff;
+    border: none;
+    cursor: pointer;
 }
 
-.view-ksvArtist:hover > svg > path {
-    fill: #000;
+.viewMore-button:hover::before {
+    transform: scaleX(1);
+}
+
+.button-content {
+    position: relative;
+    z-index: 1;
+    font-family: 'SEBANG_Regular';
+}
+
+.viewMore-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    width: 100%;
+    height: inherit;
+    border-radius: inherit;
+    background: linear-gradient(
+      82.3deg,
+      rgba(150, 93, 233, 1) 10.8%,
+      rgba(99, 88, 238, 1) 94.3%
+    );
+    transition: all 0.475s;
 }
 
 /*아티스트 사진들을 활용한 css 3D 회전 이벤트 부모 영역 */
@@ -601,7 +738,6 @@ translateZ 속성으로 부모 요소와의 거리 조절 */
     width: 100%;
     height: 5rem;
     overflow: hidden;
-    border-top: 2px solid var(--white-color);
     z-index: 10;
 }
 
