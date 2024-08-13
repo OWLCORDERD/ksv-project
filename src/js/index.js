@@ -315,7 +315,7 @@ gsap.fromTo(
 const chart_linkButton = document.querySelector('.chart-button');
 
 chart_linkButton.addEventListener('click', () => {
-  window.location.href = '/chart.html';
+  window.location.href = '/chart';
 });
 
 // ksv music player 영역 스크롤 애니메이션 이벤트
